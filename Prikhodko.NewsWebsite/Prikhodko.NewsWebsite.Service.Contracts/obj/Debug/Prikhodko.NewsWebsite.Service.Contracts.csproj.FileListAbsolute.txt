@@ -1,3 +1,4 @@
+E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\EntityFramework.xml
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\Prikhodko.NewsWebsite.Service.Contracts.dll.config
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\Prikhodko.NewsWebsite.Service.Contracts.dll
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\Prikhodko.NewsWebsite.Service.Contracts.pdb
@@ -32,7 +33,6 @@ E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Con
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\System.Web.WebPages.xml
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\System.Web.WebPages.Razor.xml
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\System.Web.Razor.xml
-E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\EntityFramework.xml
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\obj\Debug\Prikhodko.NewsWebsite.Service.Contracts.csprojAssemblyReference.cache
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Service.Contracts\obj\Debug\Prikhodko.NewsWebsite.Service.Contracts.csproj.CoreCompileInputs.cache

@@ -35,6 +35,7 @@ E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.CommonModel
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.CommonModels\bin\Debug\System.Web.WebPages.xml
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.CommonModels\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.CommonModels\bin\Debug\System.Web.WebPages.Razor.xml
+E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.CommonModels\obj\Debug\Prikhodko.NewsWebsite.CommonModels.csprojAssemblyReference.cache
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.CommonModels\obj\Debug\Prikhodko.NewsWebsite.CommonModels.csproj.CoreCompileInputs.cache
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.CommonModels\obj\Debug\Prikhodko.NewsWebsite.CommonModels.csproj.CopyComplete
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.CommonModels\obj\Debug\Prikhodko.NewsWebsite.CommonModels.dll
