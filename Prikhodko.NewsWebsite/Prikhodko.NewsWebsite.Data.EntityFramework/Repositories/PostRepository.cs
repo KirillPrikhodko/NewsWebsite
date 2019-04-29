@@ -24,6 +24,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public void Delete(int id)
         {
+            if (id <= 0)
+            {
+                return;
+            }
             var postToDelete = applicationDbContext.Posts.Find(id);
             if (postToDelete != null)
             {
@@ -33,6 +37,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public Post Get(int id)
         {
+            if (id <= 0)
+            {
+                return null;
+            }
             var result = applicationDbContext.Posts.Find(id);
             return result;
         }
@@ -45,8 +53,15 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public void Update(Post item)
         {
+            if (item == null)
+            {
+                return;
+            }
             var postToUpdate = applicationDbContext.Posts.Find(item.Id);
-            item.Update(ref item);
+            if (postToUpdate != null)
+            {
+                item.Update(postToUpdate);
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
         public virtual IEnumerable<PostRate> Rates { get; set; }
         public int AvgRate { get; set; }
 
-        public void Update(ref Post unit) //TODO: think of a better name
+        public void Update(Post unit) //TODO: think of a better name
         {
             unit.Id = this.Id;
             unit.Author = this.Author;

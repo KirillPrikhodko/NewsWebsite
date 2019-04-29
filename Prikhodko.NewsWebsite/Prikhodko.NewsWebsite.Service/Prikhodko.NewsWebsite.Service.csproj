@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoryService.cs" />
     <Compile Include="IdentityFramework\AccountManageService.cs" />
     <Compile Include="IdentityFramework\ApplicationUserService.cs" />
     <Compile Include="IdentityFramework\LoginService.cs" />

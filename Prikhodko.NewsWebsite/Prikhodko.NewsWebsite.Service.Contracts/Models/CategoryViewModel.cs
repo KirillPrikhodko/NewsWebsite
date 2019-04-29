@@ -2,7 +2,6 @@
 {
     public class CategoryViewModel
     {
-        public int Name { get; set; } //TODO: provide automatic inclusion of categories in database (likely via Seed method in migration
-
+        public int Name { get; set; } //TODO: provide automatic inclusion of categories in database (likely via Seed method in migration)
     }
 }
