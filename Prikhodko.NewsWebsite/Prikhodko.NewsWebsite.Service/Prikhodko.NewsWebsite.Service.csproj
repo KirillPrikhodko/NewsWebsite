@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -65,10 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationUserService.cs" />
-    <Compile Include="LoginService.cs" />
+    <Compile Include="IdentityFramework\AccountManageService.cs" />
+    <Compile Include="IdentityFramework\ApplicationUserService.cs" />
+    <Compile Include="IdentityFramework\LoginService.cs" />
+    <Compile Include="PostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegisterService.cs" />
+    <Compile Include="IdentityFramework\RegisterService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prikhodko.NewsWebsite.CommonModels\Prikhodko.NewsWebsite.CommonModels.csproj">

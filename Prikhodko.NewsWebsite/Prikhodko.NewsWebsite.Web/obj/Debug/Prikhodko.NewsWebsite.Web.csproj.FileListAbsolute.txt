@@ -118,3 +118,6 @@ E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Web\bin\Pri
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Web\obj\Debug\Prikhodko.NewsWebsite.Web.csproj.CopyComplete
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Web\obj\Debug\Prikhodko.NewsWebsite.Web.dll
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Web\obj\Debug\Prikhodko.NewsWebsite.Web.pdb
+E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Web\bin\AutoMapper.dll
+E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Web\bin\AutoMapper.pdb
+E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Web\bin\AutoMapper.xml

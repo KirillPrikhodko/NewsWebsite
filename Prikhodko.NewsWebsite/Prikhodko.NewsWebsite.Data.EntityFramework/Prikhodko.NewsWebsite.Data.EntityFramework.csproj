@@ -125,14 +125,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
-    <Compile Include="ApplicationSignInManager.cs" />
-    <Compile Include="ApplicationUserManager.cs" />
+    <Compile Include="IdentityFramework\AccountManageRepository.cs" />
+    <Compile Include="IdentityFramework\ApplicationSignInManager.cs" />
+    <Compile Include="IdentityFramework\ApplicationUserManager.cs" />
+    <Compile Include="Migrations\201904291814045_EntitiesDatabaseSetup.cs" />
+    <Compile Include="Migrations\201904291814045_EntitiesDatabaseSetup.Designer.cs">
+      <DependentUpon>201904291814045_EntitiesDatabaseSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
-    <Compile Include="EmailService.cs" />
+    <Compile Include="IdentityFramework\EmailService.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\RegisterRepository.cs" />
-    <Compile Include="SmsService.cs" />
+    <Compile Include="IdentityFramework\SmsService.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +155,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201904291814045_EntitiesDatabaseSetup.resx">
+      <DependentUpon>201904291814045_EntitiesDatabaseSetup.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

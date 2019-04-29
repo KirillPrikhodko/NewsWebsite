@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Prikhodko.NewsWebsite.CommonModels;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
 
-namespace Prikhodko.NewsWebsite.Service
+namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 {
     public class LoginService : ILoginService
     {
@@ -59,6 +60,12 @@ namespace Prikhodko.NewsWebsite.Service
         public async Task<IList<string>> GetValidTwoFactorProvidersAsync(string userId)
         {
             var result = await repository.GetValidTwoFactorProvidersAsync(userId);
+            return result;
+        }
+
+        public Task<IdentityResult> RemoveLoginAsync(string userId, UserLoginInfo loginInfo)
+        {
+            var result = repository.RemoveLoginAsync(userId, loginInfo);
             return result;
         }
     }

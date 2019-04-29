@@ -75,19 +75,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAccountManageRepository.cs" />
     <Compile Include="Interfaces\ILoginRepository.cs" />
     <Compile Include="Interfaces\IRegisterRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Like.cs" />
+    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\PostRate.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Prikhodko.NewsWebsite.CommonModels\Prikhodko.NewsWebsite.CommonModels.csproj">
       <Project>{db3034e8-3a79-4fb3-9503-fce98204a46e}</Project>

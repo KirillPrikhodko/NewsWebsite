@@ -75,3 +75,5 @@ E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Data.Entity
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Data.EntityFramework\obj\Debug\Prikhodko.NewsWebsite.Data.EntityFramework.csproj.CopyComplete
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Data.EntityFramework\obj\Debug\Prikhodko.NewsWebsite.Data.EntityFramework.dll
 E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Data.EntityFramework\obj\Debug\Prikhodko.NewsWebsite.Data.EntityFramework.pdb
+E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Data.EntityFramework\obj\Debug\Prikhodko.NewsWebsite.Data.EntityFramework.Migrations.EntitiesDatabaseSetup.resources
+E:\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite\Prikhodko.NewsWebsite.Data.EntityFramework\obj\Debug\Prikhodko.NewsWebsite.Data.EntityFramework.csproj.GenerateResource.cache

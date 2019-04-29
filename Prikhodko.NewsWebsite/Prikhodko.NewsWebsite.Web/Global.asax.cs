@@ -14,6 +14,7 @@ namespace Prikhodko.NewsWebsite.Web
         {
             AreaRegistration.RegisterAllAreas();
             AutofacConfig.ConfigureContainer();
+            AutoMapperConfig.Configure();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

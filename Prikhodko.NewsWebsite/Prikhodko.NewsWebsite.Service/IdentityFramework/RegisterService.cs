@@ -8,7 +8,7 @@ using Prikhodko.NewsWebsite.CommonModels;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
 
-namespace Prikhodko.NewsWebsite.Service
+namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 {
     public class RegisterService : IRegisterService
     {

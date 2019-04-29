@@ -9,7 +9,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Prikhodko.NewsWebsite.CommonModels;
 
-namespace Prikhodko.NewsWebsite.Data.EntityFramework
+namespace Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework
 {
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>

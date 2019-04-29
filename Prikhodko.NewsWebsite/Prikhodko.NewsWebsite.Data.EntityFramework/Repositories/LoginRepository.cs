@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Prikhodko.NewsWebsite.CommonModels;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
+using Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework;
 
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 {
@@ -62,6 +64,12 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         public async Task<IList<string>> GetValidTwoFactorProvidersAsync(string userId)
         {
             var result = await userManager.GetValidTwoFactorProvidersAsync(userId);
+            return result;
+        }
+
+        public async Task<IdentityResult> RemoveLoginAsync(string userId, UserLoginInfo loginInfo)
+        {
+            var result = await userManager.RemoveLoginAsync(userId, loginInfo);
             return result;
         }
     }

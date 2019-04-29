@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Prikhodko.NewsWebsite.CommonModels;
+
+namespace Prikhodko.NewsWebsite.Data.Contracts.Models
+{
+    public class Post
+    {
+        public int Id { get; set; }
+        public virtual ApplicationUser Author { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual IEnumerable<Tag> Tags { get; set; }
+        public virtual string Content { get; set; } //TODO: create Content entity (likely needed in order to insert images into posts
+        public virtual IEnumerable<PostRate> Rates { get; set; }
+        public int AvgRate { get; set; }
+
+        public void Update(ref Post unit) //TODO: think of a better name
+        {
+            unit.Id = this.Id;
+            unit.Author = this.Author;
+            unit.Title = this.Title;
+            unit.Description = this.Description;
+            unit.Category = this.Category;
+            unit.Tags = this.Tags;
+            unit.Content = this.Content;
+            unit.Rates = this.Rates;
+            unit.AvgRate = this.AvgRate;
+        }
+    }
+}

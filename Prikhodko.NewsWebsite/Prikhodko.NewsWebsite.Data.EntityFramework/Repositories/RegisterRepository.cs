@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Prikhodko.NewsWebsite.CommonModels;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
+using Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework;
 
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 {

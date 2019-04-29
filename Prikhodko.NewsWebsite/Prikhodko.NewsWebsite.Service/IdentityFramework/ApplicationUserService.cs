@@ -5,7 +5,7 @@ using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 //using Prikhodko.NewsWebsite.Data.Contracts.Models;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
 
-namespace Prikhodko.NewsWebsite.Service
+namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 {
     public class ApplicationUserService : IService<ApplicationUser>
     {
