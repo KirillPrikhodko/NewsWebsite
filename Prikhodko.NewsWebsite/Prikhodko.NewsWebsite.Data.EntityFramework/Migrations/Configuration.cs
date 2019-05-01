@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Prikhodko.NewsWebsite.Data.Contracts.Models;
+
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.Migrations
 {
     using System;
@@ -9,15 +12,17 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Prikhodko.NewsWebsite.Data.EntityFramework.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+            context.Categories.AddRange(new List<Category>
+            {
+                new Category() {Name = "C#"},
+                new Category() {Name = "Java"},
+                new Category() {Name = "Python"}
+            });
         }
     }
 }

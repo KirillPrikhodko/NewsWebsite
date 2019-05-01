@@ -22,3 +22,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.categories-options {
+    height: 50px;
+    padding-top: 8px;
+}

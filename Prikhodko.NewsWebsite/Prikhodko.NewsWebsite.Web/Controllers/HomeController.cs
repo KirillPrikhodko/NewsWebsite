@@ -22,19 +22,25 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return View();
         }
 
-        public ActionResult New()
+        public ActionResult Fresh()
         {
-            return View();
+            return PartialView();
         }
 
         public ActionResult Best()
         {
-            return View();
+            return PartialView();
         }
 
         public ActionResult TagCloud()
         {
-            return View();
+            return PartialView();
+        }
+
+        public IEnumerable<CategoryViewModel> GetCategories()
+        {
+            var result = categoryService.GetAll();
+            return result;
         }
 
         //public ActionResult About()

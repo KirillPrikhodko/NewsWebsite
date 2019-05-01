@@ -1,0 +1,10 @@
+﻿<ul class="nav navbar-nav navbar-right categories-options">
+    <li>
+        <select class="form-control">
+            @foreach (var category in ViewBag.Categories)
+            {
+                <option>@category.Name</option>
+            }
+        </select>
+    </li>
+</ul>
