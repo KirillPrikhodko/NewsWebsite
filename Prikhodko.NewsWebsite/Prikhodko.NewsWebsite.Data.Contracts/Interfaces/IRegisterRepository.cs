@@ -10,6 +10,6 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Interfaces
 {
     public interface IRegisterRepository
     {
-        Task<IdentityResult> Register(RegisterViewModel model, ApplicationUser user);
+        Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUser user);
     }
 }

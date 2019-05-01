@@ -34,7 +34,7 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
             return result;
         }
 
-        public ApplicationUser FindById(string userId)
+        public ApplicationIdentityUser FindById(string userId)
         {
             var result = repository.FindById(userId);
             return result;

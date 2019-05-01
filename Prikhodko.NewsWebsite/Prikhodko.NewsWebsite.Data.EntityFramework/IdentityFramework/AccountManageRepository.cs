@@ -26,7 +26,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework
             return result;
         }
 
-        public ApplicationUser FindById(string userId)
+        public ApplicationIdentityUser FindById(string userId)
         {
             var result = userManager.FindById(userId);
             return result;

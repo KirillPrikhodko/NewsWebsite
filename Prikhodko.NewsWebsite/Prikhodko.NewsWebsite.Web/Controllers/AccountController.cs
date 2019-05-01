@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Web.Controllers
 {
@@ -16,11 +17,13 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
     {
         private readonly ILoginService loginService;
         private readonly IRegisterService registerService;
+        private readonly IService<UserViewModel> userService;
 
-        public AccountController(ILoginService loginService, IRegisterService registerService)
+        public AccountController(ILoginService loginService, IRegisterService registerService, IService<UserViewModel> userService)
         {
             this.loginService = loginService;
             this.registerService = registerService;
+            this.userService = userService;
         }
 
         //
@@ -121,7 +124,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationIdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await registerService.Register(model, user);
                 if (result.Succeeded)
                 {
@@ -372,6 +375,12 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         //{
         //    return View();
         //}
+
+        public ActionResult GetAccountBar()
+        {
+            var model = new UserViewModel();
+            return PartialView("_AccountBarPartial", model);
+        }
 
         #region Helpers
         // Used for XSRF protection when adding external logins

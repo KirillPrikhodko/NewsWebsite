@@ -25,7 +25,7 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
             return result;
         }
 
-        public async Task Login(ApplicationUser user, bool isPeristent, bool rememberBrowser)
+        public async Task Login(ApplicationIdentityUser user, bool isPeristent, bool rememberBrowser)
         {
             await repository.Login(user, isPeristent, rememberBrowser);
         }

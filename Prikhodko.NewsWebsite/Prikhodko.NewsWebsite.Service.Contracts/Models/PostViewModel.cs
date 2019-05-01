@@ -5,7 +5,7 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
 {
     public class PostViewModel
     {
-        public virtual ApplicationUser Author { get; set; }
+        public virtual ApplicationIdentityUser Author { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public virtual CategoryViewModel Category { get; set; }

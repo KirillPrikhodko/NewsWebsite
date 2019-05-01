@@ -10,6 +10,6 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     public class Like
     {
         public int Id { get; set; }
-        public virtual ApplicationUser Author { get; set; }
+        public virtual User Author { get; set; }
     }
 }

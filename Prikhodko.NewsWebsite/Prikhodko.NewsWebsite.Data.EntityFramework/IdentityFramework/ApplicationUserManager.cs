@@ -12,12 +12,12 @@ using Prikhodko.NewsWebsite.CommonModels;
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class ApplicationUserManager : UserManager<ApplicationIdentityUser>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store, IdentityFactoryOptions<ApplicationUserManager> options)
+        public ApplicationUserManager(IUserStore<ApplicationIdentityUser> store, IdentityFactoryOptions<ApplicationUserManager> options)
             : base(store)
         {
-            this.UserValidator = new UserValidator<ApplicationUser>(this)
+            this.UserValidator = new UserValidator<ApplicationIdentityUser>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -38,11 +38,11 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            this.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser>
+            this.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationIdentityUser>
             {
                 MessageFormat = "Your security code is {0}"
             });
-            this.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser>
+            this.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationIdentityUser>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
@@ -53,7 +53,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework
             if (dataProtectionProvider != null)
             {
                 this.UserTokenProvider =
-                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<ApplicationIdentityUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
         }
     }

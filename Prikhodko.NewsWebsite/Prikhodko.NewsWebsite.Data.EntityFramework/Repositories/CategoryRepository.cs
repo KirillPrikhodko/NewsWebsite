@@ -61,7 +61,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             var categoryToUpdate = dbContext.Categories.Find(item.Id);
             if (categoryToUpdate != null)
             {
-                categoryToUpdate.Name = item.Name; //TODO: think of a common interface that will clone (maybe use ICloneable or reflection?)
+                categoryToUpdate.Name = item.Name; //TODO: think of a common interface that will clone (maybe use ICloneable?)
             }
         }
     }

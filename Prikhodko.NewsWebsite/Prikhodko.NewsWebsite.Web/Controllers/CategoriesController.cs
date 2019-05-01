@@ -20,7 +20,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         public ActionResult GetCategoriesDropdown()
         {
             ViewBag.Categories = categoryService.GetAll();
-            return PartialView();
+            return PartialView("_GetCategoriesDropdownPartial");
         }
     }
 }

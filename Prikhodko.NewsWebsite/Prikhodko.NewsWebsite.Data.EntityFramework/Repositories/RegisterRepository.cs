@@ -18,7 +18,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         {
             this.userManager = userManager;
         }
-        public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationUser user)
+        public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUser user)
         {
             var result = await userManager.CreateAsync(user, model.Password);
             return result;

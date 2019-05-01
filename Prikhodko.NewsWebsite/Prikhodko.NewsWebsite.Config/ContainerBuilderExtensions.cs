@@ -28,16 +28,16 @@ namespace Prikhodko.NewsWebsite.Config
                 DataProtectionProvider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("NewsWebsite")
             }).As<IdentityFactoryOptions<ApplicationUserManager>>();
             builder.Register(c => HttpContext.Current.GetOwinContext()).As<IOwinContext>();
-            builder.Register(c => new UserStore<ApplicationUser>(c.Resolve<ApplicationDbContext>())).As<IUserStore<ApplicationUser>>();
+            builder.Register(c => new UserStore<ApplicationIdentityUser>(c.Resolve<ApplicationDbContext>())).As<IUserStore<ApplicationIdentityUser>>();
             builder.Register(c => HttpContext.Current.GetOwinContext().Authentication).As<IAuthenticationManager>();
             builder.RegisterType<ApplicationUserManager>().As<ApplicationUserManager>().InstancePerLifetimeScope();
             builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<ApplicationUserRepository>().As<IRepository<ApplicationUser>>();
             builder.RegisterType<LoginRepository>().As<ILoginRepository>();
             builder.RegisterType<RegisterRepository>().As<IRegisterRepository>();
             builder.RegisterType<AccountManageRepository>().As<IAccountManageRepository>();
             #endregion
 
+            builder.RegisterType<UserRepository>().As<IRepository<User>>();
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<PostRepository>().As<IRepository<Post>>();
@@ -48,12 +48,12 @@ namespace Prikhodko.NewsWebsite.Config
         public static ContainerBuilder AddServiceDependencies(this ContainerBuilder builder)
         {
             #region IdentityFramework
-            builder.RegisterType<ApplicationUserService>().As<IService<ApplicationUser>>();
             builder.RegisterType<LoginService>().As<ILoginService>();
             builder.RegisterType<RegisterService>().As<IRegisterService>();
             builder.RegisterType<AccountManageService>().As<IAccountManageService>();
             #endregion
 
+            builder.RegisterType<UserService>().As<IService<UserViewModel>>();
             builder.RegisterType<PostService>().As<IService<PostViewModel>>();
             builder.RegisterType<CategoryService>().As<IService<CategoryViewModel>>();
             return builder;

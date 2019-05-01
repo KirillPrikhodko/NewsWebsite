@@ -70,9 +70,12 @@
     <Compile Include="Interfaces\IRegisterService.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\CommentViewModel.cs" />
+    <Compile Include="Models\LikeViewModel.cs" />
     <Compile Include="Models\PostRateViewModel.cs" />
     <Compile Include="Models\PostViewModel.cs" />
     <Compile Include="Models\TagViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

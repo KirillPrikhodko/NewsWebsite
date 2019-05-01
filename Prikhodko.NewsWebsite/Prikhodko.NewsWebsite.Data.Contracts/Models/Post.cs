@@ -10,7 +10,7 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     public class Post
     {
         public int Id { get; set; }
-        public virtual ApplicationUser Author { get; set; }
+        public virtual ApplicationIdentityUser Author { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public virtual Category Category { get; set; }

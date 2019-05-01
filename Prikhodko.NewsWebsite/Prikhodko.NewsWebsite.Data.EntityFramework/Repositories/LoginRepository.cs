@@ -27,7 +27,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             return result;
         }
 
-        public async Task Login(ApplicationUser user, bool isPeristent, bool rememberBrowser)
+        public async Task Login(ApplicationIdentityUser user, bool isPeristent, bool rememberBrowser)
         {
             await signInManager.SignInAsync(user, isPeristent, rememberBrowser);
         }
