@@ -4,14 +4,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Prikhodko.NewsWebsite.CommonModels
+namespace Prikhodko.NewsWebsite.Data.Contracts.Models
 {
     public class ApplicationIdentityUser : IdentityUser
     {
+        public virtual User User { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationIdentityUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

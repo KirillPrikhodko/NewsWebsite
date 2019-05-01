@@ -25,7 +25,20 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostRate> PostRates { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<User> AppUsers { get; set; }
 
         #endregion
+
+        protected override void OnModelCreating(DbModelBuilder builder)
+        {
+            var applicationIdentityUserConfiguration = builder.Entity<ApplicationIdentityUser>();
+            applicationIdentityUserConfiguration.HasRequired(x => x.User)
+                .WithRequiredDependent(x => x.ApplicationIdentityUser);
+
+            var userConfiguration = builder.Entity<User>();
+            userConfiguration.HasRequired(x => x.ApplicationIdentityUser).WithRequiredPrincipal(x => x.User);
+
+            base.OnModelCreating(builder);
+        }
     }
 }

@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Prikhodko.NewsWebsite.CommonModels;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
+using Prikhodko.NewsWebsite.Data.Contracts.Models;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
+using Prikhodko.NewsWebsite.Service.Contracts.Models;
+using LoginViewModel = Prikhodko.NewsWebsite.CommonModels.LoginViewModel;
 
 namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 {
@@ -25,8 +29,9 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
             return result;
         }
 
-        public async Task Login(ApplicationIdentityUser user, bool isPeristent, bool rememberBrowser)
+        public async Task Login(ApplicationIdentityUserViewModel userViewModel, bool isPeristent, bool rememberBrowser)
         {
+            var user = Mapper.Map<ApplicationIdentityUser>(userViewModel);
             await repository.Login(user, isPeristent, rememberBrowser);
         }
 

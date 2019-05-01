@@ -9,6 +9,6 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     public class Category
     {
         public int Id { get; set; }
-        public string Name { get; set; } //TODO: provide automatic inclusion of categories in database (likely via Seed method in migration
+        public virtual string Name { get; set; } //TODO: provide automatic inclusion of categories in database (likely via Seed method in migration
     }
 }

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Prikhodko.NewsWebsite.CommonModels;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
+using Prikhodko.NewsWebsite.Data.Contracts.Models;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
+using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 {
@@ -18,9 +21,11 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
         {
             this.repository = repository;
         }
-        public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUser user)
+        public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUserViewModel userViewModel)
         {
+            var user = Mapper.Map<ApplicationIdentityUser>(userViewModel);
             var result = await repository.Register(model, user);
+            userViewModel.Id = user.User.Id;
             return result;
         }
     }

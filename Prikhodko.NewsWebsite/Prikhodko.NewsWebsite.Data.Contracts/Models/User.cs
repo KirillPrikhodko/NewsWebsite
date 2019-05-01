@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Prikhodko.NewsWebsite.CommonModels;
 
 namespace Prikhodko.NewsWebsite.Data.Contracts.Models
 {
     public class User
     {
-        public int Id { get; set; }
-        public ApplicationIdentityUser ApplicationIdentityUser { get; set; }
-        public ICollection<Post> Posts { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<PostRate> PostRates { get; set; }
-        public int AvgRate { get; set; } //An average rate of all user's posts
+        public string Id { get; set; }
+
+        [ForeignKey("Id")]
+        public virtual ApplicationIdentityUser ApplicationIdentityUser { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<PostRate> PostRates { get; set; }
+        public virtual int AvgRate { get; set; } //An average rate of all user's posts
     }
 }

@@ -17,9 +17,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
     {
         private readonly ILoginService loginService;
         private readonly IRegisterService registerService;
-        private readonly IService<UserViewModel> userService;
+        private readonly IUserService userService;
 
-        public AccountController(ILoginService loginService, IRegisterService registerService, IService<UserViewModel> userService)
+        public AccountController(ILoginService loginService, IRegisterService registerService, IUserService userService)
         {
             this.loginService = loginService;
             this.registerService = registerService;
@@ -124,7 +124,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationIdentityUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationIdentityUserViewModel() { UserName = model.Email, Email = model.Email };
                 var result = await registerService.Register(model, user);
                 if (result.Succeeded)
                 {
@@ -378,8 +378,12 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 
         public ActionResult GetAccountBar()
         {
-            var model = new UserViewModel();
-            return PartialView("_AccountBarPartial", model);
+            var model = userService.FindById(User.Identity.GetUserId());
+            if (model != null)
+            {
+                return PartialView("_AccountBarPartial", model);
+            }
+            return new EmptyResult();
         }
 
         #region Helpers

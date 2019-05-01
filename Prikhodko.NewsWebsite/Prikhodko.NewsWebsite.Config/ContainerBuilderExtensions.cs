@@ -53,7 +53,7 @@ namespace Prikhodko.NewsWebsite.Config
             builder.RegisterType<AccountManageService>().As<IAccountManageService>();
             #endregion
 
-            builder.RegisterType<UserService>().As<IService<UserViewModel>>();
+            builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<PostService>().As<IService<PostViewModel>>();
             builder.RegisterType<CategoryService>().As<IService<CategoryViewModel>>();
             return builder;

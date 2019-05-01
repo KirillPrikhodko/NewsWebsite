@@ -6,13 +6,17 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class UserService : IService<UserViewModel>
+    public class UserService : IUserService
     {
         private readonly IRepository<User> repository;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IAccountManageService accountManageService;
 
-        public UserService(IRepository<User> repository)
+        public UserService(IRepository<User> repository, IUnitOfWork unitOfWork, IAccountManageService accountManageService)
         {
             this.repository = repository;
+            this.unitOfWork = unitOfWork;
+            this.accountManageService = accountManageService;
         }
         public void Add(UserViewModel item)
         {
@@ -22,6 +26,17 @@ namespace Prikhodko.NewsWebsite.Service
         public void Delete(int id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public UserViewModel FindById(string userId)
+        {
+            var applicationIdentityUser = accountManageService.FindById(userId);
+            UserViewModel result = null;
+            if (applicationIdentityUser != null)
+            {
+                result = applicationIdentityUser.User;
+            }
+            return result;
         }
 
         public UserViewModel Get(int id)

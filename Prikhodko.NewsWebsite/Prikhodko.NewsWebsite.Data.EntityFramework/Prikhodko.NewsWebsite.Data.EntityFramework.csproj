@@ -129,6 +129,7 @@
     <Compile Include="IdentityFramework\ApplicationSignInManager.cs" />
     <Compile Include="IdentityFramework\ApplicationUserManager.cs" />
     <Compile Include="IdentityFramework\EmailService.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

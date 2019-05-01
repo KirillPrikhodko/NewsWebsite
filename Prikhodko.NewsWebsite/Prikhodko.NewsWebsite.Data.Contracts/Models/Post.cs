@@ -10,14 +10,14 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     public class Post
     {
         public int Id { get; set; }
-        public virtual ApplicationIdentityUser Author { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public virtual User Author { get; set; }
+        public virtual string Title { get; set; }
+        public virtual string Description { get; set; }
         public virtual Category Category { get; set; }
         public virtual IEnumerable<Tag> Tags { get; set; }
         public virtual string Content { get; set; } //TODO: create Content entity (likely needed in order to insert images into posts
         public virtual IEnumerable<PostRate> Rates { get; set; }
-        public int AvgRate { get; set; }
+        public virtual int AvgRate { get; set; }
 
         public void Update(Post unit) //TODO: think of a better name
         {

@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Prikhodko.NewsWebsite.CommonModels;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
+using Prikhodko.NewsWebsite.Data.Contracts.Models;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
+using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 {
@@ -34,9 +37,10 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
             return result;
         }
 
-        public ApplicationIdentityUser FindById(string userId)
+        public ApplicationIdentityUserViewModel FindById(string userId)
         {
-            var result = repository.FindById(userId);
+            var user = repository.FindById(userId);
+            var result = Mapper.Map<ApplicationIdentityUser, ApplicationIdentityUserViewModel>(user);
             return result;
         }
 

@@ -69,11 +69,15 @@
     <Compile Include="Interfaces\ILoginService.cs" />
     <Compile Include="Interfaces\IRegisterService.cs" />
     <Compile Include="Interfaces\IService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Models\ApplicationIdentityUserViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\ClaimViewModel.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\LikeViewModel.cs" />
     <Compile Include="Models\PostRateViewModel.cs" />
     <Compile Include="Models\PostViewModel.cs" />
+    <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\TagViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +93,10 @@
     <ProjectReference Include="..\Prikhodko.NewsWebsite.CommonModels\Prikhodko.NewsWebsite.CommonModels.csproj">
       <Project>{db3034e8-3a79-4fb3-9503-fce98204a46e}</Project>
       <Name>Prikhodko.NewsWebsite.CommonModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Prikhodko.NewsWebsite.Data.Contracts\Prikhodko.NewsWebsite.Data.Contracts.csproj">
+      <Project>{d702e045-e837-453e-bc42-2f9632fb1aab}</Project>
+      <Name>Prikhodko.NewsWebsite.Data.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
