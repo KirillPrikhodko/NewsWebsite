@@ -17,13 +17,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
     {
         private readonly ILoginService loginService;
         private readonly IRegisterService registerService;
-        private readonly IUserService userService;
 
         public AccountController(ILoginService loginService, IRegisterService registerService, IUserService userService)
         {
             this.loginService = loginService;
             this.registerService = registerService;
-            this.userService = userService;
         }
 
         //
@@ -375,16 +373,6 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         //{
         //    return View();
         //}
-
-        public ActionResult GetAccountBar()
-        {
-            var model = userService.FindById(User.Identity.GetUserId());
-            if (model != null)
-            {
-                return PartialView("_AccountBarPartial", model);
-            }
-            return new EmptyResult();
-        }
 
         #region Helpers
         // Used for XSRF protection when adding external logins

@@ -25,7 +25,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public ActionResult Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
@@ -35,17 +35,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
-
-            var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
-            {
-                HasPassword = HasPassword(),
-                PhoneNumber = await accountManageService.GetPhoneNumberAsync(userId),
-                TwoFactor = await accountManageService.GetTwoFactorEnabledAsync(userId),
-                Logins = await accountManageService.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-            };
-            return View(model);
+            return View();
         }
 
         //TODO: implement the rest of the class
@@ -272,6 +262,20 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        public async Task<ActionResult> GetAccountSettingsPartial()
+        {
+            var userId = User.Identity.GetUserId();
+            var model = new IndexViewModel
+            {
+                HasPassword = HasPassword(),
+                PhoneNumber = await accountManageService.GetPhoneNumberAsync(userId),
+                TwoFactor = await accountManageService.GetTwoFactorEnabledAsync(userId),
+                Logins = await accountManageService.GetLoginsAsync(userId),
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+            };
+            return PartialView("_AccountSettingsPartial", model);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && accountManageService != null || loginService != null)
@@ -283,9 +287,20 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
+        public enum ManageMessageId
+        {
+            AddPhoneSuccess,
+            ChangePasswordSuccess,
+            SetTwoFactorSuccess,
+            SetPasswordSuccess,
+            RemoveLoginSuccess,
+            RemovePhoneSuccess,
+            Error
+        }
+
+    #region Helpers
+    // Used for XSRF protection when adding external logins
+    private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager
         {

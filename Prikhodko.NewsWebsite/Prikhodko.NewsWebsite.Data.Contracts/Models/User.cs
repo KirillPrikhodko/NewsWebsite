@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Prikhodko.NewsWebsite.CommonModels;
 
@@ -14,5 +15,12 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<PostRate> PostRates { get; set; }
         public virtual int AvgRate { get; set; } //An average rate of all user's posts
+        public string ProfileImagePath { get; set; }
+
+        public string Name { get; set; }
+        
+        public DateTime? DateOfBirth { get; set; }
+
+        public string Country { get; set; }
     }
 }

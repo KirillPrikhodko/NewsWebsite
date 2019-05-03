@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Prikhodko.NewsWebsite.CommonModels;
 
 namespace Prikhodko.NewsWebsite.Service.Contracts.Models
@@ -7,9 +8,19 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
     {
         public string Id { get; set; }
         public ApplicationIdentityUserViewModel ApplicationIdentityUser { get; set; }
-        //public ICollection<PostViewModel> Posts { get; set; }
-        //public ICollection<CommentViewModel> Comments { get; set; }
-        //public ICollection<PostRateViewModel> PostRates { get; set; }
         public int AvgRate { get; set; } //An average rate of all user's posts
+
+        public string ProfileImagePath { get; set; }
+
+        public string Name { get; set; }
+
+        private DateTime dateOfBirth;
+        public DateTime DateOfBirth
+        {
+            get { return dateOfBirth; }
+            set { dateOfBirth = value.Date; }
+        }
+
+        public string Country { get; set; }
     }
 }

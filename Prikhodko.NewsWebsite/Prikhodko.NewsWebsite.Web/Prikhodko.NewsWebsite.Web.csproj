@@ -174,8 +174,8 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ManageMessageId.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,7 +240,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Categories\_GetCategoriesDropdownPartial.cshtml" />
-    <Content Include="Views\Account\_AccountBarPartial.cshtml" />
+    <Content Include="Views\Users\_UserBarPartial.cshtml" />
+    <Content Include="Views\Manage\_AccountSettingsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
