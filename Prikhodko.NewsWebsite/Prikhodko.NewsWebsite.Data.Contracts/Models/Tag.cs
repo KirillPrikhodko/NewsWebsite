@@ -9,7 +9,7 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     public class Tag
     {
         public int Id { get; set; }
-        public virtual int Name { get; set; }
+        public virtual string Name { get; set; }
         public virtual IEnumerable<Post> Posts { get; set; }
     }
 }

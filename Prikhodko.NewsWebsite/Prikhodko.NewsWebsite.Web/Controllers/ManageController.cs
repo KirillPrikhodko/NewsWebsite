@@ -276,6 +276,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return PartialView("_AccountSettingsPartial", model);
         }
 
+        public async Task<ActionResult> GetAccountGeneralInfoPartial()
+        {
+            return View("_AccountGeneralInfoPartial");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && accountManageService != null || loginService != null)

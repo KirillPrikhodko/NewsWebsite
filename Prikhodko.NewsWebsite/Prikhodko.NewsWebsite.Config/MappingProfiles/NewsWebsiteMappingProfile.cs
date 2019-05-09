@@ -14,19 +14,22 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             MapApplicationIdentityUserViewModelToApplicationIdentityUser();
             MapUserToUserViewModel();
             MapUserViewModelToUser();
+            MapCategoryToCategoryViewModel();
+            MapCategoryViewModelToCategory();
+            MapTagToTagViewModel();
+            MapTagViewModelToTag();
         }
 
         private void MapPostToPostViewModel()
         {
             CreateMap<Post, PostViewModel>()
-                .ForPath(x => x.Category.Name, c => c.MapFrom(src => src.Category.Name))
+                .ForPath(x => x.Category, c => c.MapFrom(src => src.Category.Name))
                 .ForPath(x => x.Author, c => c.MapFrom(src => src.Author.ApplicationIdentityUser.UserName))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
                 .ForMember(x => x.Content,
                     c => c.MapFrom(src =>
                         src.Content)) //TODO: after the Content is configured as a separate entity, this will have to change
                 .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
-                .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates)) //TODO: this might not work
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForAllOtherMembers(c => c.Ignore());
@@ -35,14 +38,13 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
         private void MapPostViewModelToPost()
         {
             CreateMap<PostViewModel, Post>()
-                .ForPath(x => x.Category.Name, c => c.MapFrom(src => src.Category.Name))
+                .ForPath(x => x.Category.Name, c => c.MapFrom(src => src.Category))
                 .ForPath(x => x.Author.ApplicationIdentityUser.UserName, c => c.MapFrom(src => src.Author))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
                 .ForMember(x => x.Content,
                     c => c.MapFrom(src =>
                         src.Content)) //TODO: after the Content is configured as a separate entity, this will have to change
                 .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
-                .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates)) //TODO: this might not work
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForAllOtherMembers(c => c.Ignore());
@@ -109,6 +111,35 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.ApplicationIdentityUser, c => c.MapFrom(src => src.ApplicationIdentityUser))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapCategoryToCategoryViewModel()
+        {
+            CreateMap<Category, CategoryViewModel>()
+                .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapCategoryViewModelToCategory()
+        {
+            CreateMap<CategoryViewModel, Category>()
+                .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+        private void MapTagToTagViewModel()
+        {
+            CreateMap<Tag, TagViewModel>()
+                .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
+                .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapTagViewModelToTag()
+        {
+            CreateMap<TagViewModel, Tag>()
+                .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
+                .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
                 .ForAllOtherMembers(c => c.Ignore());
         }
     }

@@ -22,9 +22,11 @@ namespace Prikhodko.NewsWebsite.Web
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            //bundles.Add(new ScriptBundle("~/bundles/tag-it").IncludeDirectory(
+            //    "~/Scripts/tag-it", "*.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").IncludeDirectory(
+                      "~/Content", "*.css"));
         }
     }
 }

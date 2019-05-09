@@ -15,7 +15,7 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
         public virtual string Description { get; set; }
         public virtual Category Category { get; set; }
         public virtual IEnumerable<Tag> Tags { get; set; }
-        public virtual string Content { get; set; } //TODO: create Content entity (likely needed in order to insert images into posts
+        public virtual string Content { get; set; }
         public virtual IEnumerable<PostRate> Rates { get; set; }
         public virtual int AvgRate { get; set; }
 

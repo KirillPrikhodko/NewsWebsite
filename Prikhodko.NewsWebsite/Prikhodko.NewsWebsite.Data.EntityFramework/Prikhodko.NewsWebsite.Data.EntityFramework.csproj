@@ -136,6 +136,7 @@
     <Compile Include="Repositories\PostRepository.cs" />
     <Compile Include="Repositories\RegisterRepository.cs" />
     <Compile Include="IdentityFramework\SmsService.cs" />
+    <Compile Include="Repositories\TagRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>

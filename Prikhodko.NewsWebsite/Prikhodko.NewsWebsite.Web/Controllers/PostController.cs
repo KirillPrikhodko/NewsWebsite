@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Service.Contracts.Models;
+using Prikhodko.NewsWebsite.Web.Models;
 
 namespace Prikhodko.NewsWebsite.Web.Controllers
 {
     public class PostController : Controller
     {
         private readonly IService<PostViewModel> postService;
+        private readonly IService<CategoryViewModel> categoryService;
 
-        public PostController(IService<PostViewModel> postService)
+        public PostController(IService<PostViewModel> postService, IService<CategoryViewModel> categoryService)
         {
             this.postService = postService;
+            this.categoryService = categoryService;
         }
         // GET: Post
         public ActionResult Index() //TODO: I should check if this is actually necessary
@@ -25,8 +29,8 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            var model = new PostViewModel();
-            return View(model);
+            ViewBag.Categories = new SelectList(categoryService.GetAll().Select(x => x.Name));
+            return View();
         }
 
         [Authorize]

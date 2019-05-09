@@ -1,0 +1,13 @@
+﻿@section Scripts{
+}
+
+<a href="#" id="username">superuser</a>
+
+<script>
+    $('#username').editable({
+        type: 'text',
+        pk: 1,
+        url: '/post',
+        title: 'Enter username'
+    })
+</script>
