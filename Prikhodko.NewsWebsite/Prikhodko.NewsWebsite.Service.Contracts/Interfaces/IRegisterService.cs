@@ -12,6 +12,6 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
 {
     public interface IRegisterService
     {
-        Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUserViewModel user);
+        Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUserServiceModel user);
     }
 }

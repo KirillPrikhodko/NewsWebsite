@@ -18,7 +18,7 @@ namespace Prikhodko.NewsWebsite.Service
             this.unitOfWork = unitOfWork;
             this.accountManageService = accountManageService;
         }
-        public void Add(UserViewModel item)
+        public void Add(UserServiceModel item)
         {
             throw new System.NotImplementedException();
         }
@@ -28,10 +28,10 @@ namespace Prikhodko.NewsWebsite.Service
             throw new System.NotImplementedException();
         }
 
-        public UserViewModel FindById(string userId)
+        public UserServiceModel FindById(string userId)
         {
             var applicationIdentityUser = accountManageService.FindById(userId);
-            UserViewModel result = null;
+            UserServiceModel result = null;
             if (applicationIdentityUser != null)
             {
                 result = applicationIdentityUser.User;
@@ -39,17 +39,17 @@ namespace Prikhodko.NewsWebsite.Service
             return result;
         }
 
-        public UserViewModel Get(int id)
+        public UserServiceModel Get(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<UserViewModel> GetAll()
+        public IEnumerable<UserServiceModel> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update(UserViewModel item)
+        public void Update(UserServiceModel item)
         {
             throw new System.NotImplementedException();
         }

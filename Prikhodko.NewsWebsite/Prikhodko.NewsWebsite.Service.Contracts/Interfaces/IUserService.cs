@@ -2,8 +2,8 @@
 
 namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
 {
-    public interface IUserService : IService<UserViewModel>
+    public interface IUserService : IService<UserServiceModel>
     {
-        UserViewModel FindById(string userId);
+        UserServiceModel FindById(string userId);
     }
 }

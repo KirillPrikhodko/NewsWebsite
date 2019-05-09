@@ -10,9 +10,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly IService<CategoryViewModel> categoryService;
+        private readonly IService<CategoryServiceModel> categoryService;
 
-        public CategoriesController(IService<CategoryViewModel> categoryService)
+        public CategoriesController(IService<CategoryServiceModel> categoryService)
         {
             this.categoryService = categoryService;
         }

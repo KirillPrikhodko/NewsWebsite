@@ -10,9 +10,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IService<CategoryViewModel> categoryService;
+        private readonly IService<CategoryServiceModel> categoryService;
 
-        public HomeController(IService<CategoryViewModel> categoryService)
+        public HomeController(IService<CategoryServiceModel> categoryService)
         {
             this.categoryService = categoryService;
         }
@@ -37,7 +37,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return PartialView();
         }
 
-        public IEnumerable<CategoryViewModel> GetCategories()
+        public IEnumerable<CategoryServiceModel> GetCategories()
         {
             var result = categoryService.GetAll();
             return result;

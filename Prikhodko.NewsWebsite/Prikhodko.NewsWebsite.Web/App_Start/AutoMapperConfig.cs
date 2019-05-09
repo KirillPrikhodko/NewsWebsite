@@ -7,7 +7,11 @@ namespace Prikhodko.NewsWebsite.Web
     {
         public static void Configure()
         {
-            Mapper.Initialize(c => c.AddProfile<NewsWebsiteMappingProfile>());
+            Mapper.Initialize(c =>
+            {
+                c.AddProfile<NewsWebsiteMappingProfile>();
+                c.AddProfile<NewsWebsiteWebMappingProfile>();
+            });
         }
     }
 }

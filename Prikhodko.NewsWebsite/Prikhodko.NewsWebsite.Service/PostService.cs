@@ -7,51 +7,53 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class PostService : IService<PostViewModel>
+    public class PostService : IService<PostServiceModel>
     {
-        private readonly IRepository<Post> postRepository;
+        private readonly IRepository<Post> repository;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IUserService userService;
 
-        public PostService(IRepository<Post> postRepository, IUnitOfWork unitOfWork)
+        public PostService(IRepository<Post> repository, IUnitOfWork unitOfWork, IUserService userService)
         {
-            this.postRepository = postRepository;
+            this.repository = repository;
             this.unitOfWork = unitOfWork;
+            this.userService = userService;
         }
-        public void Add(PostViewModel item)
+        public void Add(PostServiceModel item)
         {
             var post = Mapper.Map<Post>(item);
-            postRepository.Add(post);
+            repository.Add(post);
             unitOfWork.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            postRepository.Delete(id);
+            repository.Delete(id);
             unitOfWork.SaveChanges();
         }
 
-        public PostViewModel Get(int id)
+        public PostServiceModel Get(int id)
         {
-            var post = postRepository.Get(id);
-            var result = Mapper.Map<PostViewModel>(post);
+            var post = repository.Get(id);
+            var result = Mapper.Map<PostServiceModel>(post);
             return result;
         }
 
-        public IEnumerable<PostViewModel> GetAll()
+        public IEnumerable<PostServiceModel> GetAll()
         {
-            var posts = postRepository.GetAll();
-            var result = new List<PostViewModel>();
+            var posts = repository.GetAll();
+            var result = new List<PostServiceModel>();
             foreach (var post in posts)
             {
-                result.Add(Mapper.Map<PostViewModel>(post));
+                result.Add(Mapper.Map<PostServiceModel>(post));
             }
             return result;
         }
 
-        public void Update(PostViewModel item)
+        public void Update(PostServiceModel item)
         {
             var post = Mapper.Map<Post>(item);
-            postRepository.Update(post);
+            repository.Update(post);
             unitOfWork.SaveChanges();
         }
     }

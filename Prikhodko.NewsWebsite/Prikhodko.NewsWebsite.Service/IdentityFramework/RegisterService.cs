@@ -21,7 +21,7 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
         {
             this.repository = repository;
         }
-        public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUserViewModel userViewModel)
+        public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUserServiceModel userViewModel)
         {
             var user = Mapper.Map<ApplicationIdentityUser>(userViewModel);
             var result = await repository.Register(model, user);

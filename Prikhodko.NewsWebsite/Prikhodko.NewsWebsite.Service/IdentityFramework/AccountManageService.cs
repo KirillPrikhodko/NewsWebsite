@@ -37,10 +37,10 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
             return result;
         }
 
-        public ApplicationIdentityUserViewModel FindById(string userId)
+        public ApplicationIdentityUserServiceModel FindById(string userId)
         {
             var user = repository.FindById(userId);
-            var result = Mapper.Map<ApplicationIdentityUser, ApplicationIdentityUserViewModel>(user);
+            var result = Mapper.Map<ApplicationIdentityUser, ApplicationIdentityUserServiceModel>(user);
             return result;
         }
 

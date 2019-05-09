@@ -70,16 +70,16 @@
     <Compile Include="Interfaces\IRegisterService.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Models\ApplicationIdentityUserViewModel.cs" />
-    <Compile Include="Models\CategoryViewModel.cs" />
-    <Compile Include="Models\ClaimViewModel.cs" />
-    <Compile Include="Models\CommentViewModel.cs" />
-    <Compile Include="Models\LikeViewModel.cs" />
-    <Compile Include="Models\PostRateViewModel.cs" />
-    <Compile Include="Models\PostViewModel.cs" />
-    <Compile Include="Models\RoleViewModel.cs" />
-    <Compile Include="Models\TagViewModel.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\ApplicationIdentityUserServiceModel.cs" />
+    <Compile Include="Models\CategoryServiceModel.cs" />
+    <Compile Include="Models\ClaimServiceModel.cs" />
+    <Compile Include="Models\CommentServiceModel.cs" />
+    <Compile Include="Models\LikeServiceModel.cs" />
+    <Compile Include="Models\PostRateServiceModel.cs" />
+    <Compile Include="Models\PostServiceModel.cs" />
+    <Compile Include="Models\RoleServiceModel.cs" />
+    <Compile Include="Models\TagServiceModel.cs" />
+    <Compile Include="Models\UserServiceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

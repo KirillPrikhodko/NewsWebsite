@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Service.Contracts.Models;
@@ -12,13 +15,15 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 {
     public class PostController : Controller
     {
-        private readonly IService<PostViewModel> postService;
-        private readonly IService<CategoryViewModel> categoryService;
+        private readonly IService<PostServiceModel> postService;
+        private readonly IService<CategoryServiceModel> categoryService;
+        private readonly IUserService userService;
 
-        public PostController(IService<PostViewModel> postService, IService<CategoryViewModel> categoryService)
+        public PostController(IService<PostServiceModel> postService, IService<CategoryServiceModel> categoryService, IUserService userService)
         {
             this.postService = postService;
             this.categoryService = categoryService;
+            this.userService = userService;
         }
         // GET: Post
         public ActionResult Index() //TODO: I should check if this is actually necessary
@@ -35,9 +40,16 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(PostViewModel model) //TODO: validate model for smth
+        public ActionResult Create(PostViewModel model)
         {
-            postService.Add(model);
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //TODO: should smth else be done here?
+            }
+
+            model.AuthorId = HttpContext.User.Identity.GetUserId();
+            var serviceModel = Mapper.Map<PostServiceModel>(model);
+            postService.Add(serviceModel);
             return View();
         }
 
@@ -51,7 +63,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Edit(PostViewModel model)
+        public ActionResult Edit(PostServiceModel model)
         {
             postService.Update(model);
             return View();

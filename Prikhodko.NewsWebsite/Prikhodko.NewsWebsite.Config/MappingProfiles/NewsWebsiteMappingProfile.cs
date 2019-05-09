@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
 using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
@@ -8,8 +9,8 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
     {
         public NewsWebsiteMappingProfile()
         {
-            MapPostToPostViewModel();
-            MapPostViewModelToPost();
+            MapPostToPostServiceModel();
+            MapPostServiceModelToPost();
             MapApplicationIdentityUserToApplicationIdentityUserViewModel();
             MapApplicationIdentityUserViewModelToApplicationIdentityUser();
             MapUserToUserViewModel();
@@ -18,13 +19,14 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             MapCategoryViewModelToCategory();
             MapTagToTagViewModel();
             MapTagViewModelToTag();
+            MapTagsAndStrings();
         }
 
-        private void MapPostToPostViewModel()
+        private void MapPostToPostServiceModel()
         {
-            CreateMap<Post, PostViewModel>()
+            CreateMap<Post, PostServiceModel>()
                 .ForPath(x => x.Category, c => c.MapFrom(src => src.Category.Name))
-                .ForPath(x => x.Author, c => c.MapFrom(src => src.Author.ApplicationIdentityUser.UserName))
+                .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
                 .ForMember(x => x.Content,
                     c => c.MapFrom(src =>
@@ -35,11 +37,11 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
-        private void MapPostViewModelToPost()
+        private void MapPostServiceModelToPost()
         {
-            CreateMap<PostViewModel, Post>()
+            CreateMap<PostServiceModel, Post>()
                 .ForPath(x => x.Category.Name, c => c.MapFrom(src => src.Category))
-                .ForPath(x => x.Author.ApplicationIdentityUser.UserName, c => c.MapFrom(src => src.Author))
+                .ForPath(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
                 .ForMember(x => x.Content,
                     c => c.MapFrom(src =>
@@ -50,9 +52,19 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
+        private void MapTagsAndStrings()
+        {
+            CreateMap<Tag, string>().ConvertUsing(source => source.Name ?? string.Empty);
+            CreateMap<string, Tag>()
+                .ForMember(x => x.Name, c => c.MapFrom(src => src))
+                .ForAllOtherMembers(c => c.Ignore());
+            CreateMap<IEnumerable<Tag>, List<string>>();
+            CreateMap<IEnumerable<string>, List<Tag>>();
+        }
+        
         private void MapApplicationIdentityUserToApplicationIdentityUserViewModel()
         {
-            CreateMap<ApplicationIdentityUser, ApplicationIdentityUserViewModel>()
+            CreateMap<ApplicationIdentityUser, ApplicationIdentityUserServiceModel>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.AccessFailedCount, c => c.MapFrom(src => src.AccessFailedCount))
                 .ForMember(x => x.Claims, c => c.MapFrom(src => src.Claims)) //TODO: properly map collections
@@ -74,7 +86,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
 
         private void MapApplicationIdentityUserViewModelToApplicationIdentityUser()
         {
-            CreateMap<ApplicationIdentityUserViewModel, ApplicationIdentityUser>()
+            CreateMap<ApplicationIdentityUserServiceModel, ApplicationIdentityUser>()
                 .ConstructUsing(c => new ApplicationIdentityUser())
                 .ForMember(x => x.Id, c => c.Condition(src => !string.IsNullOrEmpty(src.Id)))
                 .ForMember(x => x.AccessFailedCount, c => c.MapFrom(src => src.AccessFailedCount))
@@ -97,7 +109,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
 
         private void MapUserToUserViewModel()
         {
-            CreateMap<User, UserViewModel>()
+            CreateMap<User, UserServiceModel>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.ApplicationIdentityUser, c => c.MapFrom(src => src.ApplicationIdentityUser))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
@@ -107,7 +119,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
 
         private void MapUserViewModelToUser()
         {
-            CreateMap<UserViewModel, User>()
+            CreateMap<UserServiceModel, User>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.ApplicationIdentityUser, c => c.MapFrom(src => src.ApplicationIdentityUser))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
@@ -116,20 +128,20 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
 
         private void MapCategoryToCategoryViewModel()
         {
-            CreateMap<Category, CategoryViewModel>()
+            CreateMap<Category, CategoryServiceModel>()
                 .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
         private void MapCategoryViewModelToCategory()
         {
-            CreateMap<CategoryViewModel, Category>()
+            CreateMap<CategoryServiceModel, Category>()
                 .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
                 .ForAllOtherMembers(c => c.Ignore());
         }
         private void MapTagToTagViewModel()
         {
-            CreateMap<Tag, TagViewModel>()
+            CreateMap<Tag, TagServiceModel>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
                 .ForAllOtherMembers(c => c.Ignore());
@@ -137,7 +149,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
 
         private void MapTagViewModelToTag()
         {
-            CreateMap<TagViewModel, Tag>()
+            CreateMap<TagServiceModel, Tag>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
                 .ForAllOtherMembers(c => c.Ignore());

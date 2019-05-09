@@ -15,7 +15,7 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
     public interface ILoginService
     {
         Task<SignInStatus> Login(LoginViewModel model);
-        Task Login(ApplicationIdentityUserViewModel user, bool isPeristent, bool rememberBrowser);
+        Task Login(ApplicationIdentityUserServiceModel user, bool isPeristent, bool rememberBrowser);
         Task<SignInStatus> ExternalSignInAsync(ExternalLoginInfo loginInfo, bool isPersistent);
 
         Task<bool> SendTwoFactorCodeAsync(string selectedProvider);

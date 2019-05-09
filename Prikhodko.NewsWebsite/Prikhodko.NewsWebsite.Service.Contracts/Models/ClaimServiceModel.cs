@@ -1,6 +1,6 @@
 ﻿namespace Prikhodko.NewsWebsite.Service.Contracts.Models
 {
-    public enum RoleViewModel
+    public enum ClaimServiceModel
     {
         
     }

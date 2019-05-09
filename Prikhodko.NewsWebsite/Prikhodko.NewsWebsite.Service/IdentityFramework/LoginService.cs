@@ -29,7 +29,7 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
             return result;
         }
 
-        public async Task Login(ApplicationIdentityUserViewModel userViewModel, bool isPeristent, bool rememberBrowser)
+        public async Task Login(ApplicationIdentityUserServiceModel userViewModel, bool isPeristent, bool rememberBrowser)
         {
             var user = Mapper.Map<ApplicationIdentityUser>(userViewModel);
             await repository.Login(user, isPeristent, rememberBrowser);

@@ -12,7 +12,7 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
         Task<string> GetPhoneNumberAsync(string userId);
         Task<IList<UserLoginInfo>> GetLoginsAsync(string userId);
         Task<bool> GetTwoFactorEnabledAsync(string userId);
-        ApplicationIdentityUserViewModel FindById(string userId);
+        ApplicationIdentityUserServiceModel FindById(string userId);
         Task SetTwoFactorEnabledAsync(string userId, bool enabled);
         Task<IdentityResult> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
         Task<IdentityResult> AddPasswordAsync(string userId, string password);

@@ -5,9 +5,9 @@ using Prikhodko.NewsWebsite.CommonModels;
 
 namespace Prikhodko.NewsWebsite.Service.Contracts.Models
 {
-    public class ApplicationIdentityUserViewModel
+    public class ApplicationIdentityUserServiceModel
     {
-        public UserViewModel User { get; set; }
+        public UserServiceModel User { get; set; }
 
         /// <summary>Email</summary>
         public virtual string Email { get; set; }
@@ -48,10 +48,10 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
         public virtual int AccessFailedCount { get; set; }
 
         /// <summary>Navigation property for user roles</summary>
-        public virtual ICollection<RoleViewModel> Roles { get; private set; }
+        public virtual ICollection<RoleServiceModel> Roles { get; private set; }
 
         /// <summary>Navigation property for user claims</summary>
-        public virtual ICollection<ClaimViewModel> Claims { get; private set; }
+        public virtual ICollection<ClaimServiceModel> Claims { get; private set; }
 
         /// <summary>Navigation property for user logins</summary>
         public virtual ICollection<LoginViewModel> Logins { get; private set; }

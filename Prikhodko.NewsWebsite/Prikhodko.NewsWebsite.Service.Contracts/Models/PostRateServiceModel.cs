@@ -2,9 +2,9 @@
 
 namespace Prikhodko.NewsWebsite.Service.Contracts.Models
 {
-    public class PostRateViewModel
+    public class PostRateServiceModel
     {
-        public virtual UserViewModel Author { get; set; }
+        public virtual UserServiceModel Author { get; set; }
         public int Value { get; set; } //TODO: value should be between 1 and 5
     }
 }

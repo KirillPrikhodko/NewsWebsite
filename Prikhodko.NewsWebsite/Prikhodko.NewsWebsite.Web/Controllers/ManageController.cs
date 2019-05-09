@@ -276,7 +276,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return PartialView("_AccountSettingsPartial", model);
         }
 
-        public async Task<ActionResult> GetAccountGeneralInfoPartial()
+        public ActionResult GetAccountGeneralInfoPartial()
         {
             return View("_AccountGeneralInfoPartial");
         }

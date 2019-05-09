@@ -8,10 +8,12 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
     public class PostRepository : IRepository<Post>
     {
         private readonly ApplicationDbContext applicationDbContext;
+        private readonly IRepository<User> userRepository;
 
-        public PostRepository(ApplicationDbContext applicationDbContext)
+        public PostRepository(ApplicationDbContext applicationDbContext, IRepository<User> userRepository)
         {
             this.applicationDbContext = applicationDbContext;
+            this.userRepository = userRepository;
         }
         public void Add(Post item)
         {

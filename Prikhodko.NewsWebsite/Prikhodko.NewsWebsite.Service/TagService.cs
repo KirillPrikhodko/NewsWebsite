@@ -8,7 +8,7 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class TagService : IService<TagViewModel>
+    public class TagService : IService<TagServiceModel>
     {
         private readonly IRepository<Tag> repository;
         private readonly IUnitOfWork unitOfWork;
@@ -18,7 +18,7 @@ namespace Prikhodko.NewsWebsite.Service
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
-        public void Add(TagViewModel item)
+        public void Add(TagServiceModel item)
         {
             throw new System.NotImplementedException();
         }
@@ -28,19 +28,19 @@ namespace Prikhodko.NewsWebsite.Service
             throw new System.NotImplementedException();
         }
 
-        public TagViewModel Get(int id)
+        public TagServiceModel Get(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<TagViewModel> GetAll()
+        public IEnumerable<TagServiceModel> GetAll()
         {
             var tags = repository.GetAll();
-            var result = tags.Select(x => Mapper.Map<TagViewModel>(x)).ToList();
+            var result = tags.Select(x => Mapper.Map<TagServiceModel>(x)).ToList();
             return result;
         }
 
-        public void Update(TagViewModel item)
+        public void Update(TagServiceModel item)
         {
             throw new System.NotImplementedException();
         }

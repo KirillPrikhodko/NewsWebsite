@@ -55,9 +55,9 @@ namespace Prikhodko.NewsWebsite.Config
             #endregion
 
             builder.RegisterType<UserService>().As<IUserService>();
-            builder.RegisterType<PostService>().As<IService<PostViewModel>>();
-            builder.RegisterType<CategoryService>().As<IService<CategoryViewModel>>();
-            builder.RegisterType<TagService>().As<IService<TagViewModel>>();
+            builder.RegisterType<PostService>().As<IService<PostServiceModel>>();
+            builder.RegisterType<CategoryService>().As<IService<CategoryServiceModel>>();
+            builder.RegisterType<TagService>().As<IService<TagServiceModel>>();
             return builder;
         }
     }

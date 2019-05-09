@@ -7,7 +7,7 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class CategoryService : IService<CategoryViewModel>
+    public class CategoryService : IService<CategoryServiceModel>
     {
         private readonly IRepository<Category> repository;
         private readonly IUnitOfWork unitOfWork;
@@ -17,7 +17,7 @@ namespace Prikhodko.NewsWebsite.Service
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
-        public void Add(CategoryViewModel item)
+        public void Add(CategoryServiceModel item)
         {
             Category category = Mapper.Map<Category>(item); //TODO: add mapping profiles
             repository.Add(category);
@@ -30,23 +30,23 @@ namespace Prikhodko.NewsWebsite.Service
             unitOfWork.SaveChanges();
         }
 
-        public CategoryViewModel Get(int id)
+        public CategoryServiceModel Get(int id)
         {
             var category = repository.Get(id);
-            var result = Mapper.Map<CategoryViewModel>(category);
+            var result = Mapper.Map<CategoryServiceModel>(category);
             return result;
         }
 
-        public IEnumerable<CategoryViewModel> GetAll()
+        public IEnumerable<CategoryServiceModel> GetAll()
         {
             var categories = repository.GetAll();
             foreach (var category in categories)
             {
-                yield return Mapper.Map<CategoryViewModel>(category); //TODO: check whether this is correct
+                yield return Mapper.Map<CategoryServiceModel>(category); //TODO: check whether this is correct
             }
         }
 
-        public void Update(CategoryViewModel item)
+        public void Update(CategoryServiceModel item)
         {
             var category = Mapper.Map<Category>(item);
             repository.Update(category);
