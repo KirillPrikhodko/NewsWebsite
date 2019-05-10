@@ -9,11 +9,15 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
     {
         private readonly ApplicationDbContext applicationDbContext;
         private readonly IRepository<User> userRepository;
+        private readonly ITagRepository tagRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public PostRepository(ApplicationDbContext applicationDbContext, IRepository<User> userRepository)
+        public PostRepository(ApplicationDbContext applicationDbContext, IRepository<User> userRepository, ITagRepository tagRepository, ICategoryRepository categoryRepository)
         {
             this.applicationDbContext = applicationDbContext;
             this.userRepository = userRepository;
+            this.tagRepository = tagRepository;
+            this.categoryRepository = categoryRepository;
         }
         public void Add(Post item)
         {
@@ -21,6 +25,13 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             {
                 return;
             }
+
+            for(int i = 0; i < item.Tags.Count(); i++)
+            {
+                item.Tags[i] = tagRepository.Ensure(item.Tags[i]);
+            }
+
+            item.Category = categoryRepository.Ensure(item.Category);
             applicationDbContext.Posts.Add(item);
         }
 

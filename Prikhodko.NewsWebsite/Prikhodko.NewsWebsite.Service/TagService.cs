@@ -10,10 +10,10 @@ namespace Prikhodko.NewsWebsite.Service
 {
     public class TagService : IService<TagServiceModel>
     {
-        private readonly IRepository<Tag> repository;
+        private readonly ITagRepository repository;
         private readonly IUnitOfWork unitOfWork;
 
-        public TagService(IRepository<Tag> repository, IUnitOfWork unitOfWork)
+        public TagService(ITagRepository repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;

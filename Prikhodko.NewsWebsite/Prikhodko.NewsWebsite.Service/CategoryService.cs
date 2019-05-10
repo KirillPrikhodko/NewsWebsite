@@ -9,10 +9,10 @@ namespace Prikhodko.NewsWebsite.Service
 {
     public class CategoryService : IService<CategoryServiceModel>
     {
-        private readonly IRepository<Category> repository;
+        private readonly ICategoryRepository repository;
         private readonly IUnitOfWork unitOfWork;
 
-        public CategoryService(IRepository<Category> repository, IUnitOfWork unitOfWork)
+        public CategoryService(ICategoryRepository repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;

@@ -41,8 +41,8 @@ namespace Prikhodko.NewsWebsite.Config
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<PostRepository>().As<IRepository<Post>>();
-            builder.RegisterType<CategoryRepository>().As<IRepository<Category>>();
-            builder.RegisterType<TagRepository>().As<IRepository<Tag>>();
+            builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
+            builder.RegisterType<TagRepository>().As<ITagRepository>();
             return builder;
         }
 

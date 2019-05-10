@@ -12,13 +12,15 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     {
         public int Id { get; set; }
         public string AuthorId { get; set; }
+
+        [ForeignKey("AuthorId")]
         public virtual User Author { get; set; }
         public virtual string Title { get; set; }
         public virtual string Description { get; set; }
         public virtual Category Category { get; set; }
-        public virtual IEnumerable<Tag> Tags { get; set; }
+        public virtual IList<Tag> Tags { get; set; }
         public virtual string Content { get; set; }
-        public virtual IEnumerable<PostRate> Rates { get; set; }
+        public virtual IList<PostRate> Rates { get; set; }
         public virtual int AvgRate { get; set; }
 
         public void Update(Post unit) //TODO: think of a better name

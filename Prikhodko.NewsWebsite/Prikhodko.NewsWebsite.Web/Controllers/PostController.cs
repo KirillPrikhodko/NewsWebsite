@@ -50,7 +50,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             model.AuthorId = HttpContext.User.Identity.GetUserId();
             var serviceModel = Mapper.Map<PostServiceModel>(model);
             postService.Add(serviceModel);
-            return View();
+            return RedirectToAction("Index", "Manage");
         }
 
 

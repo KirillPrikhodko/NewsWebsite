@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Linq;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 {
-    public class CategoryRepository : IRepository<Category>
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly ApplicationDbContext dbContext;
 
@@ -16,7 +17,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         }
         public void Add(Category item)
         {
-            if(item != null)
+            if (item != null)
             {
                 dbContext.Categories.Add(item);
             }
@@ -33,6 +34,12 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             {
                 dbContext.Categories.Remove(category);
             }
+        }
+
+        public Category Ensure(Category item)
+        {
+            var existingCategory = dbContext.Categories.FirstOrDefault(x => x.Name == item.Name);
+            return existingCategory ?? item;
         }
 
         public Category Get(int id)
