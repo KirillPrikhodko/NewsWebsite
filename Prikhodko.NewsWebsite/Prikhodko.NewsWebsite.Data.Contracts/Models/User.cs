@@ -16,7 +16,6 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
         public virtual ICollection<PostRate> PostRates { get; set; }
         public virtual int AvgRate { get; set; } //An average rate of all user's posts
         public string ProfileImagePath { get; set; }
-
         public string Name { get; set; }
         
         public DateTime? DateOfBirth { get; set; }

@@ -122,7 +122,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationIdentityUserServiceModel() { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationIdentityUserServiceModel() { UserName = model.Username, Email = model.Email };
                 var result = await registerService.Register(model, user);
                 if (result.Succeeded)
                 {

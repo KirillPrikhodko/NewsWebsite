@@ -24,6 +24,10 @@ namespace Prikhodko.NewsWebsite.Service
             var post = Mapper.Map<Post>(item);
             repository.Add(post);
             unitOfWork.SaveChanges();
+            if (post.Id > 0)
+            {
+                item.Id = post.Id; //serviceModel Id is later used by controller for redirection to 'Details' page
+            }
         }
 
         public void Delete(int id)
@@ -36,6 +40,10 @@ namespace Prikhodko.NewsWebsite.Service
         {
             var post = repository.Get(id);
             var result = Mapper.Map<PostServiceModel>(post);
+            if (post != null)
+            {
+                result.AvgRate = GetAvgPostRate(post.Rates);
+            }
             return result;
         }
 
@@ -55,6 +63,18 @@ namespace Prikhodko.NewsWebsite.Service
             var post = Mapper.Map<Post>(item);
             repository.Update(post);
             unitOfWork.SaveChanges();
+        }
+
+        private double GetAvgPostRate(IList<PostRate> rates)
+        {
+            double result = 0;
+            var quantity = rates.Count;
+            for (int i = 0; i < quantity; i++)
+            {
+                result += rates[i].Value;
+            }
+
+            return result / quantity;
         }
     }
 }

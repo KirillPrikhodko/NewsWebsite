@@ -1,0 +1,60 @@
+﻿@model Prikhodko.NewsWebsite.Web.Models.PostViewModel
+
+<div class="container">
+
+    <h1>@Model.Title</h1>
+
+    <div class="container">
+
+        <div class="col-md-10">
+            <h4>@Model.Description</h4>
+        </div>
+
+        <div class="col-md-2">
+            Category:
+            @Html.DisplayFor(model => model.Category)
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        @Html.Raw(Model.Content)
+    </div>
+
+    <div class="container">
+        <div class="col-md-8">
+            @foreach (var tag in Model.Tags)
+            {
+                <a href="#">@tag</a>;
+            }
+        </div>
+        <div class="col-md-2">
+            @if (Model.RatedByCurrentUser)
+            {
+                <div>Your rate:</div>
+            }
+            
+            <div class="content-rate" data-rate-value=@Model.CurrentUserRateValue></div>
+            <div>Average rate: @Model.AvgRate</div>
+        </div>
+        <div>
+            By:
+            @Html.ActionLink((string)ViewBag.Author.ApplicationIdentityUser.UserName, "Details", "Account")
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/rater.min.js"></script>
+    
+    <script>
+        var options = {
+            max_value: 5,
+            initial_value: 0,
+            readonly: '@Model.RatedByCurrentUser',
+            step_size: 0.5
+        }
+        $(".content-rate").rate(options);
+    </script>
+
+}

@@ -25,30 +25,32 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
         private void MapPostToPostServiceModel()
         {
             CreateMap<Post, PostServiceModel>()
+                .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForPath(x => x.Category, c => c.MapFrom(src => src.Category.Name))
                 .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
-                .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
                 .ForMember(x => x.Content,
                     c => c.MapFrom(src =>
                         src.Content)) //TODO: after the Content is configured as a separate entity, this will have to change
                 .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
+                .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
         private void MapPostServiceModelToPost()
         {
             CreateMap<PostServiceModel, Post>()
+                .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForPath(x => x.Category.Name, c => c.MapFrom(src => src.Category))
                 .ForPath(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
-                .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
                 .ForMember(x => x.Content,
                     c => c.MapFrom(src =>
                         src.Content)) //TODO: after the Content is configured as a separate entity, this will have to change
                 .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
+                .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 

@@ -25,10 +25,28 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             this.categoryService = categoryService;
             this.userService = userService;
         }
-        // GET: Post
-        public ActionResult Index() //TODO: I should check if this is actually necessary
+
+        public ActionResult Details(int id)
         {
-            return RedirectToAction("Index", "Home");
+            var serviceModel = postService.Get(id);
+            var model = Mapper.Map<PostViewModel>(serviceModel);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
+            }
+
+            foreach (var rate in serviceModel.Rates)
+            {
+                if (rate.Author.Id == HttpContext.User.Identity.GetUserId())
+                {
+                    model.RatedByCurrentUser = true;
+                    model.CurrentUserRateValue = rate.Value;
+                    break;
+                }
+            }
+
+            ViewBag.Author = userService.FindById(model.AuthorId);
+            return View(model);
         }
 
         [Authorize]
@@ -50,7 +68,12 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             model.AuthorId = HttpContext.User.Identity.GetUserId();
             var serviceModel = Mapper.Map<PostServiceModel>(model);
             postService.Add(serviceModel);
-            return RedirectToAction("Index", "Manage");
+            if (serviceModel.Id > 0) //postService should add Id to service model after the post is added to DB
+            {
+                return RedirectToAction("Details", "Post", new {Id = serviceModel.Id});
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
 

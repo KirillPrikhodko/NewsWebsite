@@ -17,6 +17,9 @@ namespace Prikhodko.NewsWebsite.Web.Models
 
         [AllowHtml]
         public virtual string Content { get; set; }
-        public int AvgRate { get; set; }
+        public double AvgRate { get; set; }
+
+        public bool RatedByCurrentUser { get; set; } //this will determine whether the stars should be enabled on post/details page
+        public double CurrentUserRateValue { get; set; }
     }
 }

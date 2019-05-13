@@ -27,7 +27,7 @@ namespace Prikhodko.NewsWebsite.Web
 
         public void MapPostServiceModelToPostViewModel()
         {
-            CreateMap<PostViewModel, PostServiceModel>()
+            CreateMap<PostServiceModel, PostViewModel>()
                 .ForMember(x => x.Category, c => c.MapFrom(src => src.Category))
                 .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))

@@ -11,7 +11,7 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     public class Post
     {
         public int Id { get; set; }
-        public string AuthorId { get; set; }
+        public virtual string AuthorId { get; set; }
 
         [ForeignKey("AuthorId")]
         public virtual User Author { get; set; }
@@ -21,7 +21,6 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
         public virtual IList<Tag> Tags { get; set; }
         public virtual string Content { get; set; }
         public virtual IList<PostRate> Rates { get; set; }
-        public virtual int AvgRate { get; set; }
 
         public void Update(Post unit) //TODO: think of a better name
         {
@@ -33,7 +32,6 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
             unit.Tags = this.Tags;
             unit.Content = this.Content;
             unit.Rates = this.Rates;
-            unit.AvgRate = this.AvgRate;
         }
     }
 }

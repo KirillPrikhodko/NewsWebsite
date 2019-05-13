@@ -24,7 +24,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         }
         public async Task<SignInStatus> Login(LoginViewModel model)
         {
-            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             return result;
         }
 
