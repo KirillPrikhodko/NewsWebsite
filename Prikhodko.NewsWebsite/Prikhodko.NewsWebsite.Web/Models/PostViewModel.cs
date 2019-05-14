@@ -9,6 +9,7 @@ namespace Prikhodko.NewsWebsite.Web.Models
     [Validator(typeof(PostValidator))]
     public class PostViewModel
     {
+        public int Id { get; set; }
         public virtual string AuthorId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

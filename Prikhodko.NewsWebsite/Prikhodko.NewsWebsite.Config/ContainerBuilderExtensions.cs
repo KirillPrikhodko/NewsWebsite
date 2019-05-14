@@ -41,6 +41,7 @@ namespace Prikhodko.NewsWebsite.Config
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<PostRepository>().As<IRepository<Post>>();
+            builder.RegisterType<PostRateRepository>().As<IRepository<PostRate>>();
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
             builder.RegisterType<TagRepository>().As<ITagRepository>();
             return builder;
@@ -56,6 +57,7 @@ namespace Prikhodko.NewsWebsite.Config
 
             builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<PostService>().As<IService<PostServiceModel>>();
+            builder.RegisterType<PostRateService>().As<IService<PostRateServiceModel>>();
             builder.RegisterType<CategoryService>().As<IService<CategoryServiceModel>>();
             builder.RegisterType<TagService>().As<IService<TagServiceModel>>();
             return builder;

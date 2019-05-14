@@ -17,36 +17,39 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
     {
         private readonly IService<PostServiceModel> postService;
         private readonly IService<CategoryServiceModel> categoryService;
+        private readonly IService<PostRateServiceModel> rateService;
         private readonly IUserService userService;
 
-        public PostController(IService<PostServiceModel> postService, IService<CategoryServiceModel> categoryService, IUserService userService)
+        public PostController(IService<PostServiceModel> postService, IService<CategoryServiceModel> categoryService, IService<PostRateServiceModel> rateService, IUserService userService)
         {
             this.postService = postService;
             this.categoryService = categoryService;
             this.userService = userService;
+            this.rateService = rateService;
         }
 
         public ActionResult Details(int id)
         {
-            var serviceModel = postService.Get(id);
-            var model = Mapper.Map<PostViewModel>(serviceModel);
-            if (model == null)
+            var postServiceModel = postService.Get(id);
+            var postViewModel = Mapper.Map<PostViewModel>(postServiceModel);
+            if (postViewModel == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
             }
 
-            foreach (var rate in serviceModel.Rates)
+            foreach (var rate in postServiceModel.Rates)
             {
                 if (rate.Author.Id == HttpContext.User.Identity.GetUserId())
                 {
-                    model.RatedByCurrentUser = true;
-                    model.CurrentUserRateValue = rate.Value;
+                    postViewModel.RatedByCurrentUser = true;
+                    postViewModel.CurrentUserRateValue = rate.Value;
                     break;
                 }
             }
 
-            ViewBag.Author = userService.FindById(model.AuthorId);
-            return View(model);
+            ViewBag.UserAuthenticated = HttpContext.User.Identity.IsAuthenticated;
+            ViewBag.Author = userService.FindById(postViewModel.AuthorId);
+            return View(postViewModel);
         }
 
         [Authorize]
@@ -70,7 +73,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             postService.Add(serviceModel);
             if (serviceModel.Id > 0) //postService should add Id to service model after the post is added to DB
             {
-                return RedirectToAction("Details", "Post", new {Id = serviceModel.Id});
+                return RedirectToAction("Details", "Post", new { Id = serviceModel.Id });
             }
 
             return RedirectToAction("Index", "Home");
@@ -97,6 +100,13 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             postService.Delete(id);
             return RedirectToAction("Index", "Manage");
+        }
+
+        public ActionResult AddRate(double rate, int postId)
+        {
+            PostRateServiceModel postRate = new PostRateServiceModel() { Author = userService.FindById(HttpContext.User.Identity.GetUserId()), PostId = postId, Value = rate };
+            rateService.Add(postRate);
+            return new EmptyResult();
         }
     }
 }

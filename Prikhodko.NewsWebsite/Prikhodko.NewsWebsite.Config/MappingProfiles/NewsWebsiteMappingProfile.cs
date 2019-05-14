@@ -20,6 +20,8 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             MapTagToTagViewModel();
             MapTagViewModelToTag();
             MapTagsAndStrings();
+            MapPostRateToPostRateServiceModel();
+            MapPostRateServiceModelToPostRate();
         }
 
         private void MapPostToPostServiceModel()
@@ -154,6 +156,24 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             CreateMap<TagServiceModel, Tag>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapPostRateToPostRateServiceModel()
+        {
+            CreateMap<PostRate, PostRateServiceModel>()
+                .ForMember(x => x.Author, c => c.MapFrom(src => src.Author))
+                .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
+                .ForMember(x => x.Value, c => c.MapFrom(src => src.Value))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapPostRateServiceModelToPostRate()
+        {
+            CreateMap<PostRateServiceModel, PostRate>()
+                .ForMember(x => x.Author, c => c.MapFrom(src => src.Author))
+                .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
+                .ForMember(x => x.Value, c => c.MapFrom(src => src.Value))
                 .ForAllOtherMembers(c => c.Ignore());
         }
     }

@@ -11,6 +11,7 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     {
         public int Id { get; set; }
         public virtual User Author { get; set; }
-        public virtual int Value { get; set; } //TODO: value should be between 1 and 5
+        public virtual int PostId { get; set; }
+        public virtual double Value { get; set; } //TODO: value should be between 1 and 5
     }
 }

@@ -71,6 +71,7 @@
     <Compile Include="CategoryService.cs" />
     <Compile Include="IdentityFramework\AccountManageService.cs" />
     <Compile Include="IdentityFramework\LoginService.cs" />
+    <Compile Include="PostRateService.cs" />
     <Compile Include="PostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IdentityFramework\RegisterService.cs" />
