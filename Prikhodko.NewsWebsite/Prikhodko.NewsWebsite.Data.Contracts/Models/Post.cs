@@ -21,6 +21,7 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
         public virtual IList<Tag> Tags { get; set; }
         public virtual string Content { get; set; }
         public virtual IList<PostRate> Rates { get; set; }
+        public virtual IList<Comment> Comments { get; set; }
 
         public void Update(Post unit) //TODO: think of a better name
         {

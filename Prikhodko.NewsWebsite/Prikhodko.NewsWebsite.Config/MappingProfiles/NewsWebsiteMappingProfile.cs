@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
 using Prikhodko.NewsWebsite.Service.Contracts.Models;
@@ -22,6 +23,8 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             MapTagsAndStrings();
             MapPostRateToPostRateServiceModel();
             MapPostRateServiceModelToPostRate();
+            MapCommentToCommentServiceModel();
+            MapCommentServiceModelToComment();
         }
 
         private void MapPostToPostServiceModel()
@@ -37,7 +40,21 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates))
+                .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
+                .ForMember(x => x.AvgRate, c => c.MapFrom(src => GetAvgPostRate(src)))
                 .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private double GetAvgPostRate(Post post)
+        {
+            double result = 0;
+            var quantity = post.Rates.Count;
+            for (int i = 0; i < quantity; i++)
+            {
+                result += post.Rates[i].Value;
+            }
+
+            return result / quantity;
         }
 
         private void MapPostServiceModelToPost()
@@ -53,6 +70,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates))
+                .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
@@ -174,6 +192,25 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Author, c => c.MapFrom(src => src.Author))
                 .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
                 .ForMember(x => x.Value, c => c.MapFrom(src => src.Value))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapCommentToCommentServiceModel()
+        {
+            CreateMap<Comment, CommentServiceModel>()
+                .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
+                .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
+                .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
+                .ForMember(x => x.LikesCount, c => c.MapFrom(src => src.Likes.Count()))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapCommentServiceModelToComment()
+        {
+            CreateMap<CommentServiceModel, Comment>()
+                .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
+                .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
+                .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
                 .ForAllOtherMembers(c => c.Ignore());
         }
     }

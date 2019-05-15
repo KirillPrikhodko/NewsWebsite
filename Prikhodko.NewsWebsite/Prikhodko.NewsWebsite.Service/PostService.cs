@@ -40,10 +40,10 @@ namespace Prikhodko.NewsWebsite.Service
         {
             var post = repository.Get(id);
             var result = Mapper.Map<PostServiceModel>(post);
-            if (post != null)
-            {
-                result.AvgRate = GetAvgPostRate(post.Rates);
-            }
+            //if (post != null)
+            //{
+            //    result.AvgRate = GetAvgPostRate(post.Rates);
+            //}
             return result;
         }
 
@@ -65,16 +65,16 @@ namespace Prikhodko.NewsWebsite.Service
             unitOfWork.SaveChanges();
         }
 
-        private double GetAvgPostRate(IList<PostRate> rates)
-        {
-            double result = 0;
-            var quantity = rates.Count;
-            for (int i = 0; i < quantity; i++)
-            {
-                result += rates[i].Value;
-            }
+        //private double GetAvgPostRate(IList<PostRate> rates)
+        //{
+        //    double result = 0;
+        //    var quantity = rates.Count;
+        //    for (int i = 0; i < quantity; i++)
+        //    {
+        //        result += rates[i].Value;
+        //    }
 
-            return result / quantity;
-        }
+        //    return result / quantity;
+        //}
     }
 }

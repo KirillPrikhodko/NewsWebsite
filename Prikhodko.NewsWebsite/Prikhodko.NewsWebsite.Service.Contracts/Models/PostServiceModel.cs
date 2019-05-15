@@ -13,6 +13,7 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
         public virtual IEnumerable<string> Tags { get; set; }
         public string Content { get; set; }
         public IList<PostRateServiceModel> Rates { get; set; }
+        public IList<CommentServiceModel> Comments { get; set; }
         public double AvgRate { get; set; }
     }
 }

@@ -22,5 +22,6 @@ namespace Prikhodko.NewsWebsite.Web.Models
 
         public bool RatedByCurrentUser { get; set; } //this will determine whether the stars should be enabled on post/details page
         public double CurrentUserRateValue { get; set; }
+        public IList<CommentServiceModel> Comments { get; set; }
     }
 }

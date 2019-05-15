@@ -43,6 +43,7 @@ namespace Prikhodko.NewsWebsite.Config
             builder.RegisterType<PostRepository>().As<IRepository<Post>>();
             builder.RegisterType<PostRateRepository>().As<IRepository<PostRate>>();
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
+            builder.RegisterType<CommentRepository>().As<IRepository<Comment>>();
             builder.RegisterType<TagRepository>().As<ITagRepository>();
             return builder;
         }
@@ -59,6 +60,7 @@ namespace Prikhodko.NewsWebsite.Config
             builder.RegisterType<PostService>().As<IService<PostServiceModel>>();
             builder.RegisterType<PostRateService>().As<IService<PostRateServiceModel>>();
             builder.RegisterType<CategoryService>().As<IService<CategoryServiceModel>>();
+            builder.RegisterType<CommentService>().As<IService<CommentServiceModel>>();
             builder.RegisterType<TagService>().As<IService<TagServiceModel>>();
             return builder;
         }

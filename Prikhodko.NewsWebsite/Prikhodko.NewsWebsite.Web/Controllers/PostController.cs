@@ -34,7 +34,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             var postViewModel = Mapper.Map<PostViewModel>(postServiceModel);
             if (postViewModel == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadGateway);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             foreach (var rate in postServiceModel.Rates)
@@ -47,6 +47,10 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 }
             }
 
+            if (postViewModel.Comments == null)
+            {
+                postViewModel.Comments = new List<CommentServiceModel>();
+            }
             ViewBag.UserAuthenticated = HttpContext.User.Identity.IsAuthenticated;
             ViewBag.Author = userService.FindById(postViewModel.AuthorId);
             return View(postViewModel);

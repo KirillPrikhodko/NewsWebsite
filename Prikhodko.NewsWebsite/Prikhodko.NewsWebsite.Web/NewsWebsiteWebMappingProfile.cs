@@ -22,6 +22,7 @@ namespace Prikhodko.NewsWebsite.Web
                 .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
                 .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
+                .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForAllOtherMembers(c => c.Ignore());
         }
@@ -36,6 +37,7 @@ namespace Prikhodko.NewsWebsite.Web
                 .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
                 .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
+                .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForAllOtherMembers(c => c.Ignore());
         }

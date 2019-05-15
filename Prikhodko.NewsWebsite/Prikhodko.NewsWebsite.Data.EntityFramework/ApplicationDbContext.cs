@@ -37,12 +37,18 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework
 
             var userConfiguration = builder.Entity<User>();
             userConfiguration.HasRequired(x => x.ApplicationIdentityUser).WithRequiredPrincipal(x => x.User);
+            userConfiguration.HasMany(x => x.Comments).WithRequired(x => x.Author);
 
             var postConfiguration = builder.Entity<Post>();
             postConfiguration.HasMany(x => x.Tags).WithMany(x => x.Posts);
+            postConfiguration.HasMany(x => x.Comments).WithRequired(x => x.Post);
 
             var tagConfiguration = builder.Entity<Tag>();
             tagConfiguration.HasMany(x => x.Posts).WithMany(x => x.Tags);
+
+            var commentConfiguration = builder.Entity<Comment>();
+            commentConfiguration.HasRequired(x => x.Author).WithMany(x => x.Comments);
+            commentConfiguration.HasRequired(x => x.Post).WithMany(x => x.Comments);
 
             base.OnModelCreating(builder);
         }

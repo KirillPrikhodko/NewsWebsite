@@ -4,9 +4,10 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
 {
     public class CommentServiceModel
     {
+        public virtual string AuthorId { get; set; }
+        public virtual string Content { get; set; }
+        public virtual int LikesCount { get; set; }
 
-        public virtual UserServiceModel Author { get; set; }
-        public virtual string Content { get; set; } //TODO: like in posts, Content entity is probably needed (comments may include, apart from plain text, images, gifs, etc.
-        public virtual IEnumerable<LikeServiceModel> Likes { get; set; }
+        public virtual int PostId { get; set; }
     }
 }
