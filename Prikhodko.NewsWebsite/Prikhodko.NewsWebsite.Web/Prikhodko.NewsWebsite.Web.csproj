@@ -223,7 +223,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\CommentsHub.cs" />
-    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostViewModel.cs" />
     <Compile Include="NewsWebsiteWebMappingProfile.cs" />
@@ -872,6 +871,7 @@
     <Content Include="ckeditor\plugins\fileman\lang\tr.json" />
     <Content Include="ckeditor\plugins\fileman\web.config" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\comments-signalr.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />

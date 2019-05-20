@@ -23,6 +23,13 @@ textarea {
     max-width: 280px;
 }
 
+.comment-css {
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    margin-top: 12px;
+}
+
 .categories-options {
     height: 50px;
     padding-top: 8px;

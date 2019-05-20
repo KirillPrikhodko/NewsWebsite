@@ -31,10 +31,6 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             {
                 item.Tags[i] = tagRepository.Ensure(item.Tags[i]);
             }
-            item.Rates = new List<PostRate>()
-            {
-                new PostRate(){Author = item.Author, Value = 5} //every post is rated 5 stars by its author by default
-            };
             item.Category = categoryRepository.Ensure(item.Category);
             applicationDbContext.Posts.Add(item);
         }

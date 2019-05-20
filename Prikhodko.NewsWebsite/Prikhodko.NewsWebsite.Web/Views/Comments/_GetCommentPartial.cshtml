@@ -1,15 +1,25 @@
 ﻿@model Prikhodko.NewsWebsite.Service.Contracts.Models.CommentServiceModel
 
-<div style="border:1px solid black;">
-    <div class="row">
-        <a href=@Url.Action("/Account/Details" + @Model.AuthorId)>@ViewBag.Username</a>
-    </div>
-    <div class="row container">
-        <div class="col-md-10">
-            @Model.Content
+<div class="comment-css">
+    <div class="row container-fluid">
+        <div class="col-md-11">
+            <div>
+                <a href=@Url.Action("/Account/Details" + @Model.AuthorId)>@Model.AuthorName</a>
+            </div>
+            <div>
+                @Model.Content
+            </div>
         </div>
-        <div class="col-md-2">
-            Rating: @Model.LikesCount
+        <div class="col=md-1">
+            <div>
+                <button id="upvote">+</button>
+                <span>@Model.Rating</span>
+                <button id="downvote">-</button>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+
+}

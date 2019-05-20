@@ -48,7 +48,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <textarea name="content" id="editor"></textarea>
+                <textarea name="content" id="content"></textarea>
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -64,43 +64,48 @@
 @section Scripts {
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/ckeditor/ckeditor.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script src="~/Scripts/bootstrap-tagsinput.min.js"></script>
     <script src="~/Scripts/typeahead.js"></script>
-
+    
     <script>
+        var easyMDE = new EasyMDE({element: document.getElementById('content')});
+    </script>
+
+    @*<script>
         var roxyFileman = '/ckeditor/plugins/fileman/index.html'; 
         $(function(){
             CKEDITOR.replace( 'content',{filebrowserBrowseUrl:roxyFileman,
                 filebrowserImageBrowseUrl:roxyFileman+'?type=image',
                 removeDialogTabs: 'link:upload;image:upload'}); 
         });
-    </script>
+    </script>*@
 
     <script>
-            var tags = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                prefetch: {
-                    dataType: "json",
-                    url: "@Url.Action("Index", "Tags")",
-                    filter: function(list) {
-                        return $.map(list,
-                            function(name) {
-                                return { name: name };
-                            });
-                    }
+        var tags = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                dataType: "json",
+                url: "@Url.Action("Index", "Tags")",
+                filter: function(list) {
+                    return $.map(list,
+                        function(name) {
+                            return { name: name };
+                        });
                 }
-            });
-            tags.initialize();
+            }
+        });
+        tags.initialize();
 
-            $('#tags').tagsinput({
-                typeaheadjs: {
-                    name: 'tags',
-                    displayKey: 'name',
-                    valueKey: 'name',
-                    source: tags.ttAdapter()
-                }
-            });
+        $('#tags').tagsinput({
+            typeaheadjs: {
+                name: 'tags',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: tags.ttAdapter()
+            }
+        });
     </script>
 }

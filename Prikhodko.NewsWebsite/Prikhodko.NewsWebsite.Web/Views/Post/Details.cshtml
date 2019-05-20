@@ -16,8 +16,7 @@
             </div>
         </div>
 
-        <div class="panel panel-default">
-            @Html.Raw(Model.Content)
+        <div class="panel panel-default" id="content">
         </div>
 
         <div class="container">
@@ -72,8 +71,41 @@
     </div>
 </div>
 
+<div id="comment_template" class="comment-css" style="display: none;">
+    <div class="row container-fluid">
+        <div class="col-md-11">
+            <div>
+                <a href=#></a>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div class="col=md-1">
+            <div>
+                <button id="upvote">+</button>
+                <span></span>
+                <button id="downvote">-</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/Scripts/rater.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/Scripts/comments-signalr.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+    
+    <script>
+        var converter = new showdown.Converter(),
+            text      = "@Model.Content",
+            html = converter.makeHtml(text);
+        $('#content').append(html);
+    </script>
 
     <script>
         if ('@ViewBag.UserAuthenticated' === 'True') {
@@ -104,7 +136,7 @@
                 });
         }
     </script>
-    
+
     <script>
         $('#sendcomment').click(function(e) {
             e.preventDefault();

@@ -198,16 +198,19 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
         private void MapCommentToCommentServiceModel()
         {
             CreateMap<Comment, CommentServiceModel>()
+                .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
+                .ForMember(x => x.AuthorName, c => c.MapFrom(src => src.Author.ApplicationIdentityUser.UserName))
                 .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
                 .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
-                .ForMember(x => x.LikesCount, c => c.MapFrom(src => src.Likes.Count()))
+                .ForMember(x => x.Rating, c => c.MapFrom(src => src.Likes.Count() - src.Dislikes.Count()))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
         private void MapCommentServiceModelToComment()
         {
             CreateMap<CommentServiceModel, Comment>()
+                .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
                 .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
                 .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))

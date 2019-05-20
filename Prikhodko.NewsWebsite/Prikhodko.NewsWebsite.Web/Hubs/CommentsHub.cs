@@ -12,8 +12,8 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
     {
         public async Task AddComment(CommentServiceModel comment)
         {
-
-            await Clients.All.SendAsync();
+            await Clients.All.SendAsync("addNewComment", comment.AuthorName, comment.AuthorId, comment.Content, comment.Rating, comment.Id);
         }
+
     }
 }
