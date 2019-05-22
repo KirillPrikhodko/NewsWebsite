@@ -24,17 +24,5 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             //ViewBag.Username = userService.FindById(comment.AuthorId).ApplicationIdentityUser.UserName;
             return PartialView("_GetCommentPartial", comment);
         }
-
-        public ActionResult Add(string content, int postId)
-        {
-            CommentServiceModel model = new CommentServiceModel()
-            {
-                AuthorId = HttpContext.User.Identity.GetUserId(),
-                Content = content,
-                PostId = postId
-            };
-            commentService.Add(model);
-            return new EmptyResult();
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model Prikhodko.NewsWebsite.Web.Models.PostViewModel
+﻿@using Microsoft.Ajax.Utilities
+@model Prikhodko.NewsWebsite.Web.Models.PostViewModel
 
 <div class="row container">
     <div class="col-md-10">
@@ -44,7 +45,14 @@
             </div>
             <div class="col-md-10">
                 <div class="col-md-5"></div>
-                <div class="col-md-5">Average rate: @Model.AvgRate</div>
+                @if (!double.IsNaN(Model.AvgRate))
+                {
+                    <div class="col-md-5">Average rate: @Model.AvgRate</div>
+                }
+                else
+                {
+                    <div class="col-md-5">No rates so far</div>
+                }
             </div>
         </div>
 
@@ -59,7 +67,7 @@
         <textarea id="comment_input" class="col-md-10"></textarea>
         <button id="sendcomment">Send</button>
     </div>
-    <div name="comments" class="col-md-10">
+    <div id="comments" class="col-md-10">
         @{
             foreach (var comment in Model.Comments)
             {
@@ -93,13 +101,12 @@
 
 @section Scripts {
     <script src="~/Scripts/rater.min.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
-    <script src="~/Scripts/comments-signalr.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
-    
+
     <script>
         var converter = new showdown.Converter(),
             text      = "@Model.Content",
@@ -138,12 +145,27 @@
     </script>
 
     <script>
-        $('#sendcomment').click(function(e) {
-            e.preventDefault();
-            $.ajax({
-                url: "/Comments/Add",
-                data: {content: $('#comment_input')[0].value, postId: @Model.Id}
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            var commentsHub = $.connection.commentsHub;
+            // Create a function that the hub can call back to display messages.
+            commentsHub.client.addNewComment = function (username, userid, content, rating, commentid) {
+                // Add the message to the page.
+                $('#comments').append(formComment(username, userid, content, rating, commentid));
+            };
+            // Start the connection.
+            $.connection.hub.start().done(function() {
+                $('#sendcomment').click(function () {
+                    var commenttext = $('#comment_input')[0].value;
+                    commentsHub.server.addComment(commenttext, @Model.Id);
+                    $('#comment_input').val('');
+                });
             });
-        })
+        });
+        // This optional function html-encodes messages for display in the page.
+        function formComment(username, userid, content, rating, commentid) {
+            var encodedValue = $('<div />').text(username).html();
+            return encodedValue;
+        }
     </script>
 }
