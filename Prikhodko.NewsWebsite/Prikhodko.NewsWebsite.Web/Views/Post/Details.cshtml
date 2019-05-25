@@ -64,11 +64,11 @@
 </div>
 
 <div class="container">
-    @if(@User.Identity.IsAuthenticated)
+    @if (@User.Identity.IsAuthenticated)
     {
         <div class="col-md-10">
-            <input type="text" id="comment_input" class="col-md-10"/>
-            <input type="button" id="sendcomment" value="Send"/>
+            <input type="text" id="comment_input" class="col-md-10" />
+            <input type="button" id="sendcomment" value="Send" />
         </div>
     }
     <div id="comments" class="col-md-10">
@@ -97,10 +97,10 @@
 
 @section Scripts {
     <script src="~/Scripts/rater.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    
+
     <script>
         $(document).ready(function () {
             @foreach (var comment in Model.Comments)
@@ -205,10 +205,7 @@
     </script>
 
     <script>
-        var converter = new showdown.Converter(),
-            text      = "@Model.Content",
-            html = converter.makeHtml(text);
-        $('#content').append(html);
+        $('#content').append(marked(`@Html.Raw(Model.Content)`));
     </script>
 
     <script>

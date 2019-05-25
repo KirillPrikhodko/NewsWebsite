@@ -36,11 +36,5 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             return PartialView();
         }
-
-        public IEnumerable<CategoryServiceModel> GetCategories()
-        {
-            var result = categoryService.GetAll();
-            return result;
-        }
     }
 }
