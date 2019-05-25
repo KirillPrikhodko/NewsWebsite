@@ -21,11 +21,11 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Like> Likes { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostRate> PostRates { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<User> AppUsers { get; set; }
+        public DbSet<CommentRate> CommentRates { get; set; }
 
         #endregion
 
@@ -49,6 +49,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework
             var commentConfiguration = builder.Entity<Comment>();
             commentConfiguration.HasRequired(x => x.Author).WithMany(x => x.Comments);
             commentConfiguration.HasRequired(x => x.Post).WithMany(x => x.Comments);
+            commentConfiguration.HasMany(x => x.Rates).WithRequired(x => x.Comment);
+
+            var commentRateConfiguration = builder.Entity<CommentRate>();
+            commentRateConfiguration.HasRequired(x => x.Comment).WithMany(x => x.Rates);
 
             base.OnModelCreating(builder);
         }

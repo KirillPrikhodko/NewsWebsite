@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryService.cs" />
+    <Compile Include="CommentRateService.cs" />
     <Compile Include="CommentService.cs" />
     <Compile Include="IdentityFramework\AccountManageService.cs" />
     <Compile Include="IdentityFramework\LoginService.cs" />

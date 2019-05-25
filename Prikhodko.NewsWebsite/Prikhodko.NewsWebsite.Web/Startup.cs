@@ -8,8 +8,8 @@ namespace Prikhodko.NewsWebsite.Web
     {
         public void Configuration(IAppBuilder app)
         {
-            app.MapSignalR();
             ConfigureAuth(app);
+            app.MapSignalR();
         }
     }
 }

@@ -7,27 +7,23 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class CommentService : IService<CommentServiceModel>
+    public class CommentRateService : IService<CommentRateServiceModel>
     {
-        private readonly IRepository<Comment> repository;
+        private readonly IService<CommentServiceModel> commentService;
+        private readonly IRepository<CommentRate> repository;
         private readonly IUnitOfWork unitOfWork;
 
-        public CommentService(IRepository<Comment> repository, IUnitOfWork unitOfWork)
+        public CommentRateService(IRepository<CommentRate> repository, IUnitOfWork unitOfWork, IService<CommentServiceModel> commentService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
+            this.commentService = commentService;
         }
-
-        public void Add(CommentServiceModel item)
+        public void Add(CommentRateServiceModel item)
         {
-            if (item == null)
-            {
-                return;
-            }
-            var comment = Mapper.Map<Comment>(item);
-            repository.Add(comment);
+            var rate = Mapper.Map<CommentRate>(item);
+            repository.Add(rate);
             unitOfWork.SaveChanges();
-            item.Id = comment.Id;
         }
 
         public void Delete(int id)
@@ -35,18 +31,17 @@ namespace Prikhodko.NewsWebsite.Service
             throw new System.NotImplementedException();
         }
 
-        public CommentServiceModel Get(int id)
-        {
-            var result = Mapper.Map<CommentServiceModel>(repository.Get(id));
-            return result;
-        }
-
-        public IEnumerable<CommentServiceModel> GetAll()
+        public CommentRateServiceModel Get(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update(CommentServiceModel item)
+        public IEnumerable<CommentRateServiceModel> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Update(CommentRateServiceModel item)
         {
             throw new System.NotImplementedException();
         }

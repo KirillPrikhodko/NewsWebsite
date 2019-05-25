@@ -14,12 +14,25 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
     public class CommentsHub : Hub
     {
         private readonly IService<CommentServiceModel> commentService;
+        private readonly IService<CommentRateServiceModel> commentRateService;
 
-        public CommentsHub(IService<CommentServiceModel> commentService)
+        public CommentsHub(IService<CommentServiceModel> commentService, IService<CommentRateServiceModel> commentRateService)
         {
             this.commentService = commentService;
+            this.commentRateService = commentRateService;
         }
-        public void AddComment(string content, int postId)
+
+        public override async Task OnConnected()
+        {
+            await base.OnConnected();
+        }
+
+        public override async Task OnDisconnected(bool a)
+        {
+            await base.OnDisconnected(a);
+        }
+
+        public void Send(string content, int postId)
         {
             CommentServiceModel model = new CommentServiceModel()
             {
@@ -30,6 +43,19 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
             };
             commentService.Add(model);
             Clients.All.addNewComment(model.AuthorName, model.AuthorId, model.Content, model.Rating, model.Id);
+        }
+
+        public void AddVote(bool value, string stringCommentId)
+        {
+            string textToReplace = value ? "upvote" : "downvote";
+            int commentId = Int32.Parse(stringCommentId.Replace(textToReplace, "")); //because html upvote button have id "upvoteXXXX" which is passed to server, I have to do this
+            commentRateService.Add(new CommentRateServiceModel()
+            {
+                AuthorId = Context.User.Identity.GetUserId(),
+                CommentId = commentId,
+                Value = value
+            });
+            Clients.All.changeRating(commentId, value);
         }
     }
 }

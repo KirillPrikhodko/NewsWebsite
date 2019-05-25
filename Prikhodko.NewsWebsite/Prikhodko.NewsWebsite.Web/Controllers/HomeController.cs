@@ -42,10 +42,5 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             var result = categoryService.GetAll();
             return result;
         }
-
-        public ActionResult Chat()
-        {
-            return View();
-        }
     }
 }

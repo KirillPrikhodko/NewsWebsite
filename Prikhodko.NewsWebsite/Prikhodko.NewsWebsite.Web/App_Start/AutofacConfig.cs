@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.SignalR;
+using Microsoft.AspNet.SignalR;
 using Prikhodko.NewsWebsite.Config;
 
 namespace Prikhodko.NewsWebsite.Web
@@ -17,13 +19,15 @@ namespace Prikhodko.NewsWebsite.Web
             var builder = new ContainerBuilder();
 
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterHubs(typeof(MvcApplication).Assembly);
 
             builder.AddDataDependencies();
             builder.AddServiceDependencies();
 
             var container = builder.Build();
 
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            GlobalHost.DependencyResolver = new Autofac.Integration.SignalR.AutofacDependencyResolver(container);
+            DependencyResolver.SetResolver(new Autofac.Integration.Mvc.AutofacDependencyResolver(container));
         }
     }
 }

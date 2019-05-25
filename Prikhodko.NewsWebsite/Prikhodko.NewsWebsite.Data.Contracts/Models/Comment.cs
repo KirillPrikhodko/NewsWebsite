@@ -20,7 +20,6 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
         [ForeignKey("PostId")]
         public virtual Post Post { get; set; }
         public virtual string Content { get; set; } //TODO: like in posts, Content entity is probably needed (comments may include, apart from plain text, images, gifs, etc.
-        public virtual IEnumerable<Like> Likes { get; set; }
-        public virtual IEnumerable<Like> Dislikes { get; set; }
+        public virtual IList<CommentRate> Rates { get; set; }
     }
 }

@@ -36,7 +36,8 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public Comment Get(int id)
         {
-            throw new System.NotImplementedException();
+            var result = dbContext.Comments.Find(id);
+            return result;
         }
 
         public IEnumerable<Comment> GetAll()

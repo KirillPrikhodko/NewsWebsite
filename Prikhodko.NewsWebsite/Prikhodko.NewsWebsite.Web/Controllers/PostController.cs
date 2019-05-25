@@ -53,6 +53,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             }
             ViewBag.UserAuthenticated = HttpContext.User.Identity.IsAuthenticated;
             ViewBag.Author = userService.FindById(postViewModel.AuthorId);
+            ViewBag.CurrentUser = userService.FindById(HttpContext.User.Identity.GetUserId());
             return View(postViewModel);
         }
 
