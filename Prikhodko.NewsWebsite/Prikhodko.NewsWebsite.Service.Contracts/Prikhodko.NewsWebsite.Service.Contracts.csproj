@@ -74,7 +74,7 @@
     <Compile Include="Models\CategoryServiceModel.cs" />
     <Compile Include="Models\ClaimServiceModel.cs" />
     <Compile Include="Models\CommentServiceModel.cs" />
-    <Compile Include="Models\LikeServiceModel.cs" />
+    <Compile Include="Models\CommentRateServiceModel.cs" />
     <Compile Include="Models\PostRateServiceModel.cs" />
     <Compile Include="Models\PostServiceModel.cs" />
     <Compile Include="Models\RoleServiceModel.cs" />

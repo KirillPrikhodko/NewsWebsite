@@ -14,8 +14,8 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             MapPostServiceModelToPost();
             MapApplicationIdentityUserToApplicationIdentityUserViewModel();
             MapApplicationIdentityUserViewModelToApplicationIdentityUser();
-            MapUserToUserViewModel();
-            MapUserViewModelToUser();
+            MapUserToUserServiceModel();
+            MapUserServiceModelToUser();
             MapCategoryToCategoryViewModel();
             MapCategoryViewModelToCategory();
             MapTagToTagViewModel();
@@ -25,6 +25,8 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             MapPostRateServiceModelToPostRate();
             MapCommentToCommentServiceModel();
             MapCommentServiceModelToComment();
+            MapCommentRateToCommentRateServiceModel();
+            MapCommentRateServiceModelToCommentRate();
         }
 
         private void MapPostToPostServiceModel()
@@ -129,17 +131,18 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
-        private void MapUserToUserViewModel()
+        private void MapUserToUserServiceModel()
         {
             CreateMap<User, UserServiceModel>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.ApplicationIdentityUser, c => c.MapFrom(src => src.ApplicationIdentityUser))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
                 .ForMember(x => x.ProfileImagePath, c => c.MapFrom(src => src.ProfileImagePath))
+                .ForMember(x => x.CommentRates, c => c.MapFrom(src => src.CommentRates))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
-        private void MapUserViewModelToUser()
+        private void MapUserServiceModelToUser()
         {
             CreateMap<UserServiceModel, User>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
@@ -201,9 +204,9 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
                 .ForMember(x => x.AuthorName, c => c.MapFrom(src => src.Author.ApplicationIdentityUser.UserName))
-                .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
+                .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.Author.Id))
                 .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
-                .ForMember(x => x.Rating, c => c.MapFrom(src => src.Likes.Count() - src.Dislikes.Count()))
+                .ForMember(x => x.Rating, c => c.MapFrom(src => src.Rates.Where(x => x.Value == true).Count() - src.Rates.Where(x => x.Value == false).Count()))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
@@ -212,8 +215,23 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             CreateMap<CommentServiceModel, Comment>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.PostId, c => c.MapFrom(src => src.PostId))
-                .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
                 .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapCommentRateToCommentRateServiceModel()
+        {
+            CreateMap<CommentRate, CommentRateServiceModel>()
+                .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.Author.Id))
+                .ForMember(x => x.Value, c => c.MapFrom(src => src.Value))
+                .ForMember(x => x.CommentId, c => c.MapFrom(src => src.Comment.Id))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        private void MapCommentRateServiceModelToCommentRate()
+        {
+            CreateMap<CommentRateServiceModel, CommentRate>()
+                .ForMember(x => x.Value, c => c.MapFrom(src => src.Value))
                 .ForAllOtherMembers(c => c.Ignore());
         }
     }

@@ -11,9 +11,10 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
 
         [ForeignKey("Id")]
         public virtual ApplicationIdentityUser ApplicationIdentityUser { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<PostRate> PostRates { get; set; }
+        public virtual IList<Post> Posts { get; set; }
+        public virtual IList<Comment> Comments { get; set; }
+        public virtual IList<CommentRate> CommentRates { get; set; }
+        public virtual IList<PostRate> PostRates { get; set; }
         public virtual int AvgRate { get; set; } //An average rate of all user's posts
         public string ProfileImagePath { get; set; }
         public string Name { get; set; }

@@ -22,5 +22,7 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
         }
 
         public string Country { get; set; }
+
+        public IList<int> CommentRates { get; set; }
     }
 }

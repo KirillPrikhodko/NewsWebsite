@@ -1,4 +1,5 @@
 ﻿@using Microsoft.Ajax.Utilities
+@using Newtonsoft.Json
 @model Prikhodko.NewsWebsite.Web.Models.PostViewModel
 
 <div class="row container">
@@ -63,19 +64,14 @@
 </div>
 
 <div class="container">
-    <div class="col-md-10">
-        <textarea id="comment_input" class="col-md-10"></textarea>
-        <button id="sendcomment">Send</button>
-    </div>
+    @if(@User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-10">
+            <input type="text" id="comment_input" class="col-md-10"/>
+            <input type="button" id="sendcomment" value="Send"/>
+        </div>
+    }
     <div id="comments" class="col-md-10">
-        @{
-            foreach (var comment in Model.Comments)
-            {
-                <div>
-                    @Html.Action("GetCommentPartial", "Comments", comment)
-                </div>
-            }
-        }
     </div>
 </div>
 
@@ -83,17 +79,17 @@
     <div class="row container-fluid">
         <div class="col-md-11">
             <div>
-                <a href=#></a>
+                <a id="authorname_template" href=#></a>
             </div>
-            <div>
+            <div id="commentcontent_template">
 
             </div>
         </div>
         <div class="col=md-1">
             <div>
-                <button id="upvote">+</button>
-                <span></span>
-                <button id="downvote">-</button>
+                <button id="upvote_template" class="upvote_button">+</button>
+                <span id="currentrating_template"></span>
+                <button id="downvote_template" class="downvote_button">-</button>
             </div>
         </div>
     </div>
@@ -101,11 +97,88 @@
 
 @section Scripts {
     <script src="~/Scripts/rater.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            @foreach (var comment in Model.Comments)
+            {
+                @:$('#comments').append(formComment('@comment.AuthorName', '@comment.AuthorId', '@comment.Content', '@comment.Rating', '@comment.Id'));
+            }
+        });
+    </script>
+
+    <script>
+        $(function () {
+
+            var comments_hub = $.connection.commentsHub;
+
+            comments_hub.client.addNewComment = function (username, userid, content, rating, commentid) {
+                // Add the comment to the page.
+                $('#comments').append(formComment(username, userid, content, rating, commentid));
+            };
+
+            comments_hub.client.changeRating = function (requiredcommentid, shouldIncrease) {
+                var currentrating = document.getElementById("currentrating" + requiredcommentid).innerHTML;
+                if (shouldIncrease) {
+                    currentrating++;
+                } else {
+                    currentrating--;
+                }
+                document.getElementById("currentrating" + requiredcommentid).innerHTML = currentrating;
+            };
+
+            $('#comment_input').focus();
+
+            $.connection.hub.start().done(function () {
+                $('#sendcomment').click(function () {
+                    comments_hub.server.send($('#comment_input').val(), @Model.Id);
+                    $('#comment_input').val('').focus();
+                });
+                $('.upvote_button').on("click", function(e) {
+                    e.preventDefault();
+                    comments_hub.server.addVote(true, this.id);
+                })
+                $('.downvote_button').on("click", function(e) {
+                    e.preventDefault();
+                    comments_hub.server.addVote(false, this.id);
+                })
+            });
+        });
+
+        function formComment(username, userid, content, rating, commentid) {
+            var newcommentid = "comment" + commentid;
+            var comment = $('#comment_template').clone(true).prop("id", newcommentid);
+            comment.css("display", "block");
+
+            $(comment).find('#authorname_template').append(username);
+            $(comment).find('#authorname_template').prop("id", "authorname" + commentid);
+
+            $(comment).find('#commentcontent_template').append("<span>" + content + "</span>");
+            $(comment).find('#commentcontent_template').prop("id", "commentcontent" + commentid);
+
+            @foreach(var commentRate in ViewBag.CurrentUser.CommentRates)
+            {
+                if(commentRate.AuthorId == ViewBag.CurrentUser.Id)
+                {
+                    @:$(comment).find('#upvote_template').prop("disabled", true);
+                    @:$(comment).find('#downvote_template').prop("disabled", true);
+                }
+            }
+            $(comment).find('#upvote_template').prop("id", "upvote" + commentid);
+
+            $(comment).find('#currentrating_template').append(rating);
+            $(comment).find('#currentrating_template').prop("id", "currentrating" + commentid);
+
+            $(comment).find('#downvote_template').prop("id", "downvote" + commentid);
+
+            var authorNameElement = $('#authorname').append(false);
+
+            return comment;
+        }
+    </script>
 
     <script>
         var converter = new showdown.Converter(),
@@ -141,31 +214,6 @@
                         data: { rate: data.to, postId: @Model.Id }
                     });
                 });
-        }
-    </script>
-
-    <script>
-        $(function () {
-            // Reference the auto-generated proxy for the hub.
-            var commentsHub = $.connection.commentsHub;
-            // Create a function that the hub can call back to display messages.
-            commentsHub.client.addNewComment = function (username, userid, content, rating, commentid) {
-                // Add the message to the page.
-                $('#comments').append(formComment(username, userid, content, rating, commentid));
-            };
-            // Start the connection.
-            $.connection.hub.start().done(function() {
-                $('#sendcomment').click(function () {
-                    var commenttext = $('#comment_input')[0].value;
-                    commentsHub.server.addComment(commenttext, @Model.Id);
-                    $('#comment_input').val('');
-                });
-            });
-        });
-        // This optional function html-encodes messages for display in the page.
-        function formComment(username, userid, content, rating, commentid) {
-            var encodedValue = $('<div />').text(username).html();
-            return encodedValue;
         }
     </script>
 }

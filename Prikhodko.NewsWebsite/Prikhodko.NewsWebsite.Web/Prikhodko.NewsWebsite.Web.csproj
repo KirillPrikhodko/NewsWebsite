@@ -51,6 +51,9 @@
     <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.SignalR, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.SignalR2.4.0.0\lib\net45\Autofac.Integration.SignalR.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=8.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.1.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
@@ -222,7 +225,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\CommentsHub.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostViewModel.cs" />
@@ -928,8 +930,6 @@
     <Content Include="Views\Manage\_AccountGeneralInfoPartial.cshtml" />
     <Content Include="Views\Post\Create.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
-    <Content Include="Views\Comments\_GetCommentPartial.cshtml" />
-    <Content Include="Views\Home\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -938,6 +938,7 @@
     <Folder Include="ckeditor\plugins\fileman\tmp\" />
     <Folder Include="ckeditor\plugins\fileman\Uploads\Documents\" />
     <Folder Include="ckeditor\plugins\fileman\Uploads\FLV\" />
+    <Folder Include="Views\Comments\" />
     <Folder Include="Views\Tags\" />
   </ItemGroup>
   <ItemGroup>

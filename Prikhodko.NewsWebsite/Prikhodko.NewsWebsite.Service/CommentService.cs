@@ -27,6 +27,7 @@ namespace Prikhodko.NewsWebsite.Service
             var comment = Mapper.Map<Comment>(item);
             repository.Add(comment);
             unitOfWork.SaveChanges();
+            item.Id = comment.Id;
         }
 
         public void Delete(int id)
@@ -36,7 +37,8 @@ namespace Prikhodko.NewsWebsite.Service
 
         public CommentServiceModel Get(int id)
         {
-            throw new System.NotImplementedException();
+            var result = Mapper.Map<CommentServiceModel>(repository.Get(id));
+            return result;
         }
 
         public IEnumerable<CommentServiceModel> GetAll()

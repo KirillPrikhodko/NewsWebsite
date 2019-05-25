@@ -86,7 +86,7 @@
     <Compile Include="Models\ApplicationIdentityUser.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Like.cs" />
+    <Compile Include="Models\CommentRate.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\PostRate.cs" />
     <Compile Include="Models\Tag.cs" />
