@@ -25,7 +25,7 @@
             <div class="col-md-4">
                 @foreach (var tag in Model.Tags)
                 {
-                    <a href="#">@tag</a>;
+                    <a href="/Search/Tag?tagText=@HttpUtility.UrlEncode(tag)">@tag</a>;
                 }
             </div>
             <div class="col-md-4">
@@ -46,7 +46,7 @@
             </div>
             <div class="col-md-10">
                 <div class="col-md-5"></div>
-                @if (!double.IsNaN(Model.AvgRate))
+                @if (Model.AvgRate != null)
                 {
                     <div class="col-md-5">Average rate: @Model.AvgRate</div>
                 }
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-<div id="comment_template" class="comment-css" style="display: none;">
+<div id="comment_template" class="comment-css" style="display: none">
     <div class="row container-fluid">
         <div class="col-md-11">
             <div>
@@ -198,7 +198,7 @@
                 }
             }
 
-            var authorNameElement = $('#authorname').append(false);
+            /*var authorNameElement = $('#authorname').append(false);*/
 
             return comment;
         }

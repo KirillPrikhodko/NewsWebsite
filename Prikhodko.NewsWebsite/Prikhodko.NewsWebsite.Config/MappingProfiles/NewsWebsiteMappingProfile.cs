@@ -35,6 +35,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForPath(x => x.Category, c => c.MapFrom(src => src.Category.Name))
                 .ForMember(x => x.AuthorId, c => c.MapFrom(src => src.AuthorId))
+                .ForMember(x => x.AuthorName, c => c.MapFrom(src => src.Author.ApplicationIdentityUser.UserName))
                 .ForMember(x => x.Content,
                     c => c.MapFrom(src =>
                         src.Content)) //TODO: after the Content is configured as a separate entity, this will have to change
@@ -44,19 +45,20 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates))
                 .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => GetAvgPostRate(src)))
+                .ForMember(x => x.Created, c => c.MapFrom(src => src.Created))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
-        private double GetAvgPostRate(Post post)
+        private double? GetAvgPostRate(Post post)
         {
-            double result = 0;
+            double? result = 0;
             var quantity = post.Rates.Count;
             for (int i = 0; i < quantity; i++)
             {
                 result += post.Rates[i].Value;
             }
 
-            return result / quantity;
+            return quantity == 0 ? null : result / quantity;
         }
 
         private void MapPostServiceModelToPost()
@@ -73,6 +75,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates))
                 .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
+                .ForMember(x => x.Created, c => c.MapFrom(src => src.Created))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 

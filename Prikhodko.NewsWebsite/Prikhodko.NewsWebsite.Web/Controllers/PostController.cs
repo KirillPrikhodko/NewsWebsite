@@ -15,12 +15,12 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 {
     public class PostController : Controller
     {
-        private readonly IService<PostServiceModel> postService;
+        private readonly IPostService postService;
         private readonly IService<CategoryServiceModel> categoryService;
         private readonly IService<PostRateServiceModel> rateService;
         private readonly IUserService userService;
 
-        public PostController(IService<PostServiceModel> postService, IService<CategoryServiceModel> categoryService, IService<PostRateServiceModel> rateService, IUserService userService)
+        public PostController(IPostService postService, IService<CategoryServiceModel> categoryService, IService<PostRateServiceModel> rateService, IUserService userService)
         {
             this.postService = postService;
             this.categoryService = categoryService;
@@ -72,7 +72,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //TODO: should smth else be done here?
             }
-
+            model.Created = DateTime.Now;
             model.AuthorId = HttpContext.User.Identity.GetUserId();
             var serviceModel = Mapper.Map<PostServiceModel>(model);
             postService.Add(serviceModel);

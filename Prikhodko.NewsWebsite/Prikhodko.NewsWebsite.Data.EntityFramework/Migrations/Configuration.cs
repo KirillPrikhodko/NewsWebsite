@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
+using Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework;
 
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.Migrations
 {

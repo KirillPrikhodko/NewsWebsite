@@ -16,7 +16,7 @@ namespace Prikhodko.NewsWebsite.Web.Validation
             RuleFor(x => x.Content).NotEmpty();
             RuleFor(x => x.Description).NotEmpty().MaximumLength(150);
             RuleFor(x => x.Tags).NotEmpty(); //TODO: Add validation mechanism that lets a post have not more than 6 tags (create IEnumerable<TagViewModel> Validator?
-            RuleFor(x => x.Title).NotEmpty().Matches(@"[A-aZ-z\s-]+").MaximumLength(90);
+            RuleFor(x => x.Title).NotEmpty().Matches(@"[A-aZ-z \d-\&'()*#\/+,./:;?@[\\\]_`|]+").MaximumLength(90);
         }
         public PostValidator(IService<CategoryServiceModel> categoryService)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
@@ -7,22 +8,24 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class PostService : IService<PostServiceModel>
+    public class PostService : IPostService
     {
-        private readonly IRepository<Post> repository;
+        private readonly IPostRepository postRepository;
+        private readonly ITagRepository tagRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IUserService userService;
 
-        public PostService(IRepository<Post> repository, IUnitOfWork unitOfWork, IUserService userService)
+        public PostService(IPostRepository postRepository, ITagRepository tagRepository, IUnitOfWork unitOfWork, IUserService userService)
         {
-            this.repository = repository;
+            this.postRepository = postRepository;
             this.unitOfWork = unitOfWork;
             this.userService = userService;
+            this.tagRepository = tagRepository;
         }
         public void Add(PostServiceModel item)
         {
             var post = Mapper.Map<Post>(item);
-            repository.Add(post);
+            postRepository.Add(post);
             unitOfWork.SaveChanges();
             if (post.Id > 0)
             {
@@ -32,13 +35,13 @@ namespace Prikhodko.NewsWebsite.Service
 
         public void Delete(int id)
         {
-            repository.Delete(id);
+            postRepository.Delete(id);
             unitOfWork.SaveChanges();
         }
 
         public PostServiceModel Get(int id)
         {
-            var post = repository.Get(id);
+            var post = postRepository.Get(id);
             var result = Mapper.Map<PostServiceModel>(post);
             //if (post != null)
             //{
@@ -49,7 +52,7 @@ namespace Prikhodko.NewsWebsite.Service
 
         public IEnumerable<PostServiceModel> GetAll()
         {
-            var posts = repository.GetAll();
+            var posts = postRepository.GetAll();
             var result = new List<PostServiceModel>();
             foreach (var post in posts)
             {
@@ -58,23 +61,41 @@ namespace Prikhodko.NewsWebsite.Service
             return result;
         }
 
+        public IEnumerable<PostServiceModel> GetBest(double minimumRate, int amount)
+        {
+            if (minimumRate < 0 || double.IsInfinity(minimumRate) || double.IsNaN(minimumRate) || amount <= 0)
+            {
+                return null;
+            }
+
+            var result = postRepository.GetBest(minimumRate, amount).Select(x => Mapper.Map<PostServiceModel>(x));
+            return result;
+        }
+
+        public IEnumerable<PostServiceModel> GetByTag(TagServiceModel tagModel)
+        {
+            var tag = tagRepository.Ensure(Mapper.Map<Tag>(tagModel));
+            var posts = postRepository.GetByTag(tag);
+            var result = posts.Select(x => Mapper.Map<PostServiceModel>(x));
+            return result;
+        }
+
+        public IEnumerable<PostServiceModel> GetFresh(int amount)
+        {
+            if (amount <= 0)
+            {
+                return null;
+            }
+
+            var result = postRepository.GetFresh(amount).Select(x => Mapper.Map<PostServiceModel>(x));
+            return result;
+        }
+
         public void Update(PostServiceModel item)
         {
             var post = Mapper.Map<Post>(item);
-            repository.Update(post);
+            postRepository.Update(post);
             unitOfWork.SaveChanges();
         }
-
-        //private double GetAvgPostRate(IList<PostRate> rates)
-        //{
-        //    double result = 0;
-        //    var quantity = rates.Count;
-        //    for (int i = 0; i < quantity; i++)
-        //    {
-        //        result += rates[i].Value;
-        //    }
-
-        //    return result / quantity;
-        //}
     }
 }

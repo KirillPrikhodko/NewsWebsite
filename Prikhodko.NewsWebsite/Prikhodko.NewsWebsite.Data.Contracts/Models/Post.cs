@@ -21,18 +21,17 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
         public virtual IList<Tag> Tags { get; set; }
         public virtual string Content { get; set; }
         public virtual IList<PostRate> Rates { get; set; }
+        public virtual double? AvgRate { get; set; }
         public virtual IList<Comment> Comments { get; set; }
+        public virtual DateTime Created { get; set; }
 
         public void Update(Post unit) //TODO: think of a better name
         {
-            unit.Id = this.Id;
-            unit.Author = this.Author;
             unit.Title = this.Title;
             unit.Description = this.Description;
             unit.Category = this.Category;
             unit.Tags = this.Tags;
             unit.Content = this.Content;
-            unit.Rates = this.Rates;
         }
     }
 }

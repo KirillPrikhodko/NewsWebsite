@@ -8,22 +8,23 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
     public class PostRateRepository : IRepository<PostRate>
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly IPostRepository postRepository;
 
-        public PostRateRepository(ApplicationDbContext dbContext)
+        public PostRateRepository(ApplicationDbContext dbContext, IPostRepository postRepository)
         {
             this.dbContext = dbContext;
+            this.postRepository = postRepository;
         }
         public void Add(PostRate item)
         {
-            if (item != null && item.Value > 0)
+            if (item == null && item.Value <= 0)
             {
-                item.Author = dbContext.Users.Find(item.Author.Id).User;
-                dbContext.PostRates.Add(item);
+                return;
             }
-            else
-            {
-                throw new IndexOutOfRangeException("someone tried to rate a post 0 or less");
-            }
+            item.Author = dbContext.Users.Find(item.Author.Id).User;
+            dbContext.PostRates.Add(item);
+            var updatedPost = dbContext.Posts.Find(item.PostId);
+            updatedPost.AvgRate = postRepository.GetAvgPostRate(updatedPost);
         }
 
         public void Delete(int id)

@@ -40,7 +40,7 @@ namespace Prikhodko.NewsWebsite.Config
             builder.RegisterType<UserRepository>().As<IRepository<User>>();
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterType<PostRepository>().As<IRepository<Post>>();
+            builder.RegisterType<PostRepository>().As<IPostRepository>();
             builder.RegisterType<PostRateRepository>().As<IRepository<PostRate>>();
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
             builder.RegisterType<CommentRepository>().As<IRepository<Comment>>();
@@ -58,7 +58,7 @@ namespace Prikhodko.NewsWebsite.Config
             #endregion
 
             builder.RegisterType<UserService>().As<IUserService>();
-            builder.RegisterType<PostService>().As<IService<PostServiceModel>>();
+            builder.RegisterType<PostService>().As<IPostService>();
             builder.RegisterType<PostRateService>().As<IService<PostRateServiceModel>>();
             builder.RegisterType<CategoryService>().As<IService<CategoryServiceModel>>();
             builder.RegisterType<CommentService>().As<IService<CommentServiceModel>>();

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Prikhodko.NewsWebsite.Web.Models.PostViewModel>
+
+<div style="margin-top: 10px" id="freshposts" class="container">
+    @foreach (var post in Model)
+    {
+        var postId = "post" + post.Id;
+        <div id="@postId" class="search-result">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>
+                        <a href="/post/details/@post.Id">
+                            @post.Title
+                        </a>
+                    </h3>
+                </div>
+                <div class="col-md-4">
+                    <h3>
+                        <a href="/user/details/@post.AuthorName">@post.AuthorName</a>
+                    </h3>
+                </div>
+            </div>
+            <p>
+                @post.Description
+            </p>
+            <div class="row">
+                <div class="col-md-2">
+                    @foreach (var tag in post.Tags)
+                    {
+                        <span class="glyphicon glyphicon-tag" style="color: gray">@tag</span>
+                    }
+                </div>
+                <div class="col-md-2">
+                    <span>@post.Created</span>
+                </div>
+                <div class="col-md-offset-4 col-md-2">
+                    @if (post.AvgRate == null)
+                    {
+                        <span>No average rate so far</span>
+                    }
+                    else
+                    {
+                        <span class="glyphicon glyphicon-star">@post.AvgRate</span>
+                    }
+                </div>
+                <div class="col-md-2">
+                    <span>@post.Comments.Count comments</span>
+                </div>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    }
+    <div>
+    </div>
+</div>
