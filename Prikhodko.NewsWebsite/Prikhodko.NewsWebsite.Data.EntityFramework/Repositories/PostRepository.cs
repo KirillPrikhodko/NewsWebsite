@@ -97,7 +97,9 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             {
                 return null;
             }
-            var result = dbContext.Posts.Where(x => x.Tags.Contains(tag)).ToList();
+
+            tag = tagRepository.Ensure(tag);
+            var result = dbContext.Posts.Where(x => x.Tags.Select(t => t.Name).Contains(tag.Name)).ToList();
             return result;
         }
 
