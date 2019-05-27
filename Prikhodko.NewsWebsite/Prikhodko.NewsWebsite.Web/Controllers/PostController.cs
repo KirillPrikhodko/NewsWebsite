@@ -16,11 +16,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
     public class PostController : Controller
     {
         private readonly IPostService postService;
-        private readonly IService<CategoryServiceModel> categoryService;
-        private readonly IService<PostRateServiceModel> rateService;
+        private readonly ICategoryService categoryService;
+        private readonly IPostRateService rateService;
         private readonly IUserService userService;
 
-        public PostController(IPostService postService, IService<CategoryServiceModel> categoryService, IService<PostRateServiceModel> rateService, IUserService userService)
+        public PostController(IPostService postService, ICategoryService categoryService, IPostRateService rateService, IUserService userService)
         {
             this.postService = postService;
             this.categoryService = categoryService;

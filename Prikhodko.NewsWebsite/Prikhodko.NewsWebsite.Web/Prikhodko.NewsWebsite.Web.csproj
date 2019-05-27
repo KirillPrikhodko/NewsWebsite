@@ -940,6 +940,7 @@
     <Content Include="Views\Home\_GetFreshPosts.cshtml" />
     <Content Include="Views\Home\_GetBestPosts.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

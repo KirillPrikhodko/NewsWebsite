@@ -4,12 +4,12 @@ using Prikhodko.NewsWebsite.Data.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 {
-    public class CommentRateRepository : IRepository<CommentRate>
+    public class CommentRateRepository : ICommentRateRepository
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IRepository<Comment> commentRepository;
+        private readonly ICommentRepository commentRepository;
 
-        public CommentRateRepository(ApplicationDbContext dbContext, IRepository<Comment> commentRepository)
+        public CommentRateRepository(ApplicationDbContext dbContext, ICommentRepository commentRepository)
         {
             this.dbContext = dbContext;
             this.commentRepository = commentRepository;

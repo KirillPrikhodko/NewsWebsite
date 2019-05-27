@@ -5,7 +5,7 @@ using Prikhodko.NewsWebsite.Data.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 {
-    public class PostRateRepository : IRepository<PostRate>
+    public class PostRateRepository : IPostRateRepository
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IPostRepository postRepository;

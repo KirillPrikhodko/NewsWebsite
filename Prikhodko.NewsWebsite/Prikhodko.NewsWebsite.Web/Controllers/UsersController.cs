@@ -28,6 +28,22 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return new EmptyResult();
         }
 
+        public ActionResult Details(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (name == HttpContext.User.Identity.Name.ToLower())
+            {
+                return RedirectToAction("Index", "Manage");
+            }
+
+            var model = userService.FindByName(name);
+            return View();
+        }
+
         [HttpPost]
         public ActionResult EditUser(string name)
         {

@@ -8,12 +8,12 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class PostRateService : IService<PostRateServiceModel>
+    public class PostRateService : IPostRateService
     {
-        private readonly IRepository<PostRate> repository;
+        private readonly IPostRateRepository repository;
         private readonly IUnitOfWork unitOfWork;
 
-        public PostRateService(IRepository<PostRate> repository, IUnitOfWork unitOfWork)
+        public PostRateService(IPostRateRepository repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;

@@ -12,9 +12,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
     public class CommentsController : Controller
     {
         private readonly IUserService userService;
-        private readonly IService<CommentServiceModel> commentService;
+        private readonly ICommentService commentService;
 
-        public CommentsController(IUserService userService, IService<CommentServiceModel> commentService)
+        public CommentsController(IUserService userService, ICommentService commentService)
         {
             this.userService = userService;
             this.commentService = commentService;

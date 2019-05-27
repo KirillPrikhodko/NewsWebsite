@@ -12,11 +12,11 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
     public class PostRepository : IPostRepository
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IRepository<User> userRepository;
+        private readonly IUserRepository userRepository;
         private readonly ITagRepository tagRepository;
         private readonly ICategoryRepository categoryRepository;
 
-        public PostRepository(ApplicationDbContext dbContext, IRepository<User> userRepository, ITagRepository tagRepository, ICategoryRepository categoryRepository)
+        public PostRepository(ApplicationDbContext dbContext, IUserRepository userRepository, ITagRepository tagRepository, ICategoryRepository categoryRepository)
         {
             this.dbContext = dbContext;
             this.userRepository = userRepository;

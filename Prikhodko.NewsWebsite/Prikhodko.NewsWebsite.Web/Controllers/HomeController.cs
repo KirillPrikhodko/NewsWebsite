@@ -13,11 +13,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IService<CategoryServiceModel> categoryService;
+        private readonly ICategoryService categoryService;
         private readonly IPostService postService;
         private readonly ITagService tagService;
 
-        public HomeController(IService<CategoryServiceModel> categoryService, IPostService postService, ITagService tagService)
+        public HomeController(ICategoryService categoryService, IPostService postService, ITagService tagService)
         {
             this.categoryService = categoryService;
             this.postService = postService;

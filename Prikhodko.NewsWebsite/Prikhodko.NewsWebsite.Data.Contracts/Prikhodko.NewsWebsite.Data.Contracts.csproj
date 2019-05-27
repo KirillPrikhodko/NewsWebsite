@@ -77,13 +77,17 @@
   <ItemGroup>
     <Compile Include="Interfaces\IAccountManageRepository.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />
+    <Compile Include="Interfaces\ICommentRateRepository.cs" />
+    <Compile Include="Interfaces\ICommentRepository.cs" />
     <Compile Include="Interfaces\IEnsurable.cs" />
     <Compile Include="Interfaces\ILoginRepository.cs" />
+    <Compile Include="Interfaces\IPostRateRepository.cs" />
     <Compile Include="Interfaces\IPostRepository.cs" />
     <Compile Include="Interfaces\IRegisterRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ITagRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Models\ApplicationIdentityUser.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Comment.cs" />

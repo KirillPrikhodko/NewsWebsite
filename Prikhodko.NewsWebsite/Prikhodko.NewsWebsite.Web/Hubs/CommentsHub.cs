@@ -13,10 +13,10 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
 {
     public class CommentsHub : Hub
     {
-        private readonly IService<CommentServiceModel> commentService;
-        private readonly IService<CommentRateServiceModel> commentRateService;
+        private readonly ICommentService commentService;
+        private readonly ICommentRateService commentRateService;
 
-        public CommentsHub(IService<CommentServiceModel> commentService, IService<CommentRateServiceModel> commentRateService)
+        public CommentsHub(ICommentService commentService, ICommentRateService commentRateService)
         {
             this.commentService = commentService;
             this.commentRateService = commentRateService;

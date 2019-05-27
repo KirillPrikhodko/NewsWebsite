@@ -7,12 +7,12 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class CommentService : IService<CommentServiceModel>
+    public class CommentService : ICommentService
     {
-        private readonly IRepository<Comment> repository;
+        private readonly ICommentRepository repository;
         private readonly IUnitOfWork unitOfWork;
 
-        public CommentService(IRepository<Comment> repository, IUnitOfWork unitOfWork)
+        public CommentService(ICommentRepository repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;

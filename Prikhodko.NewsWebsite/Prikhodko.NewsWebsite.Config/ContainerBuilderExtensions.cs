@@ -37,15 +37,15 @@ namespace Prikhodko.NewsWebsite.Config
             builder.RegisterType<AccountManageRepository>().As<IAccountManageRepository>();
             #endregion
 
-            builder.RegisterType<UserRepository>().As<IRepository<User>>();
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<PostRepository>().As<IPostRepository>();
-            builder.RegisterType<PostRateRepository>().As<IRepository<PostRate>>();
+            builder.RegisterType<PostRateRepository>().As<IPostRateRepository>();
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>();
-            builder.RegisterType<CommentRepository>().As<IRepository<Comment>>();
+            builder.RegisterType<CommentRepository>().As<ICommentRepository>();
             builder.RegisterType<TagRepository>().As<ITagRepository>();
-            builder.RegisterType<CommentRateRepository>().As<IRepository<CommentRate>>();
+            builder.RegisterType<CommentRateRepository>().As<ICommentRateRepository>();
             return builder;
         }
 
@@ -59,11 +59,11 @@ namespace Prikhodko.NewsWebsite.Config
 
             builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<PostService>().As<IPostService>();
-            builder.RegisterType<PostRateService>().As<IService<PostRateServiceModel>>();
-            builder.RegisterType<CategoryService>().As<IService<CategoryServiceModel>>();
-            builder.RegisterType<CommentService>().As<IService<CommentServiceModel>>();
+            builder.RegisterType<PostRateService>().As<IPostRateService>();
+            builder.RegisterType<CategoryService>().As<ICategoryService>();
+            builder.RegisterType<CommentService>().As<ICommentService>();
             builder.RegisterType<TagService>().As<ITagService>();
-            builder.RegisterType<CommentRateService>().As<IService<CommentRateServiceModel>>();
+            builder.RegisterType<CommentRateService>().As<ICommentRateService>();
             return builder;
         }
     }

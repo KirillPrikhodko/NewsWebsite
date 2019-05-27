@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
@@ -8,11 +9,11 @@ namespace Prikhodko.NewsWebsite.Service
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<User> repository;
+        private readonly IUserRepository repository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IAccountManageService accountManageService;
 
-        public UserService(IRepository<User> repository, IUnitOfWork unitOfWork, IAccountManageService accountManageService)
+        public UserService(IUserRepository repository, IUnitOfWork unitOfWork, IAccountManageService accountManageService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -36,6 +37,17 @@ namespace Prikhodko.NewsWebsite.Service
             {
                 result = applicationIdentityUser.User;
             }
+            return result;
+        }
+
+        public UserServiceModel FindByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+            var user = repository.FindByName(name);
+            var result = /*user == null ? null : */Mapper.Map<UserServiceModel>(repository.FindByName(name));
             return result;
         }
 

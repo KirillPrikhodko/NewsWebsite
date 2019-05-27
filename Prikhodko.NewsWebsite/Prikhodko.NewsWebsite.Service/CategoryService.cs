@@ -7,7 +7,7 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class CategoryService : IService<CategoryServiceModel>
+    public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository repository;
         private readonly IUnitOfWork unitOfWork;
