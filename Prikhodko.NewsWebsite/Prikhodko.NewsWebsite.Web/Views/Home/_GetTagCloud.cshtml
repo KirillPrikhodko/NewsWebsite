@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Prikhodko.NewsWebsite.Service.Contracts.Models.TagServiceModel>
+
+    <ul id="tag_cloud">
+        @foreach (var tag in Model)
+        {
+            <li data-weight="@tag.PostsCount"><a href="/Search/Tag?tagText=@tag.Name">@tag.Name</a></li>
+        }
+    </ul>

@@ -9,6 +9,6 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
 
         [JsonProperty("name")]
         public string Name { get; set; }
-        public virtual IEnumerable<PostServiceModel> Posts { get; set; }
+        public virtual int PostsCount { get; set; }
     }
 }

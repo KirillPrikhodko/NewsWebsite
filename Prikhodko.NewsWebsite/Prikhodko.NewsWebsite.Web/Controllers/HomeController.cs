@@ -15,51 +15,52 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
     {
         private readonly IService<CategoryServiceModel> categoryService;
         private readonly IPostService postService;
+        private readonly ITagService tagService;
 
-        public HomeController(IService<CategoryServiceModel> categoryService, IPostService postService)
+        public HomeController(IService<CategoryServiceModel> categoryService, IPostService postService, ITagService tagService)
         {
             this.categoryService = categoryService;
             this.postService = postService;
+            this.tagService = tagService;
         }
         public ActionResult Index()
         {
+            int amount = 10;
+            ViewBag.Fresh = postService.GetFresh(amount).Select(x => Mapper.Map<PostViewModel>(x));
+            ViewBag.Best = postService.GetBest(4.5, 10).Select(x => Mapper.Map<PostViewModel>(x));
             return View();
         }
 
-        //public ActionResult Fresh()
-        //{
-        //    return View();
-        //}
-
-        public ActionResult Fresh(/*int amount*/)
+        public ActionResult GetFreshPosts()
         {
-            int amount = 10; //TODO: add polzunok to webpage so user will select the amount
+            int amount = 10;
             if (amount <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var model = postService.GetFresh(amount).Select(x => Mapper.Map<PostViewModel>(x));
-            return View(model);
+            return PartialView("_GetFreshPosts", model);
         }
 
-        //public ActionResult Best()
-        //{
-        //    return View();
-        //}
-
-        public ActionResult Best(/*double minimumRate, int amount*/)
+        public ActionResult GetBestPosts()
         {
-            double minimumRate = 4; //TODO: add polzunok to webpage so user will select the minumumRate
-            int amount = 10; //TODO: add polzunok to webpage so user will select the amount
+            double minimumRate = 4;
+            int amount = 10;
             if (minimumRate < 0 || double.IsInfinity(minimumRate) || double.IsNaN(minimumRate) || amount <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var model = postService.GetBest(minimumRate, amount).Select(x => Mapper.Map<PostViewModel>(x));
-            return View(model);
+            return PartialView("_GetBestPosts", model);
         }
 
-        public ActionResult TagCloud()
+        public ActionResult GetTagCloud()
+        {
+            var model = tagService.GetAmount(10) ?? new List<TagServiceModel>();
+            return PartialView("_GetTagCloud", model);
+        }
+
+        public ActionResult Test()
         {
             return View();
         }

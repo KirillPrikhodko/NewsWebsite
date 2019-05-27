@@ -42,6 +42,16 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             return tags;
         }
 
+        public IEnumerable<Tag> GetAmount(int amount)
+        {
+            if (amount <= 0)
+            {
+                return null;
+            }
+            var result = dbContext.Tags.OrderBy(x => x.Posts.Count).Take(amount).ToList();
+            return result;
+        }
+
         public void Update(Tag item)
         {
             throw new System.NotImplementedException();

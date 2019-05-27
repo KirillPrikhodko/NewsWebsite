@@ -70,6 +70,7 @@
     <Compile Include="Interfaces\IPostService.cs" />
     <Compile Include="Interfaces\IRegisterService.cs" />
     <Compile Include="Interfaces\IService.cs" />
+    <Compile Include="Interfaces\ITagService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\ApplicationIdentityUserServiceModel.cs" />
     <Compile Include="Models\CategoryServiceModel.cs" />

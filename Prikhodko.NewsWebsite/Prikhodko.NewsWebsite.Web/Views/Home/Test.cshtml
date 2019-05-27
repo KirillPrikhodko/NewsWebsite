@@ -1,0 +1,26 @@
+﻿
+
+<ul id="tagcloud">
+    <li data-weight="1"><a href="#">HTML5</a></li>
+    <li data-weight="2"><a href="#">CSS3</a></li>
+    <li data-weight="3"><a href="#">Javascript</a></li>
+    <li data-weight="4"><a href="#">jQuery</a></li>
+    ...
+</ul>
+
+@section Scripts {
+    
+    <link href="~/Content/tx3-tag-cloud.css" media="screen" rel="stylesheet" type="text/css"/>
+    <script src="~/Scripts/jquery.tx3-tag-cloud.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#tagcloud").tx3TagCloud({
+                multiplier: 5 // default multiplier is "1"
+            });
+        });
+    </script>
+}
+
+
+

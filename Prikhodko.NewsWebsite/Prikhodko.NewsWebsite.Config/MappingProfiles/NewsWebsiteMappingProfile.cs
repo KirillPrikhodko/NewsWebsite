@@ -18,8 +18,8 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             MapUserServiceModelToUser();
             MapCategoryToCategoryViewModel();
             MapCategoryViewModelToCategory();
-            MapTagToTagViewModel();
-            MapTagViewModelToTag();
+            MapTagToTagServiceModel();
+            MapTagServiceModelToTag();
             MapTagsAndStrings();
             MapPostRateToPostRateServiceModel();
             MapPostRateServiceModelToPostRate();
@@ -167,15 +167,16 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
                 .ForAllOtherMembers(c => c.Ignore());
         }
-        private void MapTagToTagViewModel()
+        private void MapTagToTagServiceModel()
         {
             CreateMap<Tag, TagServiceModel>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
+                .ForMember(x => x.PostsCount, c => c.MapFrom(src => src.Posts.Count))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
-        private void MapTagViewModelToTag()
+        private void MapTagServiceModelToTag()
         {
             CreateMap<TagServiceModel, Tag>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))

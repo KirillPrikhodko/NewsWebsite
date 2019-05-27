@@ -62,7 +62,7 @@ namespace Prikhodko.NewsWebsite.Config
             builder.RegisterType<PostRateService>().As<IService<PostRateServiceModel>>();
             builder.RegisterType<CategoryService>().As<IService<CategoryServiceModel>>();
             builder.RegisterType<CommentService>().As<IService<CommentServiceModel>>();
-            builder.RegisterType<TagService>().As<IService<TagServiceModel>>();
+            builder.RegisterType<TagService>().As<ITagService>();
             builder.RegisterType<CommentRateService>().As<IService<CommentRateServiceModel>>();
             return builder;
         }

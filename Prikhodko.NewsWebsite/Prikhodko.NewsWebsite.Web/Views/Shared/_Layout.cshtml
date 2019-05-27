@@ -21,11 +21,6 @@
                 @Html.ActionLink("ITNews", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Fresh", "Fresh", "Home")</li>
-                    <li>@Html.ActionLink("Best", "Best", "Home")</li>
-                    <li>@Html.ActionLink("Tag Cloud", "TagCloud", "Home")</li>
-                </ul>
                 @Html.Partial("_LoginPartial")
                 @Html.Action("GetCategoriesDropdown", "Categories")
             </div>

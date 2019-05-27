@@ -2,11 +2,87 @@
     ViewBag.Title = "Home Page";
 }
 
+<div class="row" style="margin-top: 10px">
+    <ul class="nav nav-tabs">
+        <li class="active"><a id="freshposts" data-toggle="tab">Fresh</a></li>
+        <li><a id="bestposts" data-toggle="tab">Best</a></li>
+        <li><a id="tagcloud" data-toggle="tab">Tag Cloud</a></li>
+    </ul>
+</div>
+
 <div class="row">
-    <div class="col-sm-10">
+    <div id="mainpage_content" class="col-sm-10">
+
     </div>
     <div class="col-sm-2">
-        @Html.Action("GetUserBar", "Users")
+        <div class="row">
+            @Html.Action("GetUserBar", "Users")
+        </div>
     </div>
 </div>
 
+@section Scripts {
+    <link href="~/Content/tx3-tag-cloud.css" media="screen" rel="stylesheet" type="text/css"/>
+    <script src="~/Scripts/jquery.tx3-tag-cloud.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "@Url.Action("GetFreshPosts", "Home")",
+                type: "get",
+                dataType: 'html',
+                beforeSend: function () {
+                    $('#mainpage_content').append("loading..");
+                },
+                success: function(html) {
+                    $('#mainpage_content').html(html);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $('#freshposts').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "@Url.Action("GetFreshPosts", "Home")",
+                type: "get",
+                dataType: 'html',
+                success: function (html) {
+                    $('#mainpage_content').html(html);
+                }
+            });
+        })
+    </script>
+
+    <script>
+        $('#bestposts').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "@Url.Action("GetBestPosts", "Home")",
+                type: "get",
+                dataType: 'html',
+                success: function(html) {
+                    $('#mainpage_content').html(html);
+                }
+            });
+        })
+    </script>
+
+    <script>
+        $('#tagcloud').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "@Url.Action("GetTagCloud", "Home")",
+                type: "get",
+                dataType: 'html',
+                success: function(html) {
+                    $('#mainpage_content').html(html);
+                    $("#tag_cloud").tx3TagCloud({
+                        multiplier: 5 // default multiplier is "1"
+                    });
+                }
+            });
+        })
+    </script>
+}

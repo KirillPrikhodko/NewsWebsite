@@ -8,7 +8,7 @@ using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service
 {
-    public class TagService : IService<TagServiceModel>
+    public class TagService : ITagService
     {
         private readonly ITagRepository repository;
         private readonly IUnitOfWork unitOfWork;
@@ -37,6 +37,16 @@ namespace Prikhodko.NewsWebsite.Service
         {
             var tags = repository.GetAll();
             var result = tags.Select(x => Mapper.Map<TagServiceModel>(x)).ToList();
+            return result;
+        }
+
+        public IEnumerable<TagServiceModel> GetAmount(int amount)
+        {
+            if (amount <= 0)
+            {
+                return null;
+            }
+            var result = repository.GetAmount(amount).Select(x => Mapper.Map<TagServiceModel>(x)).ToList();
             return result;
         }
 
