@@ -25,9 +25,6 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         }
         public ActionResult Index()
         {
-            int amount = 10;
-            ViewBag.Fresh = postService.GetFresh(amount).Select(x => Mapper.Map<PostViewModel>(x));
-            ViewBag.Best = postService.GetBest(4.5, 10).Select(x => Mapper.Map<PostViewModel>(x));
             return View();
         }
 

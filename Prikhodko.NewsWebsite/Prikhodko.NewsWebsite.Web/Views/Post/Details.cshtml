@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-2">
                 By:
-                @Html.ActionLink((string)ViewBag.Author.ApplicationIdentityUser.UserName, "Details", "Account")
+                <a href="/users/details?name=@ViewBag.Author.ApplicationIdentityUser.UserName">@ViewBag.Author.ApplicationIdentityUser.UserName</a>
             </div>
             <div class="col-md-10">
                 <div class="col-md-5"></div>
@@ -162,6 +162,7 @@
             comment.css("display", "block");
 
             $(comment).find('#authorname_template').append(username);
+            $(comment).find('#authorname_template').prop("href", "/users/details?name=" + username);
             $(comment).find('#authorname_template').prop("id", "authorname" + commentid);
 
             $(comment).find('#commentcontent_template').append("<span>" + content + "</span>");

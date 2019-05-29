@@ -11,9 +11,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 {
     public class TagsController : Controller
     {
-        private readonly IService<TagServiceModel> tagService;
+        private readonly ITagService tagService;
 
-        public TagsController(IService<TagServiceModel> tagService)
+        public TagsController(ITagService tagService)
         {
             this.tagService = tagService;
         }

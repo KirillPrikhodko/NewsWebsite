@@ -1,54 +1,50 @@
 ﻿@model Prikhodko.NewsWebsite.Service.Contracts.Models.UserServiceModel
 
-@{
-    ViewBag.Title = "Details";
+
+<h3>
+    @Model.ApplicationIdentityUser.UserName
+</h3>
+
+<ul class="nav nav-tabs">
+    <li class="active"><a id="navgeneral" data-toggle="tab" href="#general">General</a></li>
+    <li><a id="navposts" data-toggle="tab" href="#posts">Posts</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="general" class="tab-pane fade in active">
+        <div id="generalcontent">
+            <div>
+                Username: @Model.ApplicationIdentityUser.UserName
+            </div>
+            <div>
+                Name: @Model.Name
+            </div>
+            <div>
+                Country: @Model.Country
+            </div>
+            <div>
+                Date of Birth: @Model.DateOfBirth
+            </div>
+        </div>
+    </div>
+    <div id="posts" class="tab-pane fade">
+        <div id="postscontent"></div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        $("#navposts").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/Post/GetUserPosts?name=@Model.ApplicationIdentityUser.UserName",
+                success: function (viewHtml) {
+                    $("#postscontent").html(viewHtml);
+                }
+            });
+        })
+    </script>
+
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>UserServiceModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AvgRate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AvgRate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ProfileImagePath)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProfileImagePath)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
-
-    </dl>
-</div>

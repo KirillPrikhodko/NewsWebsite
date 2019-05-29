@@ -23,7 +23,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         }
         public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUser user)
         {
-            user.User = new User() { Id = user.Id };
+            user.User = new User() { Id = user.Id, DateOfBirth = null};
             var result = await userManager.CreateAsync(user, model.Password);
             return result;
         }

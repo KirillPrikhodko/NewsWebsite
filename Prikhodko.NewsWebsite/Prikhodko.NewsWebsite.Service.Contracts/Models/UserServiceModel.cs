@@ -14,15 +14,14 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
 
         public string Name { get; set; }
 
-        private DateTime dateOfBirth;
-        public DateTime DateOfBirth
-        {
-            get { return dateOfBirth; }
-            set { dateOfBirth = value.Date; }
-        }
+        private DateTime? dateOfBirth;
+        public DateTime? DateOfBirth { get; set; }
 
         public string Country { get; set; }
 
+        public IList<PostServiceModel> Posts { get; set; }
+        public IList<PostRateServiceModel> PostRates { get; set; }
+        public IList<CommentServiceModel> Comments { get; set; }
         public IList<CommentRateServiceModel> CommentRates { get; set; }
     }
 }

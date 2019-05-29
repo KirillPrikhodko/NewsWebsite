@@ -141,6 +141,9 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.ApplicationIdentityUser, c => c.MapFrom(src => src.ApplicationIdentityUser))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
                 .ForMember(x => x.ProfileImagePath, c => c.MapFrom(src => src.ProfileImagePath))
+                .ForMember(x => x.Posts, c => c.MapFrom(src => src.Posts))
+                .ForMember(x => x.PostRates, c => c.MapFrom(src => src.PostRates))
+                .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
                 .ForMember(x => x.CommentRates, c => c.MapFrom(src => src.CommentRates))
                 .ForAllOtherMembers(c => c.Ignore());
         }

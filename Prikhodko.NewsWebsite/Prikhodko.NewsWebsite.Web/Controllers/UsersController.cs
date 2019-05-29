@@ -35,13 +35,13 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (name == HttpContext.User.Identity.Name.ToLower())
+            if (name.ToLower() == HttpContext.User.Identity.Name.ToLower())
             {
                 return RedirectToAction("Index", "Manage");
             }
 
             var model = userService.FindByName(name);
-            return View();
+            return View(model);
         }
 
         [HttpPost]

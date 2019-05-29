@@ -941,6 +941,8 @@
     <Content Include="Views\Home\_GetBestPosts.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Post\_UserPostsPartial.cshtml" />
+    <Content Include="Views\Post\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
