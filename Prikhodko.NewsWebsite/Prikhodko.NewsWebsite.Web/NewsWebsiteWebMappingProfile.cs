@@ -10,6 +10,8 @@ namespace Prikhodko.NewsWebsite.Web
         {
             MapPostViewModelToPostServiceModel();
             MapPostServiceModelToPostViewModel();
+            MapEditPostViewModelToPostServiceModel();
+            MapPostServiceModelToEditPostViewModel();
         }
 
         public void MapPostViewModelToPostServiceModel()
@@ -43,6 +45,30 @@ namespace Prikhodko.NewsWebsite.Web
                 .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForMember(x => x.Created, c => c.MapFrom(src => src.Created))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        public void MapEditPostViewModelToPostServiceModel()
+        {
+            CreateMap<EditPostViewModel, PostServiceModel>()
+                .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
+                .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
+                .ForMember(x => x.Category, c => c.MapFrom(src => src.Category))
+                .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
+                .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
+                .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
+                .ForAllOtherMembers(c => c.Ignore());
+        }
+
+        public void MapPostServiceModelToEditPostViewModel()
+        {
+            CreateMap<EditPostViewModel, PostServiceModel>()
+                .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
+                .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
+                .ForMember(x => x.Category, c => c.MapFrom(src => src.Category))
+                .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
+                .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
+                .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
                 .ForAllOtherMembers(c => c.Ignore());
         }
     }

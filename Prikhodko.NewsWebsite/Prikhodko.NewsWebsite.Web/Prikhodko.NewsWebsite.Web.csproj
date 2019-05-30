@@ -227,6 +227,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\CommentsHub.cs" />
+    <Compile Include="Models\EditPostViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostViewModel.cs" />
     <Compile Include="NewsWebsiteWebMappingProfile.cs" />
@@ -833,7 +834,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap-editable.js" />
-    <Content Include="Scripts\bootstrap-editable.min.js" />
     <Content Include="Scripts\bootstrap-tagsinput.js" />
     <Content Include="Scripts\bootstrap-tagsinput.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -928,7 +928,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Categories\_GetCategoriesDropdownPartial.cshtml" />
-    <Content Include="Views\Users\_UserBarPartial.cshtml" />
     <Content Include="Views\Manage\_AccountSettingsPartial.cshtml" />
     <Content Include="Views\Manage\_AccountGeneralInfoPartial.cshtml" />
     <Content Include="Views\Post\Create.cshtml" />
@@ -943,6 +942,7 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Post\_UserPostsPartial.cshtml" />
     <Content Include="Views\Post\Test.cshtml" />
+    <Content Include="Views\Post\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

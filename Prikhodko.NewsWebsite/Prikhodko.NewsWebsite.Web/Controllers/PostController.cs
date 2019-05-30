@@ -88,23 +88,42 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
-            var model = postService.Get(id);
-            return View(model);
+            var currentPost = postService.Get(id);
+            var model = Mapper.Map<EditPostViewModel>(currentPost);
+            if (model == null)
+            {
+                return new HttpStatusCodeResult(404);
+            }
+            if (currentPost.AuthorName == HttpContext.User.Identity.Name ||
+                HttpContext.User.IsInRole("Admin")) //only admin or author can edit post
+            {
+                ViewBag.Categories = new SelectList(categoryService.GetAll().Select(x => x.Name));
+                return View(model);
+            }
+            return new HttpStatusCodeResult(400);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult Edit(PostServiceModel model)
+        public ActionResult Edit(EditPostViewModel model)
         {
-            postService.Update(model);
-            return View();
+            var currentPost = postService.Get(model.Id);
+            var post = Mapper.Map<PostServiceModel>(model);
+            if (currentPost.AuthorName == HttpContext.User.Identity.Name ||
+                HttpContext.User.IsInRole("Admin")) //only admin or author can edit post
+            {
+                postService.Update(post);
+                return RedirectToAction("Details", "Users", new { name = currentPost.AuthorName });
+            }
+
+            return new HttpStatusCodeResult(403);
         }
 
         [Authorize]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, string username)
         {
             postService.Delete(id);
-            return RedirectToAction("Index", "Manage");
+            return RedirectToAction("Details", "Users", new  {name = username });
         }
 
         public ActionResult AddRate(double rate, int postId)

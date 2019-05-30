@@ -13,8 +13,6 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
         public string ProfileImagePath { get; set; }
 
         public string Name { get; set; }
-
-        private DateTime? dateOfBirth;
         public DateTime? DateOfBirth { get; set; }
 
         public string Country { get; set; }

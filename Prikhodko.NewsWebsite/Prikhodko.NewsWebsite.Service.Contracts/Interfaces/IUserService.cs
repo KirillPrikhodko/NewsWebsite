@@ -1,4 +1,5 @@
-﻿using Prikhodko.NewsWebsite.Service.Contracts.Models;
+﻿using System;
+using Prikhodko.NewsWebsite.Service.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
 {
@@ -6,5 +7,9 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
     {
         UserServiceModel FindById(string userId);
         UserServiceModel FindByName(string name);
+
+        void EditName(string id, string name);
+        void EditCountry(string id, string country);
+        void EditDateOfBirth(string id, DateTime dateOfBirth);
     }
 }

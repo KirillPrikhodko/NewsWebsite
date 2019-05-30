@@ -16,11 +16,13 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
     {
         private readonly IAccountManageService accountManageService;
         private readonly ILoginService loginService;
+        private readonly IUserService userService;
 
-        public ManageController(IAccountManageService accountManageService, ILoginService loginService)
+        public ManageController(IAccountManageService accountManageService, IUserService userService, ILoginService loginService)
         {
             this.accountManageService = accountManageService;
             this.loginService = loginService;
+            this.userService = userService;
         }
 
         //
@@ -278,7 +280,8 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 
         public ActionResult GetAccountGeneralInfoPartial()
         {
-            return View("_AccountGeneralInfoPartial");
+            var model = userService.FindById(HttpContext.User.Identity.GetUserId());
+            return View("_AccountGeneralInfoPartial", model);
         }
 
         protected override void Dispose(bool disposing)

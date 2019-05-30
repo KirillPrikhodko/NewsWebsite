@@ -1,13 +1,56 @@
-﻿@section Scripts{
+﻿@model Prikhodko.NewsWebsite.Service.Contracts.Models.UserServiceModel
+
+<table>
+    <tr>
+        <td>Name: </td>
+        <td href="#" id="nameeditable">@Model.Name</td>
+    </tr>
+    <tr>
+        <td>From: </td>
+        <td href="#" id="countryeditable">@Model.Country</td>
+    </tr>
+    <tr>
+        <td>Date of Birth: </td>
+        <td href="#" id="dateofbirtheditable">@Model.DateOfBirth</td>
+    </tr>
+</table>
+
+
+
+@section Scripts{
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bootstrap-editable.js"></script>
+
+    <script>
+        $.fn.editable.defaults.mode = 'inline';
+        $(document).ready(function () {
+            $('#nameeditable').editable({
+                type: 'text',
+                pk: '@Model.Id',
+                url: '/users/editname',
+                title: 'Enter your name',
+            });
+            $('#countryeditable').editable({
+                type: 'text',
+                pk: '@Model.Id',
+                url: '/users/editcountry',
+                title: 'Where are you from?',
+            });
+            $.fn.editable.defaults.mode = 'popup';
+            $('#dateofbirtheditable').editable({
+                type: 'date',
+                pk: 1,
+                url: '/users/editdateofbirth',
+                title: 'Enter your birthday',
+                placement: 'bottom',
+                format: 'yyyy-mm-dd',
+                viewformat: 'dd/mm/yyyy',
+                datepicker: {
+                    weekStart: 1
+                }
+            });
+        });
+    </script>
 }
-
-<a href="#" id="username">superuser</a>
-
-<script>
-    $('#username').editable({
-        type: 'text',
-        pk: 1,
-        url: '/post',
-        title: 'Enter username'
-    })
-</script>

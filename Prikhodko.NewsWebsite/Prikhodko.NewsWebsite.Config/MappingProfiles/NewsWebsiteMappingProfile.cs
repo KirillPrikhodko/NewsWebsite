@@ -145,6 +145,9 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.PostRates, c => c.MapFrom(src => src.PostRates))
                 .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
                 .ForMember(x => x.CommentRates, c => c.MapFrom(src => src.CommentRates))
+                .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
+                .ForMember(x => x.Country, c => c.MapFrom(src => src.Country))
+                .ForMember(x => x.DateOfBirth, c => c.MapFrom(src => src.DateOfBirth))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
@@ -154,6 +157,9 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
                 .ForMember(x => x.ApplicationIdentityUser, c => c.MapFrom(src => src.ApplicationIdentityUser))
                 .ForMember(x => x.AvgRate, c => c.MapFrom(src => src.AvgRate))
+                .ForMember(x => x.Name, c => c.MapFrom(src => src.Name))
+                .ForMember(x => x.Country, c => c.MapFrom(src => src.Country))
+                .ForMember(x => x.DateOfBirth, c => c.MapFrom(src => src.DateOfBirth))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 

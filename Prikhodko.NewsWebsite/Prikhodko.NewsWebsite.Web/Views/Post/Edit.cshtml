@@ -1,15 +1,12 @@
-﻿@model Prikhodko.NewsWebsite.Web.Models.PostViewModel
+﻿@model Prikhodko.NewsWebsite.Web.Models.EditPostViewModel
 
-@{
-    ViewBag.Title = "Create";
-}
 
-<h2>Create post</h2>
+<h2>Edit post</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(model => model.Id)
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -40,7 +37,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select multiple name="tags" type="text" id="tags" data-role="tagsinput"/>
+                <select multiple name="tags" type="text" id="tags" data-role="tagsinput">
+                    @foreach (var tag  in Model.Tags)
+                    {
+                        <option value="@tag">@tag</option>
+                    }
+                </select>
                 @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -55,7 +57,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Update" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -68,10 +70,11 @@
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script src="~/Scripts/bootstrap-tagsinput.min.js"></script>
     <script src="~/Scripts/typeahead.js"></script>
-    
+
     <script>
         var easyMDE = new EasyMDE({
-            element: document.getElementById('content')
+            element: document.getElementById('content'),
+            initialValue: `@Html.Raw(Model.Content)`
         });
     </script>
 
@@ -99,7 +102,7 @@
                 displayKey: 'name',
                 valueKey: 'name',
                 source: tags.ttAdapter(),
-                allowduplicates: false
+                allowDuplicates: false
             }
         });
     </script>

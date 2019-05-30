@@ -9,6 +9,7 @@ using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
 
 namespace Prikhodko.NewsWebsite.Web.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly IUserService userService;
@@ -18,16 +19,17 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             this.userService = userService;
         }
 
-        public ActionResult GetUserBar()
-        {
-            var model = userService.FindById(User.Identity.GetUserId());
-            if (model != null)
-            {
-                return PartialView("_UserBarPartial", model);
-            }
-            return new EmptyResult();
-        }
+        //public ActionResult GetUserBar()
+        //{
+        //    var model = userService.FindById(User.Identity.GetUserId());
+        //    if (model != null)
+        //    {
+        //        return PartialView("_UserBarPartial", model);
+        //    }
+        //    return new EmptyResult();
+        //}
 
+        [AllowAnonymous]
         public ActionResult Details(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -44,10 +46,22 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult EditUser(string name)
+        public ActionResult EditName(string value)
         {
-            throw new NotImplementedException();
+            userService.EditName(HttpContext.User.Identity.GetUserId(), value);
+            return new HttpStatusCodeResult(200);
+        }
+
+        public ActionResult EditCountry(string value)
+        {
+            userService.EditCountry(HttpContext.User.Identity.GetUserId(), value);
+            return new HttpStatusCodeResult(200);
+        }
+
+        public ActionResult EditDateOfBirth(DateTime value)
+        {
+            userService.EditDateOfBirth(HttpContext.User.Identity.GetUserId(), value);
+            return new HttpStatusCodeResult(200);
         }
     }
 }

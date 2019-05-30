@@ -25,6 +25,7 @@ namespace Prikhodko.NewsWebsite.Service
         public void Add(PostServiceModel item)
         {
             var post = Mapper.Map<Post>(item);
+            post.Tags = post.Tags.Distinct().ToList();
             postRepository.Add(post);
             unitOfWork.SaveChanges();
             if (post.Id > 0)
@@ -94,6 +95,7 @@ namespace Prikhodko.NewsWebsite.Service
         public void Update(PostServiceModel item)
         {
             var post = Mapper.Map<Post>(item);
+            post.Tags = post.Tags.Distinct().ToList();
             postRepository.Update(post);
             unitOfWork.SaveChanges();
         }
