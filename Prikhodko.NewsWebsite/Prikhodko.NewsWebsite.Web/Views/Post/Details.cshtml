@@ -157,7 +157,11 @@
             var newcommentid = "comment" + commentid;
             var comment = $('#comment_template').clone(true).prop("id", newcommentid);
             comment.css("display", "block");
-
+        @if (!Context.User.Identity.IsAuthenticated)
+        {
+            @:$(comment).find('#upvote_template').prop("disabled", true);
+            @:$(comment).find('#downvote_template').prop("disabled", true);
+        }
             $(comment).find('#authorname_template').append(username);
             $(comment).find('#authorname_template').prop("href", "/users/details?name=" + username);
             $(comment).find('#authorname_template').prop("id", "authorname" + commentid);
@@ -173,12 +177,7 @@
             $(comment).find('#downvote_template').prop("id", "downvote" + commentid);
 
 
-            @if(ViewBag.CurrentUser == null) //if currentuser is not in database, he is not authenticated and should not be able to vote for comments
-            {
-                    @:$(comment).find('#upvote_template').prop("disabled", true);
-                    @:$(comment).find('#downvote_template').prop("disabled", true);
-            }
-            else
+            @if(ViewBag.CurrentUser != null)
             {
                 foreach (var commentRate in ViewBag.CurrentUser.CommentRates)
                 {
@@ -195,8 +194,6 @@
                      }
                 }
             }
-
-            /*var authorNameElement = $('#authorname').append(false);*/
 
             return comment;
         }

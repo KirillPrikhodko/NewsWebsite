@@ -218,6 +218,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -827,6 +828,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dropzone.css" />
     <Content Include="Content\tx3-tag-cloud.css" />
     <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
@@ -876,6 +878,7 @@
     <Content Include="ckeditor\plugins\fileman\lang\tr.json" />
     <Content Include="ckeditor\plugins\fileman\web.config" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -952,6 +955,7 @@
     <Folder Include="ckeditor\plugins\fileman\Uploads\Documents\" />
     <Folder Include="ckeditor\plugins\fileman\Uploads\FLV\" />
     <Folder Include="Views\Comments\" />
+    <Folder Include="Views\Image\" />
     <Folder Include="Views\Tags\" />
   </ItemGroup>
   <ItemGroup>

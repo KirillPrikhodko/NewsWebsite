@@ -40,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select multiple name="tags" type="text" id="tags" data-role="tagsinput"/>
+                <select multiple name="tags" type="text" id="tags" data-role="tagsinput" />
                 @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +52,7 @@
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -60,6 +60,10 @@
         </div>
     </div>
 }
+   
+<form action="/image/upload"
+      class="dropzone"
+      id="my-awesome-dropzone"></form>
 
 @section Scripts {
     <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -68,7 +72,15 @@
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script src="~/Scripts/bootstrap-tagsinput.min.js"></script>
     <script src="~/Scripts/typeahead.js"></script>
+    <script src="~/Scripts/dropzone.js"></script>
+    <link href="~/Content/dropzone.css"/>
     
+    <script>
+        Dropzone.options.myAwesomeDropzone = {
+
+        }
+    </script>
+
     <script>
         var easyMDE = new EasyMDE({
             element: document.getElementById('content')
