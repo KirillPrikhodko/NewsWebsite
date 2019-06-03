@@ -12,14 +12,14 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         public ActionResult Upload()
         {
             bool isSavedSuccessfully = true;
-            string fName = "";
+            string path = "";
             try
             {
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
                     //Save file content goes here
-                    fName = file.FileName;
+                    string fName = file.FileName;
                     if (file != null && file.ContentLength > 0)
                     {
 
@@ -34,8 +34,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                         if (!isExists)
                             System.IO.Directory.CreateDirectory(pathString);
 
-                        var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                        path = string.Format("{0}\\{1}", pathString, file.FileName);
                         file.SaveAs(path);
+                        path = "/Images/WallImages/imagepath/" + fileName1;
                     }
 
                 }
@@ -49,7 +50,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 
             if (isSavedSuccessfully)
             {
-                return Json(new { Message = fName });
+                return Json(new { Message = path/*.Replace(@"\", "/")*/ });
             }
             else
             {
