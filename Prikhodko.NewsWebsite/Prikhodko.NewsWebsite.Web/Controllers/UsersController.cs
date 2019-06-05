@@ -22,7 +22,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var model = userService.GetAll().Where(x => x.ApplicationIdentityUser.UserName.ToLower() != "admin").ToList(); //admin is not listed
+            var model = userService.GetAll().Where(x => x.ApplicationIdentityUser.UserName.ToLower() != "admin").Where(x => x.ApplicationIdentityUser.IsEnabled == true).ToList(); //admin is not listed
             return View(model);
         }
 
@@ -104,6 +104,39 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             userService.RemoveRole(id, "Admin");
+            return new HttpStatusCodeResult(200);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Block(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            userService.AddRole(id, "Blocked");
+            return new HttpStatusCodeResult(200);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Unblock(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            userService.RemoveRole(id, "Blocked");
+            return new HttpStatusCodeResult(200);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            userService.Delete(id);
             return new HttpStatusCodeResult(200);
         }
     }

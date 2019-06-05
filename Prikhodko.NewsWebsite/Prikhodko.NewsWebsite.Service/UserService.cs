@@ -21,10 +21,6 @@ namespace Prikhodko.NewsWebsite.Service
             this.unitOfWork = unitOfWork;
             this.accountManageService = accountManageService;
         }
-        public void Add(UserServiceModel item)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void AddRole(string id, string role)
         {
@@ -35,9 +31,14 @@ namespace Prikhodko.NewsWebsite.Service
             repository.AddRole(id, role);
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentException("invalid id");
+            }
+            repository.Delete(id);
+            unitOfWork.SaveChanges();
         }
 
         public void EditCountry(string id, string country)
@@ -95,15 +96,10 @@ namespace Prikhodko.NewsWebsite.Service
             return result;
         }
 
-        public UserServiceModel Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<UserServiceModel> GetAll()
+        public IList<UserServiceModel> GetAll()
         {
             var users = repository.GetAll();
-            var result = users.Select(x => Mapper.Map<UserServiceModel>(x)).ToList();
+            var result = users.Select(x => Mapper.Map<UserServiceModel>(x)).Where(x => x.ApplicationIdentityUser != null).ToList();
             foreach (var user in result)
             {
                 user.ApplicationIdentityUser.Roles = repository.GetRoles(user.Id);
@@ -118,11 +114,6 @@ namespace Prikhodko.NewsWebsite.Service
                 return;
             }
             repository.RemoveRole(id, role);
-        }
-
-        public void Update(UserServiceModel item)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

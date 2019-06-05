@@ -24,6 +24,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUser user)
         {
             user.User = new User() { Id = user.Id, DateOfBirth = null};
+            user.IsEnabled = true;
             var result = await userManager.CreateAsync(user, model.Password);
             if (result == IdentityResult.Success)
             {

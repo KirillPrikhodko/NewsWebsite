@@ -94,6 +94,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
         {
             CreateMap<ApplicationIdentityUser, ApplicationIdentityUserServiceModel>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
+                .ForMember(x => x.IsEnabled, c => c.MapFrom(src => src.IsEnabled))
                 .ForMember(x => x.AccessFailedCount, c => c.MapFrom(src => src.AccessFailedCount))
                 .ForMember(x => x.Claims, c => c.MapFrom(src => src.Claims)) //TODO: properly map collections
                 .ForMember(x => x.Email, c => c.MapFrom(src => src.Email))
@@ -117,6 +118,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             CreateMap<ApplicationIdentityUserServiceModel, ApplicationIdentityUser>()
                 .ConstructUsing(c => new ApplicationIdentityUser())
                 .ForMember(x => x.Id, c => c.Condition(src => !string.IsNullOrEmpty(src.Id)))
+                .ForMember(x => x.IsEnabled, c => c.MapFrom(src => src.IsEnabled))
                 .ForMember(x => x.AccessFailedCount, c => c.MapFrom(src => src.AccessFailedCount))
                 .ForMember(x => x.Claims, c => c.MapFrom(src => src.Claims)) //TODO: properly map collections
                 .ForMember(x => x.Email, c => c.MapFrom(src => src.Email))

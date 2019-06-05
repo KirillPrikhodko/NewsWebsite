@@ -13,25 +13,32 @@
     </tr>
     @foreach (var user in Model)
     {
-        <tr class="item">
+        <tr class="item" id="tablerow @user.Id">
             <td><a href="/users/details/@user.Id">@user.ApplicationIdentityUser.UserName</a></td>
             @if (user.ApplicationIdentityUser.Roles.Contains("Writer"))
             {
-                <td><input class="writercheckbox" id="writer @user.Id" type="checkbox" checked="checked"/></td>
+                <td><input class="writercheckbox" id="writer @user.Id" type="checkbox" checked="checked" /></td>
             }
             else
             {
-                <td><input class="writercheckbox" id="writer @user.Id" type="checkbox"/></td>
+                <td><input class="writercheckbox" id="writer @user.Id" type="checkbox" /></td>
             }
             @if (user.ApplicationIdentityUser.Roles.Contains("Admin"))
             {
-                <td><input class="admincheckbox" id="admin @user.Id" type="checkbox" checked="checked"/></td>
+                <td><input class="admincheckbox" id="admin @user.Id" type="checkbox" checked="checked" /></td>
             }
             else
             {
-                <td><input class="admincheckbox" id="admin @user.Id" type="checkbox"/></td>
+                <td><input class="admincheckbox" id="admin @user.Id" type="checkbox" /></td>
             }
-            <td><input class="blockbutton" id="block @user.Id" type="button" value="Block" /></td>
+            @if (user.ApplicationIdentityUser.Roles.Contains("Blocked"))
+            {
+                <td><input class="blockbutton" id="block @user.Id" type="button" value="Unblock" /></td>
+            }
+            else
+            {
+                <td><input class="blockbutton" id="block @user.Id" type="button" value="Block" /></td>
+            }
             <td><input class="deletebutton" id="delete @user.Id" type="button" value="Delete" /></td>
         </tr>
     }
@@ -39,7 +46,7 @@
 
 @section Scripts {
     <script>
-        $('.writercheckbox').on('change', function(e) {
+        $('.writercheckbox').on('change', function (e) {
             e.preventDefault();
             if (this.checked) {
                 $.ajax({
@@ -54,7 +61,7 @@
     </script>
 
     <script>
-        $('.admincheckbox').on('change', function(e) {
+        $('.admincheckbox').on('change', function (e) {
             e.preventDefault();
             if (this.checked) {
                 $.ajax({
@@ -65,6 +72,42 @@
                     url: '/users/removeadminpermissions/' + this.id.replace('admin ', ''),
                 })
             }
+        })
+    </script>
+
+    <script>
+        $('.blockbutton').on('click', function (e) {
+            e.preventDefault();
+            if (this.value === "Block") {
+                var currentbutton = this;
+                $.ajax({
+                    url: '/users/block/' + this.id.replace('block ', ''),
+                    success: function() {
+                        currentbutton.value = "Unblock";
+                    }
+                });
+            } else {
+                var currentbutton = this;
+                $.ajax({
+                    url: '/users/unblock/' + this.id.replace('block ', ''),
+                    success: function() {
+                        currentbutton.value = "Block";
+                    }
+                });
+            }
+        })
+    </script>
+
+    <script>
+        $('.deletebutton').on('click', function (e) {
+            e.preventDefault();
+            var id = this.id.replace('delete ', '');
+            $.ajax({
+                url: '/users/delete/' + id,
+                success: function() {
+                    $('#tablerow ' + id).remove();
+                }
+            });
         })
     </script>
 }

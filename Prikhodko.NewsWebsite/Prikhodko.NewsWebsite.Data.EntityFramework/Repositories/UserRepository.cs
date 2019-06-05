@@ -18,14 +18,19 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             this.dbContext = dbContext;
             this.userManager = userManager;
         }
-        public void Add(User item)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrEmpty(id))
+            {
+                return;
+            }
+
+            var toRemove = dbContext.AppUsers.Find(id);
+            if (toRemove != null)
+            {
+                toRemove.ApplicationIdentityUser.IsEnabled = false;
+            }
         }
 
         public User FindByName(string name)
@@ -39,20 +44,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             return result;
         }
 
-        public User Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<User> GetAll()
+        public IList<User> GetAll()
         {
             var users = dbContext.AppUsers.ToList();
             return users;
-        }
-
-        public void Update(User item)
-        {
-            throw new System.NotImplementedException();
         }
 
         public void EditName(string id, string name)

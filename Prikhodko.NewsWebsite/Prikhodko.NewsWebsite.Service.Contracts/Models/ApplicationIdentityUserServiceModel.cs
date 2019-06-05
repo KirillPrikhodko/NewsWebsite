@@ -7,6 +7,7 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
 {
     public class ApplicationIdentityUserServiceModel
     {
+        public bool? IsEnabled { get; set; }
         public UserServiceModel User { get; set; }
 
         /// <summary>Email</summary>

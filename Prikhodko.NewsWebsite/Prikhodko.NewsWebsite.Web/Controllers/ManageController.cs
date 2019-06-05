@@ -29,6 +29,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         // GET: /Manage/Index
         public ActionResult Index(ManageMessageId? message)
         {
+            ViewBag.Blocked = HttpContext.User.IsInRole("Blocked");
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."

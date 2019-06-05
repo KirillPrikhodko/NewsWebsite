@@ -1,5 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
 
+@if (ViewBag.Blocked)
+{
+    <h2 style="color: red">This account was blocked by admin</h2>
+}
 
 <ul class="nav nav-tabs">
     <li class="active"><a id="navgeneral" data-toggle="tab" href="#general">General</a></li>

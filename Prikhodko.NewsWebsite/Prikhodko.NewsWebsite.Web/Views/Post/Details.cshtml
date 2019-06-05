@@ -214,7 +214,7 @@
             var options = {
                 max_value: 5,
                 initial_value: rate_value.replace(",", "."),
-                readonly: ('@Model.RatedByCurrentUser' === 'True'), //TODO: this is very unoptimized but js compares C# booleans as strings so I do not know the way around
+                readonly: ('@Model.RatedByCurrentUser' === 'True' || '@Context.User.IsInRole("Blocked")' === 'True'),
                 step_size: 0.5
             }
 

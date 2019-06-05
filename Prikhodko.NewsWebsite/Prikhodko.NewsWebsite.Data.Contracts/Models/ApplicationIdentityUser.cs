@@ -12,6 +12,8 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Models
     public class ApplicationIdentityUser : IdentityUser
     {
         public virtual User User { get; set; }
+
+        public bool? IsEnabled { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationIdentityUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
