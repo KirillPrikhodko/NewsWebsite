@@ -134,10 +134,10 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return new EmptyResult();
         }
 
-        public ActionResult GetUserPosts(string name)
+        public ActionResult GetUserPosts(string id)
         {
-            var posts = userService.FindByName(name).Posts.Select(x => Mapper.Map<PostViewModel>(x)).ToList();
-            ViewBag.LetEditAndDelete = HttpContext.User.IsInRole("Admin") || HttpContext.User.Identity.Name == name;   //if admin requests posts table or user requests his own posts
+            var posts = userService.FindById(id).Posts.Select(x => Mapper.Map<PostViewModel>(x)).ToList();
+            ViewBag.LetEditAndDelete = HttpContext.User.IsInRole("Admin") || HttpContext.User.Identity.GetUserId() == id;   //if admin requests posts table or user requests his own posts
             return PartialView("_UserPostsPartial", posts);                                                            //he should be able to edit or delete posts
         }
     }

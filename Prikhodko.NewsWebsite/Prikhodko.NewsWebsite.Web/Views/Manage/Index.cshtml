@@ -50,7 +50,7 @@
         $("#navposts").click(function (e) {
             e.preventDefault();
             $.ajax({
-                url: "/Post/GetUserPosts?name=@Context.User.Identity.Name",
+                url: "/Post/GetUserPosts/@Context.User.Identity.GetUserId()",
                 success: function (viewHtml) {
                     $("#posts").html(viewHtml);
                 }

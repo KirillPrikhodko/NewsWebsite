@@ -81,18 +81,8 @@ namespace Prikhodko.NewsWebsite.Service
             if (applicationIdentityUser != null)
             {
                 result = applicationIdentityUser.User;
+                result.ApplicationIdentityUser.Roles = repository.GetRoles(result.Id);
             }
-            return result;
-        }
-
-        public UserServiceModel FindByName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return null;
-            }
-            var user = repository.FindByName(name);
-            var result = /*user == null ? null : */Mapper.Map<UserServiceModel>(repository.FindByName(name));
             return result;
         }
 

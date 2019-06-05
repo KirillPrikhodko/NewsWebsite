@@ -8,7 +8,6 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
     {
         IList<UserServiceModel> GetAll();
         UserServiceModel FindById(string userId);
-        UserServiceModel FindByName(string name);
         void Delete(string id);
         void EditName(string id, string name);
         void EditCountry(string id, string country);
