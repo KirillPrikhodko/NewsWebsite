@@ -2,6 +2,11 @@
 @using Newtonsoft.Json
 @model Prikhodko.NewsWebsite.Web.Models.PostViewModel
 
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
 <div class="row container">
     <div class="col-md-12">
         <h1>@Model.Title</h1>
@@ -42,7 +47,7 @@
             </div>
             <div class="col-md-2">
                 By:
-                <a href="/users/details?name=@ViewBag.Author.ApplicationIdentityUser.UserName">@ViewBag.Author.ApplicationIdentityUser.UserName</a>
+                <a href="/users/details/@ViewBag.Author.Id">@ViewBag.Author.ApplicationIdentityUser.UserName</a>
             </div>
             <div class="col-md-10">
                 <div class="col-md-5"></div>
@@ -61,7 +66,7 @@
 </div>
 
 <div class="container">
-    @if (@User.Identity.IsAuthenticated)
+    @if (User.Identity.IsAuthenticated && !User.IsInRole("Blocked"))
     {
         <div class="col-md-10">
             <input type="text" id="comment_input" class="col-md-10" />

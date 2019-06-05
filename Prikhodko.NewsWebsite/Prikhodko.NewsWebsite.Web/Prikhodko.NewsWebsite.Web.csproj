@@ -215,7 +215,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -930,14 +929,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Categories\_GetCategoriesDropdownPartial.cshtml" />
     <Content Include="Views\Manage\_AccountSettingsPartial.cshtml" />
     <Content Include="Views\Manage\_AccountGeneralInfoPartial.cshtml" />
     <Content Include="Views\Post\Create.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
     <Content Include="Views\Search\Tag.cshtml" />
-    <Content Include="Views\Home\Fresh.cshtml" />
-    <Content Include="Views\Home\Best.cshtml" />
     <Content Include="Views\Home\_GetTagCloud.cshtml" />
     <Content Include="Views\Home\_GetFreshPosts.cshtml" />
     <Content Include="Views\Home\_GetBestPosts.cshtml" />
@@ -946,6 +942,7 @@
     <Content Include="Views\Post\_UserPostsPartial.cshtml" />
     <Content Include="Views\Post\Test.cshtml" />
     <Content Include="Views\Post\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

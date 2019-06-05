@@ -21,17 +21,8 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
             this.commentService = commentService;
             this.commentRateService = commentRateService;
         }
-
-        public override async Task OnConnected()
-        {
-            await base.OnConnected();
-        }
-
-        public override async Task OnDisconnected(bool a)
-        {
-            await base.OnDisconnected(a);
-        }
-
+        
+        [Authorize(Roles="Admin,Reader,Writer")]
         public void Send(string content, int postId)
         {
             CommentServiceModel model = new CommentServiceModel()
@@ -44,7 +35,8 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
             commentService.Add(model);
             Clients.All.addNewComment(model.AuthorName, model.AuthorId, model.Content, model.Rating, model.Id);
         }
-
+        
+        [Authorize(Roles = "Admin,Reader,Writer")]
         public void AddVote(bool value, string stringCommentId)
         {
             string textToReplace = value ? "upvote" : "downvote";

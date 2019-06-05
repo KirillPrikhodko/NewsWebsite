@@ -57,20 +57,20 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return View(postViewModel);
         }
 
-        [Authorize]
+        [Authorize (Roles = "Admin,Writer")]
         public ActionResult Create()
         {
             ViewBag.Categories = new SelectList(categoryService.GetAll().Select(x => x.Name));
             return View();
         }
 
-        [Authorize]
+        [Authorize (Roles = "Admin,Writer")]
         [HttpPost]
         public ActionResult Create(PostViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //TODO: should smth else be done here?
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             model.Created = DateTime.Now;
             model.AuthorId = HttpContext.User.Identity.GetUserId();
@@ -85,7 +85,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         }
 
 
-        [Authorize]
+        [Authorize (Roles = "Admin,Writer")]
         public ActionResult Edit(int id)
         {
             var currentPost = postService.Get(id);
@@ -103,7 +103,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return new HttpStatusCodeResult(400);
         }
 
-        [Authorize]
+        [Authorize (Roles = "Admin,Writer")]
         [HttpPost]
         public ActionResult Edit(EditPostViewModel model)
         {
@@ -119,13 +119,14 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return new HttpStatusCodeResult(403);
         }
 
-        [Authorize]
+        [Authorize (Roles = "Admin,Writer")]
         public ActionResult Delete(int id, string username)
         {
             postService.Delete(id);
             return RedirectToAction("Details", "Users", new  {name = username });
         }
 
+        [Authorize(Roles = "Admin,Reader,Writer")]
         public ActionResult AddRate(double rate, int postId)
         {
             PostRateServiceModel postRate = new PostRateServiceModel() { Author = userService.FindById(HttpContext.User.Identity.GetUserId()), PostId = postId, Value = rate };

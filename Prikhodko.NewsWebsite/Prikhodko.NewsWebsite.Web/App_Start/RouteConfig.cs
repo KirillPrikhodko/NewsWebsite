@@ -25,6 +25,12 @@ namespace Prikhodko.NewsWebsite.Web
                 defaults: new { controller = "Tags", action = "Index"}
             );
 
+            routes.MapRoute(
+                name: "Users",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Users", action = "Details", id = UrlParameter.Optional }
+            );
+
             //routes.MapRoute(
             //    name: "Posts",
             //    url: "{controller}/{id}",

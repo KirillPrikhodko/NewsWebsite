@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNet.Identity;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
+using Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework;
 
 namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly ApplicationUserManager userManager;
 
-        public UserRepository(ApplicationDbContext dbContext)
+        public UserRepository(ApplicationDbContext dbContext, ApplicationUserManager userManager)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
         }
         public void Add(User item)
         {
@@ -42,7 +46,8 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public IEnumerable<User> GetAll()
         {
-            throw new System.NotImplementedException();
+            var users = dbContext.AppUsers.ToList();
+            return users;
         }
 
         public void Update(User item)
@@ -81,6 +86,34 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             }
 
             user.DateOfBirth = dateOfBirth;
+        }
+
+        public void AddRole(string id, string role)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(role))
+            {
+                return;
+            }
+            userManager.AddToRole(id, role);
+        }
+
+        public void RemoveRole(string id, string role)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(role))
+            {
+                return;
+            }
+
+            if (dbContext.Users.Find(id).UserName == "admin")
+            {
+                return; //no one is allowed to remove permissions from admin, even admin
+            }
+            userManager.RemoveFromRole(id, role);
+        }
+
+        public IList<string> GetRoles(string id)
+        {
+            return userManager.GetRoles(id);
         }
     }
 }

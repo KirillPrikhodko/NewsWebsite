@@ -24,7 +24,8 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Migrations
             context.Categories.AddOrUpdate(new Category() {Name = "Machine Learning" });
             context.Categories.AddOrUpdate(new Category() {Name = "Algorithms" });
 
-            context.Roles.AddOrUpdate(new IdentityRole("Readonly"));
+            context.Roles.AddOrUpdate(new IdentityRole("Blocked"));
+            context.Roles.AddOrUpdate(new IdentityRole("Reader"));
             context.Roles.AddOrUpdate(new IdentityRole("Writer"));
             context.Roles.AddOrUpdate(new IdentityRole("Admin"));
         }

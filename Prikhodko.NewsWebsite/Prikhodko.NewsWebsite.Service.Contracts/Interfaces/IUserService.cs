@@ -11,5 +11,7 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
         void EditName(string id, string name);
         void EditCountry(string id, string country);
         void EditDateOfBirth(string id, DateTime dateOfBirth);
+        void AddRole(string id, string role);
+        void RemoveRole(string id, string role);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using AutoMapper;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
 using Prikhodko.NewsWebsite.Service.Contracts.Models;
@@ -12,8 +13,8 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
         {
             MapPostToPostServiceModel();
             MapPostServiceModelToPost();
-            MapApplicationIdentityUserToApplicationIdentityUserViewModel();
-            MapApplicationIdentityUserViewModelToApplicationIdentityUser();
+            MapApplicationIdentityUserToApplicationIdentityUserServiceModel();
+            MapApplicationIdentityUserServiceModelToApplicationIdentityUser();
             MapUserToUserServiceModel();
             MapUserServiceModelToUser();
             MapCategoryToCategoryViewModel();
@@ -89,7 +90,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
             CreateMap<IEnumerable<string>, List<Tag>>();
         }
         
-        private void MapApplicationIdentityUserToApplicationIdentityUserViewModel()
+        private void MapApplicationIdentityUserToApplicationIdentityUserServiceModel()
         {
             CreateMap<ApplicationIdentityUser, ApplicationIdentityUserServiceModel>()
                 .ForMember(x => x.Id, c => c.MapFrom(src => src.Id))
@@ -106,12 +107,12 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.SecurityStamp, c => c.MapFrom(src => src.SecurityStamp))
                 .ForMember(x => x.TwoFactorEnabled, c => c.MapFrom(src => src.TwoFactorEnabled))
                 .ForMember(x => x.User, c => c.MapFrom(x => x.User))
-                .ForMember(x => x.Roles, c => c.MapFrom(src => src.Roles))
+                //.ForMember(x => x.Roles, c => c.MapFrom(src => src.Claims.Where(claim => claim.ClaimType == ClaimTypes.Role).Select(r => r.ClaimValue)))
                 .ForMember(x => x.UserName, c => c.MapFrom(src => src.UserName))
                 .ForAllOtherMembers(c => c.Ignore());
         }
 
-        private void MapApplicationIdentityUserViewModelToApplicationIdentityUser()
+        private void MapApplicationIdentityUserServiceModelToApplicationIdentityUser()
         {
             CreateMap<ApplicationIdentityUserServiceModel, ApplicationIdentityUser>()
                 .ConstructUsing(c => new ApplicationIdentityUser())

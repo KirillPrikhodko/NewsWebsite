@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
@@ -23,6 +24,15 @@ namespace Prikhodko.NewsWebsite.Service
         public void Add(UserServiceModel item)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void AddRole(string id, string role)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(role))
+            {
+                return;
+            }
+            repository.AddRole(id, role);
         }
 
         public void Delete(int id)
@@ -92,7 +102,22 @@ namespace Prikhodko.NewsWebsite.Service
 
         public IEnumerable<UserServiceModel> GetAll()
         {
-            throw new System.NotImplementedException();
+            var users = repository.GetAll();
+            var result = users.Select(x => Mapper.Map<UserServiceModel>(x)).ToList();
+            foreach (var user in result)
+            {
+                user.ApplicationIdentityUser.Roles = repository.GetRoles(user.Id);
+            }
+            return result;
+        }
+
+        public void RemoveRole(string id, string role)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(role))
+            {
+                return;
+            }
+            repository.RemoveRole(id, role);
         }
 
         public void Update(UserServiceModel item)

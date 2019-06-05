@@ -48,7 +48,7 @@ namespace Prikhodko.NewsWebsite.Service.Contracts.Models
         public virtual int AccessFailedCount { get; set; }
 
         /// <summary>Navigation property for user roles</summary>
-        public virtual ICollection<RoleServiceModel> Roles { get; private set; }
+        public virtual IList<string> Roles { get; set; }
 
         /// <summary>Navigation property for user claims</summary>
         public virtual ICollection<ClaimServiceModel> Claims { get; private set; }

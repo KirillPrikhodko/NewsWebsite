@@ -19,30 +19,29 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             this.userService = userService;
         }
 
-        //public ActionResult GetUserBar()
-        //{
-        //    var model = userService.FindById(User.Identity.GetUserId());
-        //    if (model != null)
-        //    {
-        //        return PartialView("_UserBarPartial", model);
-        //    }
-        //    return new EmptyResult();
-        //}
+        [Authorize(Roles = "Admin")]
+        public ActionResult Index()
+        {
+            var model = userService.GetAll().Where(x => x.ApplicationIdentityUser.UserName.ToLower() != "admin").ToList(); //admin is not listed
+            return View(model);
+        }
 
         [AllowAnonymous]
-        public ActionResult Details(string name)
+        public ActionResult Details(string id)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (name.ToLower() == HttpContext.User.Identity.Name.ToLower())
+            if (HttpContext.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Manage");
+                if (id.ToLower() == HttpContext.User.Identity.GetUserId().ToLower())
+                {
+                    return RedirectToAction("Index", "Manage");
+                }
             }
-
-            var model = userService.FindByName(name);
+            var model = userService.FindById(id);
             return View(model);
         }
 
@@ -61,6 +60,50 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         public ActionResult EditDateOfBirth(DateTime value)
         {
             userService.EditDateOfBirth(HttpContext.User.Identity.GetUserId(), value);
+            return new HttpStatusCodeResult(200);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddWriterPermissions(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            userService.AddRole(id, "Writer");
+            return new HttpStatusCodeResult(200);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult RemoveWriterPermissions(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            userService.RemoveRole(id, "Writer");
+            return new HttpStatusCodeResult(200);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddAdminPermissions(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            userService.AddRole(id, "Admin");
+            return new HttpStatusCodeResult(200);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult RemoveAdminPermissions(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            userService.RemoveRole(id, "Admin");
             return new HttpStatusCodeResult(200);
         }
     }

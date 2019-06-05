@@ -25,6 +25,14 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         {
             user.User = new User() { Id = user.Id, DateOfBirth = null};
             var result = await userManager.CreateAsync(user, model.Password);
+            if (result == IdentityResult.Success)
+            {
+                userManager.AddToRole(user.Id, "Reader");
+                if (user.UserName.ToLower() == "admin")
+                {
+                    userManager.AddToRoles(user.Id, "Writer", "Admin");
+                }
+            }
             return result;
         }
     }
