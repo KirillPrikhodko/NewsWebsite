@@ -6,8 +6,8 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Interfaces
     public interface IPostRepository : IRepository<Post>
     {
         IEnumerable<Post> GetByTag(Tag tag);
-        IEnumerable<Post> GetFresh(int amount);
-        IEnumerable<Post> GetBest(double minimumRate, int amount);
+        IEnumerable<Post> GetFresh();
+        IEnumerable<Post> GetBest(double minimumRate);
 
         double? GetAvgPostRate(Post item);
     }

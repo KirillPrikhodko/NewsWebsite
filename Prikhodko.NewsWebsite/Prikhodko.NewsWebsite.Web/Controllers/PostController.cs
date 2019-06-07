@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using PagedList;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Service.Contracts.Models;
 using Prikhodko.NewsWebsite.Web.Models;
@@ -134,9 +135,10 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return new EmptyResult();
         }
 
-        public ActionResult GetUserPosts(string id)
+        public ActionResult GetUserPosts(string id, int? page)
         {
-            var posts = userService.FindById(id).Posts.Select(x => Mapper.Map<PostViewModel>(x)).ToList();
+            int pageNumber = page ?? 1;
+            var posts = userService.FindById(id).Posts.Select(x => Mapper.Map<PostViewModel>(x)).ToPagedList(pageNumber, 10);
             ViewBag.LetEditAndDelete = HttpContext.User.IsInRole("Admin") || HttpContext.User.Identity.GetUserId() == id;   //if admin requests posts table or user requests his own posts
             return PartialView("_UserPostsPartial", posts);                                                            //he should be able to edit or delete posts
         }

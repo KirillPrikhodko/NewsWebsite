@@ -132,7 +132,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                 .ForMember(x => x.SecurityStamp, c => c.MapFrom(src => src.SecurityStamp))
                 .ForMember(x => x.TwoFactorEnabled, c => c.MapFrom(src => src.TwoFactorEnabled))
                 .ForMember(x => x.User, c => c.MapFrom(x => x.User))
-                .ForMember(x => x.Roles, c => c.MapFrom(src => src.Roles))
+                //.ForMember(x => x.Roles, c => c.MapFrom(src => src.Roles))
                 .ForMember(x => x.UserName, c => c.MapFrom(src => src.UserName))
                 .ForAllOtherMembers(c => c.Ignore());
         }

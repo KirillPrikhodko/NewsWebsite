@@ -7,7 +7,7 @@
 
 <ul class="nav nav-tabs">
     <li class="active"><a id="navgeneral" data-toggle="tab" href="#general">General</a></li>
-    <li><a id="navposts" data-toggle="tab" href="#posts">Posts</a></li>
+    <li><a id="navposts" data-toggle="tab" href="#postscontent">Posts</a></li>
     @*<li><a data-toggle="tab" id="navcomments" href="#comments">Comments</a></li>
     <li><a data-toggle="tab" id="navlikedcomments" href="#likedcomments">Liked Comments</a></li>
     <li><a data-toggle="tab" id="navratedposts" href="#ratedposts">Rated Posts</a></li>*@
@@ -17,7 +17,7 @@
 <div class="tab-content">
     <div id="general" class="tab-pane fade in active">
     </div>
-    <div id="posts" class="tab-pane fade">
+    <div id="postscontent" class="tab-pane fade">
     </div>
     @*<div id="comments" class="tab-pane fade">
     </div>
@@ -52,7 +52,7 @@
             $.ajax({
                 url: "/Post/GetUserPosts/@Context.User.Identity.GetUserId()",
                 success: function (viewHtml) {
-                    $("#posts").html(viewHtml);
+                    $("#postscontent").html(viewHtml);
                 }
             });
         })

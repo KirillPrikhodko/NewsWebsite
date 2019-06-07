@@ -62,14 +62,14 @@ namespace Prikhodko.NewsWebsite.Service
             return result;
         }
 
-        public IEnumerable<PostServiceModel> GetBest(double minimumRate, int amount)
+        public IEnumerable<PostServiceModel> GetBest(double minimumRate)
         {
-            if (minimumRate < 0 || double.IsInfinity(minimumRate) || double.IsNaN(minimumRate) || amount <= 0)
+            if (minimumRate < 0 || double.IsInfinity(minimumRate) || double.IsNaN(minimumRate))
             {
                 return null;
             }
 
-            var result = postRepository.GetBest(minimumRate, amount).Select(x => Mapper.Map<PostServiceModel>(x));
+            var result = postRepository.GetBest(minimumRate).Select(x => Mapper.Map<PostServiceModel>(x));
             return result;
         }
 
@@ -81,14 +81,9 @@ namespace Prikhodko.NewsWebsite.Service
             return result;
         }
 
-        public IEnumerable<PostServiceModel> GetFresh(int amount)
+        public IEnumerable<PostServiceModel> GetFresh()
         {
-            if (amount <= 0)
-            {
-                return null;
-            }
-
-            var result = postRepository.GetFresh(amount).Select(x => Mapper.Map<PostServiceModel>(x));
+            var result = postRepository.GetFresh().Select(x => Mapper.Map<PostServiceModel>(x));
             return result;
         }
 

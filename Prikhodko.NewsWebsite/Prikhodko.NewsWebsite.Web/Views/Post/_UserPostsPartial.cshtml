@@ -1,8 +1,10 @@
 ﻿@using Prikhodko.NewsWebsite.Web.Models
-@model IEnumerable<Prikhodko.NewsWebsite.Web.Models.PostViewModel>
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Prikhodko.NewsWebsite.Web.Models.PostViewModel>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://www.w3schools.com/lib/w3.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <table id="posts" style="margin-top: 15px" class="w3-table-all">
     <tr>
@@ -34,3 +36,15 @@
         </tr>
     }
 </table>
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model,
+    page => Url.Action("GetUserPosts", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions.PageNumbersOnly,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "Get",
+            UpdateTargetId = "postscontent"
+        }))

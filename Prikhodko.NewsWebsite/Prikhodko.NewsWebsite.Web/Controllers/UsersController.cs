@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using PagedList;
 using Prikhodko.NewsWebsite.Service.Contracts.Interfaces;
 
 namespace Prikhodko.NewsWebsite.Web.Controllers
@@ -20,10 +21,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var model = userService.GetAll().Where(x => x.ApplicationIdentityUser.UserName.ToLower() != "admin").Where(x => x.ApplicationIdentityUser.IsEnabled == true).ToList(); //admin is not listed
-            return View(model);
+            int pageNumber = page ?? 1;
+            return View(model.ToPagedList(pageNumber, 10));
         }
 
         [AllowAnonymous]

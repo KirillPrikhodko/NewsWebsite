@@ -1,7 +1,11 @@
-﻿@model IEnumerable<Prikhodko.NewsWebsite.Service.Contracts.Models.UserServiceModel>
+﻿@model PagedList.IPagedList<Prikhodko.NewsWebsite.Service.Contracts.Models.UserServiceModel>
+@using PagedList.Mvc;
 
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://www.w3schools.com/lib/w3.js"></script>
+
+<input type="text" id="searchusers" onkeyup="myFunction()" placeholder="Search for names.." style="margin-top: 15px" />
 
 <table id="users" style="margin-top: 15px" class="w3-table-all">
     <tr>
@@ -43,6 +47,12 @@
         </tr>
     }
 </table>
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page }))
 
 @section Scripts {
     <script src="~/Scripts/adminusermanaging.js"></script>

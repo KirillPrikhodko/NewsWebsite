@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Prikhodko.NewsWebsite.Web.Models.PostViewModel>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Prikhodko.NewsWebsite.Web.Models.PostViewModel>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <div style="margin-top: 10px" id="freshposts" class="container">
     @foreach (var post in Model)
@@ -52,3 +55,14 @@
     <div>
     </div>
 </div>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model,
+    page => Url.Action("GetFreshPosts", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions.PageNumbersOnly,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "Get",
+            UpdateTargetId = "mainpage_content"
+        }))

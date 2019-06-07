@@ -81,13 +81,13 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             return result;
         }
 
-        public IEnumerable<Post> GetBest(double minimumRate, int amount)
+        public IEnumerable<Post> GetBest(double minimumRate)
         {
-            if (minimumRate < 0 || double.IsInfinity(minimumRate) || double.IsNaN(minimumRate) || amount <= 0)
+            if (minimumRate < 0 || double.IsInfinity(minimumRate) || double.IsNaN(minimumRate))
             {
                 return null;
             }
-            var result = dbContext.Posts.Where(x => x.AvgRate != null && x.AvgRate >= minimumRate).Take(amount).OrderByDescending(x => x.AvgRate).ToList();
+            var result = dbContext.Posts.Where(x => x.AvgRate != null && x.AvgRate >= minimumRate).OrderByDescending(x => x.AvgRate).ToList();
             return result;
         }
 
@@ -103,10 +103,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             return result;
         }
 
-        public IEnumerable<Post> GetFresh(int amount)
+        public IEnumerable<Post> GetFresh()
         {
-            var expirationDate = DateTime.Now.AddDays(-1);
-            var result = dbContext.Posts.Where(x => x.Created >= expirationDate).Take(amount).OrderBy(x => x.Created).ToList();
+            var expirationDate = DateTime.Now.AddDays(-7);
+            var result = dbContext.Posts.Where(x => x.Created >= expirationDate).OrderBy(x => x.Created).ToList();
             return result;
         }
 
