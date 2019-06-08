@@ -46,7 +46,7 @@
                     }
                 </div>
                 <div class="col-md-2">
-                    <span>@post.Comments.Count comments</span>
+                    <span>@post.Comments.Count @Localization.Comments</span>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
     </div>
 </div>
 
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Localization.Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @Localization.Of @Model.PageCount
 
 @Html.PagedListPager(Model,
     page => Url.Action("GetFreshPosts", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions.PageNumbersOnly,

@@ -106,7 +106,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         public IEnumerable<Post> GetFresh()
         {
             var expirationDate = DateTime.Now.AddDays(-7);
-            var result = dbContext.Posts.Where(x => x.Created >= expirationDate).OrderBy(x => x.Created).ToList();
+            var result = dbContext.Posts.Where(x => x.Created >= expirationDate).OrderByDescending(x => x.Created).ToList();
             return result;
         }
 

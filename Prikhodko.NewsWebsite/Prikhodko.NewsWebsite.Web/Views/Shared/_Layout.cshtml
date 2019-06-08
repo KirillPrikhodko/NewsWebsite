@@ -25,12 +25,18 @@
 
                 @if(Context.User.IsInRole("Admin") || Context.User.IsInRole("Writer"))
                 {
-                    @Html.ActionLink("Create Post", "Create", "Post", new {area = ""}, new {@class = "navbar-brand"});
+                    @Html.ActionLink(Localization.CreatePost, "Create", "Post", new {area = ""}, new {@class = "navbar-brand"});
                 }
                 @if (Context.User.IsInRole("Admin"))
                 {
-                    @Html.ActionLink("All Users", "Index", "Users", new {area = ""}, new {@class = "navbar-brand"});
+                    @Html.ActionLink(Localization.AllUsers, "Index", "Users", new {area = ""}, new {@class = "navbar-brand"});
                 }
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Русский", "ChangeCulture", new { controller = "Home", culture = "ru", returnUrl = Request.RawUrl })</li>
+                        <li>@Html.ActionLink("English", "ChangeCulture", new { controller = "Home", culture = "en", returnUrl = Request.RawUrl })</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using Prikhodko.NewsWebsite.Web.Filters;
 
 namespace Prikhodko.NewsWebsite.Web
 {
@@ -8,6 +9,7 @@ namespace Prikhodko.NewsWebsite.Web
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new CultureFilter());
         }
     }
 }

@@ -7,15 +7,15 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <h2>
-                        @Model.Count() results found @*for: <span class="text-navy">"Bootdey"*@</span>
+                        @Model.Count() @Localization.ResultsFound @*for: <span class="text-navy">"Bootdey"*@</span>
                     </h2>
                     <div class="search-form">
                         <div class="input-group">
                             <div>
-                                <input id="tag_search_input" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords">
+                                <input id="tag_search_input" class="form-control form-control-lg form-control-borderless" type="search" placeholder="@Localization.TagSearchInputFiller">
                             </div>
                             <div class="input-group-btn">
-                                <input class="btn btn-lg btn-primary" type="button" onclick="location.href = '/search/tag?tagText=' + $('#tag_search_input').val()" value="Search" />
+                                <input class="btn btn-lg btn-primary" type="button" onclick="location.href = '/search/tag?tagText=' + $('#tag_search_input').val()" value="@Localization.Search" />
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                                         }
                                     </div>
                                     <div class="col-md-2">
-                                        <span>@post.Comments.Count comments</span>
+                                        <span>@post.Comments.Count @Localization.Comments</span>
                                     </div>
                                 </div>
                             </div>

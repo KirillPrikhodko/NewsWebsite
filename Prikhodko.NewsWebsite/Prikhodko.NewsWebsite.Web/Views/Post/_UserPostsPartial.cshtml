@@ -8,14 +8,14 @@
 
 <table id="posts" style="margin-top: 15px" class="w3-table-all">
     <tr>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(1)')" style="cursor:pointer">@nameof(PostViewModel.Title)</th>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(2)')" style="cursor:pointer">@nameof(PostViewModel.Category)</th>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(3)')" style="cursor:pointer">@nameof(PostViewModel.AvgRate)</th>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(4)')" style="cursor:pointer">Number of @nameof(PostViewModel.Comments)</th>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(5)')" style="cursor:pointer">@nameof(PostViewModel.Created)</th>
+        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(1)')" style="cursor:pointer">@Localization.Title</th>
+        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(2)')" style="cursor:pointer">@Localization.Category</th>
+        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(3)')" style="cursor:pointer">@Localization.AvgRate</th>
+        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(4)')" style="cursor:pointer">@Localization.NumberOfComments</th>
+        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(5)')" style="cursor:pointer">@Localization.Created</th>
         @if (ViewBag.LetEditAndDelete)
         {
-            <th style="cursor:pointer">Edit/Delete</th>
+    <th style="cursor:pointer">@Localization.Edit/@Localization.Delete</th>
         }
     </tr>
     @foreach (var post in Model)
@@ -29,8 +29,8 @@
             @if (ViewBag.LetEditAndDelete)
             {
                 <td>
-                    <a href="@Url.Action("Edit", "Post", new {id = post.Id})">Edit</a>
-                    <a href="@Url.Action("Delete", "Post", new {id = post.Id, username = post.AuthorName})">Delete</a>
+                    <a href="@Url.Action("Edit", "Post", new {id = post.Id})">@Localization.Edit</a>
+                    <a href="@Url.Action("Delete", "Post", new {id = post.Id, username = post.AuthorName})">@Localization.Delete</a>
                 </td>
             }
         </tr>
@@ -38,7 +38,7 @@
 </table>
 <br />
 
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Localization.Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @Localization.Of @Model.PageCount
 
 @Html.PagedListPager(Model,
     page => Url.Action("GetUserPosts", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions.PageNumbersOnly,

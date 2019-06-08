@@ -2,15 +2,15 @@
 
 <table>
     <tr>
-        <td>Name: </td>
+        <td>@Localization.Name: </td>
         <td href="#" id="nameeditable">@Model.Name</td>
     </tr>
     <tr>
-        <td>From: </td>
+        <td>@Localization.Country: </td>
         <td href="#" id="countryeditable">@Model.Country</td>
     </tr>
     <tr>
-        <td>Date of Birth: </td>
+        <td>@Localization.DateOfBirth: </td>
         <td href="#" id="dateofbirtheditable">@Model.DateOfBirth</td>
     </tr>
 </table>
@@ -31,12 +31,14 @@
                 pk: '@Model.Id',
                 url: '/users/editname',
                 title: 'Enter your name',
+                emptytext: "@Localization.Empty"
             });
             $('#countryeditable').editable({
                 type: 'text',
                 pk: '@Model.Id',
                 url: '/users/editcountry',
                 title: 'Where are you from?',
+                emptytext: "@Localization.Empty"
             });
             $.fn.editable.defaults.mode = 'popup';
             $('#dateofbirtheditable').editable({
@@ -44,6 +46,7 @@
                 pk: 1,
                 url: '/users/editdateofbirth',
                 title: 'Enter your birthday',
+                emptytext: "@Localization.Empty",
                 placement: 'bottom',
                 format: 'yyyy-mm-dd',
                 viewformat: 'dd/mm/yyyy',

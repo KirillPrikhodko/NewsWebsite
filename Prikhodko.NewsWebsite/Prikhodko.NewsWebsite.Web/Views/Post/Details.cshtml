@@ -18,7 +18,7 @@
             </div>
 
             <div class="col-md-2">
-                Category:
+                @Localization.Category:
                 @Html.DisplayFor(model => model.Category)
             </div>
         </div>
@@ -37,7 +37,7 @@
                 @{
                     if (@Model.RatedByCurrentUser)
                     {
-                        <div class="col-md-4">Your rate:</div>
+                        <div class="col-md-4">@Localization.YourRate</div>
                     }
                 }
                 <div class="col-md-1">
@@ -46,18 +46,18 @@
                 </div>
             </div>
             <div class="col-md-2">
-                By:
+                @Localization.Author:
                 <a href="/users/details/@ViewBag.Author.Id">@ViewBag.Author.ApplicationIdentityUser.UserName</a>
             </div>
             <div class="col-md-10">
                 <div class="col-md-5"></div>
                 @if (Model.AvgRate != null)
                 {
-                    <div class="col-md-5">Average rate: @Model.AvgRate</div>
+                    <div class="col-md-5">@Localization.AvgRate: @Model.AvgRate</div>
                 }
                 else
                 {
-                    <div class="col-md-5">No rates so far</div>
+                    <div class="col-md-5">@Localization.NoRatesSoFar</div>
                 }
             </div>
         </div>
@@ -70,7 +70,7 @@
     {
         <div class="col-md-10">
             <input type="text" id="comment_input" class="col-md-10" />
-            <input type="button" id="sendcomment" value="Send" />
+            <input type="button" id="sendcomment" value="@Localization.Send" />
         </div>
     }
     <div id="comments" class="col-md-10">

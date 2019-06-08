@@ -4,9 +4,9 @@
 
 <div class="row" style="margin-top: 10px">
     <ul class="nav nav-tabs">
-        <li class="active"><a id="freshposts" data-toggle="tab" href="#freshposts">Fresh</a></li>
-        <li><a id="bestposts" data-toggle="tab" href="#bestposts">Best</a></li>
-        <li><a id="tagcloud" data-toggle="tab" href="#cloudtag">Tag Cloud</a></li>
+        <li class="active"><a id="freshposts" data-toggle="tab" href="#freshposts">@Localization.Fresh</a></li>
+        <li><a id="bestposts" data-toggle="tab" href="#bestposts">@Localization.Best</a></li>
+        <li><a id="tagcloud" data-toggle="tab" href="#cloudtag">@Localization.TagCloud</a></li>
     </ul>
 </div>
 
@@ -32,7 +32,7 @@
                 type: "get",
                 dataType: 'html',
                 beforeSend: function () {
-                    $('#mainpage_content').append("loading..");
+                    $('#mainpage_content').append("@Localization.Loading");
                 },
                 success: function(html) {
                     $('#mainpage_content').html(html);

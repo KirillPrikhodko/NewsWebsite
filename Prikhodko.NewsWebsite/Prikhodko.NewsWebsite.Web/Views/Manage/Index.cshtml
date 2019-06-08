@@ -2,16 +2,16 @@
 
 @if (ViewBag.Blocked)
 {
-    <h2 style="color: red">This account was blocked by admin</h2>
+    <h2 style="color: red">@Localization.ThisAccountWasBlocked</h2>
 }
 
 <ul class="nav nav-tabs">
-    <li class="active"><a id="navgeneral" data-toggle="tab" href="#general">General</a></li>
-    <li><a id="navposts" data-toggle="tab" href="#postscontent">Posts</a></li>
+    <li class="active"><a id="navgeneral" data-toggle="tab" href="#general">@Localization.General</a></li>
+    <li><a id="navposts" data-toggle="tab" href="#postscontent">@Localization.Posts</a></li>
     @*<li><a data-toggle="tab" id="navcomments" href="#comments">Comments</a></li>
     <li><a data-toggle="tab" id="navlikedcomments" href="#likedcomments">Liked Comments</a></li>
     <li><a data-toggle="tab" id="navratedposts" href="#ratedposts">Rated Posts</a></li>*@
-    <li><a id="navsettings" data-toggle="tab" href="#settings">Settings</a></li>
+    <li><a id="navsettings" data-toggle="tab" href="#settings">@Localization.Settings</a></li>
 </ul>
 
 <div class="tab-content">

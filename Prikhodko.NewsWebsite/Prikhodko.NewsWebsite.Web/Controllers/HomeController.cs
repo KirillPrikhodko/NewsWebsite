@@ -29,6 +29,12 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return View();
         }
 
+        public ActionResult ChangeCulture(string culture, string returnUrl)
+        {
+            HttpContext.Response.Cookies.Add(new HttpCookie("culture", culture));
+            return Redirect(returnUrl);
+        }
+
         public ActionResult GetFreshPosts(int? page)
         {
             int pageNumber = page ?? 1;

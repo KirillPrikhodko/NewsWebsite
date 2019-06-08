@@ -24,27 +24,6 @@ $('.admincheckbox').on('change', function (e) {
     }
 })
 
-$('.blockbutton').on('click', function (e) {
-    e.preventDefault();
-    if (this.value === "Block") {
-        var currentbutton = this;
-        $.ajax({
-            url: '/users/block/' + this.id.replace('block ', ''),
-            success: function () {
-                currentbutton.value = "Unblock";
-            }
-        });
-    } else {
-        var currentbutton = this;
-        $.ajax({
-            url: '/users/unblock/' + this.id.replace('block ', ''),
-            success: function () {
-                currentbutton.value = "Block";
-            }
-        });
-    }
-})
-
 $('.deletebutton').on('click', function (e) {
     e.preventDefault();
     var id = this.id.replace('delete ', '');
