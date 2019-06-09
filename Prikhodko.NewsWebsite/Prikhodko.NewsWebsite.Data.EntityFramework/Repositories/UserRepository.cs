@@ -53,7 +53,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         public void EditName(string id, string name)
         {
             var user = dbContext.AppUsers.Find(id);
-            if (user == null || string.IsNullOrEmpty(name))
+            if (user == null || name == null)
             {
                 throw new ArgumentException("no user with requested id");
             }
@@ -64,7 +64,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         public void EditCountry(string id, string country)
         {
             var user = dbContext.AppUsers.Find(id);
-            if (user == null || string.IsNullOrEmpty(country))
+            if (user == null || country == null)
             {
                 throw new ArgumentException("no user with requested id");
             }

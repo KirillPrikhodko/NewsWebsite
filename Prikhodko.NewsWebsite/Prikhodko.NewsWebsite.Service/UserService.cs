@@ -43,7 +43,7 @@ namespace Prikhodko.NewsWebsite.Service
 
         public void EditCountry(string id, string country)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(country))
+            if (string.IsNullOrEmpty(id) || country == null) //unlike Id, country can be empty
             {
                 throw new ArgumentException("invalid id or country");
             }
@@ -65,7 +65,7 @@ namespace Prikhodko.NewsWebsite.Service
 
         public void EditName(string id, string name)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(id) || name == null) //unlike Id, name can be empty
             {
                 throw new ArgumentException("invalid id or name");
             }

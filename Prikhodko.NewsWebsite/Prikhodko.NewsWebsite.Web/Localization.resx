@@ -255,4 +255,13 @@
   <data name="YourRate" xml:space="preserve">
     <value>Your rate</value>
   </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="MainPage" xml:space="preserve">
+    <value>ITNews - Home</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
 </root>

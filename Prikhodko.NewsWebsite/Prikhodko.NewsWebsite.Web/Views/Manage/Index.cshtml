@@ -8,9 +8,6 @@
 <ul class="nav nav-tabs">
     <li class="active"><a id="navgeneral" data-toggle="tab" href="#general">@Localization.General</a></li>
     <li><a id="navposts" data-toggle="tab" href="#postscontent">@Localization.Posts</a></li>
-    @*<li><a data-toggle="tab" id="navcomments" href="#comments">Comments</a></li>
-    <li><a data-toggle="tab" id="navlikedcomments" href="#likedcomments">Liked Comments</a></li>
-    <li><a data-toggle="tab" id="navratedposts" href="#ratedposts">Rated Posts</a></li>*@
     <li><a id="navsettings" data-toggle="tab" href="#settings">@Localization.Settings</a></li>
 </ul>
 
@@ -19,21 +16,11 @@
     </div>
     <div id="postscontent" class="tab-pane fade">
     </div>
-    @*<div id="comments" class="tab-pane fade">
-    </div>
-    <div id="likedcomments" class="tab-pane fade">
-    </div>
-    <div id="ratedposts" class="tab-pane fade">
-    </div>*@
     <div id="settings" class="tab-pane fade">
     </div>
 </div>
 
 @section Scripts {
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @*<script src="~/Scripts/bootstrap-editable.js"></script>
-        <link rel="~/Content/bootstrap-editable.css"/>*@
-    @*<script src="~/Scripts/bootstrap-editable.min.js"></script>*@
     <script>
         $("#navgeneral").click(function (e) {
             e.preventDefault();

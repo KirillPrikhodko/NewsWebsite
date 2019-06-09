@@ -255,4 +255,13 @@
   <data name="YourRate" xml:space="preserve">
     <value>Ваша оценка</value>
   </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Синенькая</value>
+  </data>
+  <data name="MainPage" xml:space="preserve">
+    <value>ITNews - Главная</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Красненькая</value>
+  </data>
 </root>
