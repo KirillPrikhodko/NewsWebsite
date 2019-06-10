@@ -12,5 +12,8 @@ namespace Prikhodko.NewsWebsite.Data.Contracts.Interfaces
     public interface IRegisterRepository
     {
         Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUser user);
+        Task<string> GenerateEmailConfirmationTokenAsync(string Id);
+        Task SendEmailAsync(string userId, string subject, string body);
+        Task<IdentityResult> ConfirmEmailAsync(string userId, string code);
     }
 }

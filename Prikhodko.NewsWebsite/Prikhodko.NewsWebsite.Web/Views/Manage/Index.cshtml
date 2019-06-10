@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 
+<title>@Localization.Manage</title>
+
 @if (ViewBag.Blocked)
 {
     <h2 style="color: red">@Localization.ThisAccountWasBlocked</h2>
@@ -7,14 +9,14 @@
 
 <ul class="nav nav-tabs" style="margin-top: 50px">
     <li class="active"><a id="navgeneral" data-toggle="tab" href="#general">@Localization.General</a></li>
-    <li><a id="navposts" data-toggle="tab" href="#postscontent">@Localization.Posts</a></li>
+    <li><a id="navposts" data-toggle="tab" href="#posts">@Localization.Posts</a></li>
     <li><a id="navsettings" data-toggle="tab" href="#settings">@Localization.Settings</a></li>
 </ul>
 
 <div class="tab-content">
     <div id="general" class="tab-pane fade in active">
     </div>
-    <div id="postscontent" class="tab-pane fade">
+    <div id="posts" class="tab-pane fade">
     </div>
     <div id="settings" class="tab-pane fade">
     </div>
@@ -39,7 +41,7 @@
             $.ajax({
                 url: "/Post/GetUserPosts/@Context.User.Identity.GetUserId()",
                 success: function (viewHtml) {
-                    $("#postscontent").html(viewHtml);
+                    $("#posts").html(viewHtml);
                 }
             });
         })
@@ -57,7 +59,6 @@
         })
     </script>
 
-
     <script>
         // Javascript to enable link to tab
         var url = document.location.toString();
@@ -73,12 +74,42 @@
 
     <script>
         $(document).ready(function () {
-            $.ajax({
-                url: "/Manage/GetAccountGeneralInfoPartial",
-                success: function (viewHtml) {
-                    $("#general").html(viewHtml);
-                }
-            });
+            var currenturl = window.location.href;
+            var currentanchor = currenturl.substring(currenturl.indexOf('#')).replace('#', '');
+            switch (currentanchor) {
+                case 'general':
+                    $.ajax({
+                        url: "/Manage/GetAccountGeneralInfoPartial",
+                        success: function (viewHtml) {
+                            $("#general").html(viewHtml);
+                        }
+                    })
+                    break;
+                case 'posts':
+                    $.ajax({
+                        url: "/Post/GetUserPosts/@Context.User.Identity.GetUserId()",
+                        success: function (viewHtml) {
+                            $("#posts").html(viewHtml);
+                        }
+                    });
+                    break;
+                case 'settings':
+                    $.ajax({
+                        url: "/Manage/GetAccountSettingsPartial",
+                        success: function (viewHtml) {
+                            $("#settings").html(viewHtml);
+                        }
+                    });
+                    break;
+                default:
+                    $.ajax({
+                        url: "/Manage/GetAccountGeneralInfoPartial",
+                        success: function (viewHtml) {
+                            $("#general").html(viewHtml);
+                        }
+                    })
+                    break;
+            }
         })
     </script>
 }

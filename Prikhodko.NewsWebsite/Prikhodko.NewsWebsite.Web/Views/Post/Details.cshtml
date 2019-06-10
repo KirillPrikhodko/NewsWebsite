@@ -2,10 +2,7 @@
 @using Newtonsoft.Json
 @model Prikhodko.NewsWebsite.Web.Models.PostViewModel
 
-
-@{
-    ViewBag.Title = Model.Title;
-}
+<title>@Model.Title</title>
 
 
 <div class="container">
@@ -17,43 +14,43 @@
                 <h4>@Model.Description</h4>
                 <h4>
                     @Localization.Category:
-                @Html.DisplayFor(model => model.Category)
-            </h4>
-            <p>
-                <div class="panel panel-default" id="content">
-                </div>
-            </p>
-            <ul class="list-inline list-unstyled">
-                <li><span><i class="glyphicon glyphicon-calendar"></i>@Model.Created</span></li>
-                <li>|</li>
-                <span><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count comments</span>
-                <li>|</li>
-                <li>
-                    <div class="content-rate">
+                    @Html.DisplayFor(model => model.Category)
+                </h4>
+                <p>
+                    <div class="panel panel-default" id="content">
                     </div>
-                </li>
-                <li>|</li>
-                <li>
-                    @if (Model.AvgRate != null)
-                    {
-                        <h5>@Localization.AvgRate: @Model.AvgRate</h5>
-                    }
-                    else
-                    {
-                        <h5>@Localization.NoRatesSoFar</h5>
-                    }
-                </li>
-                <li>|</li>
-                <li>
-                    @foreach (var tag in Model.Tags)
-                    {
-                        <a href="/Search/Tag?tagText=@HttpUtility.UrlEncode(tag)"> <span><i class="glyphicon glyphicon-tag"></i></span>@tag</a>;
-                    }
-                </li>
-            </ul>
+                </p>
+                <ul class="list-inline list-unstyled">
+                    <li><span><i class="glyphicon glyphicon-calendar"></i>@Model.Created</span></li>
+                    <li>|</li>
+                    <span><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count comments</span>
+                    <li>|</li>
+                    <li>
+                        <div class="content-rate">
+                        </div>
+                    </li>
+                    <li>|</li>
+                    <li>
+                        @if (Model.AvgRate != null)
+                        {
+                            <h5>@Localization.AvgRate: @Model.AvgRate</h5>
+                        }
+                        else
+                        {
+                            <h5>@Localization.NoRatesSoFar</h5>
+                        }
+                    </li>
+                    <li>|</li>
+                    <li>
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <a href="/Search/Tag?tagText=@HttpUtility.UrlEncode(tag)"> <span><i class="glyphicon glyphicon-tag"></i></span>@tag</a>;
+                        }
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="container">

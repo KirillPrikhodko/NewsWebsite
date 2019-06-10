@@ -250,6 +250,15 @@ namespace Prikhodko.NewsWebsite.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In order to finish it, please check your mailbox for our confirmation letter.
+        /// </summary>
+        public static string FinishRegistrationDisclaimer {
+            get {
+                return ResourceManager.GetString("FinishRegistrationDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fresh.
         /// </summary>
         public static string Fresh {
@@ -385,6 +394,15 @@ namespace Prikhodko.NewsWebsite.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Red.
         /// </summary>
         public static string Red {
@@ -399,6 +417,15 @@ namespace Prikhodko.NewsWebsite.Web {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registered.
+        /// </summary>
+        public static string Registered {
+            get {
+                return ResourceManager.GetString("Registered", resourceCulture);
             }
         }
         
@@ -471,6 +498,15 @@ namespace Prikhodko.NewsWebsite.Web {
         public static string TagSearchInputFiller {
             get {
                 return ResourceManager.GetString("TagSearchInputFiller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for registration.
+        /// </summary>
+        public static string ThanksForRegistration {
+            get {
+                return ResourceManager.GetString("ThanksForRegistration", resourceCulture);
             }
         }
         

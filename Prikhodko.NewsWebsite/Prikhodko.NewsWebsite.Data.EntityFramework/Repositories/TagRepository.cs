@@ -38,7 +38,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public IEnumerable<Tag> GetAll()
         {
-            var tags = dbContext.Tags.ToList();
+            var tags = dbContext.Tags.Where(x => x.Posts.Count > 0).ToList();
             return tags;
         }
 

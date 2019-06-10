@@ -1,7 +1,6 @@
 ﻿@model Prikhodko.NewsWebsite.Web.Models.EditPostViewModel
 
-
-<h2>Edit post</h2>
+<title>@Model.Title - @Localization.Edit</title>
 
 @using (Html.BeginForm())
 {
@@ -38,7 +37,7 @@
             @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <select multiple name="tags" type="text" id="tags" data-role="tagsinput">
-                    @foreach (var tag  in Model.Tags)
+                    @foreach (var tag in Model.Tags)
                     {
                         <option value="@tag">@tag</option>
                     }

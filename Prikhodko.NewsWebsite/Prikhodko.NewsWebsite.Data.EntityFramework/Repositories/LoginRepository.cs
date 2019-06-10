@@ -24,12 +24,33 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         }
         public async Task<SignInStatus> Login(LoginViewModel model)
         {
+            if (!AllowLogin(model.Username))
+            {
+                var user = await userManager.FindByNameAsync(model.Username);
+                if (user != null)
+                {
+                    if (!user.IsEnabled.HasValue | (user.IsEnabled.HasValue && !user.IsEnabled.Value))
+                    {
+                        return SignInStatus.LockedOut;
+                    }
+
+                    if (!user.EmailConfirmed)
+                    {
+                        return SignInStatus.RequiresVerification;
+                    }
+                }
+                return SignInStatus.Failure;
+            }
             var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             return result;
         }
 
         public async Task Login(ApplicationIdentityUser user, bool isPeristent, bool rememberBrowser)
         {
+            if (!AllowLogin(user.UserName))
+            {
+                return;
+            }
             await signInManager.SignInAsync(user, isPeristent, rememberBrowser);
         }
 
@@ -37,6 +58,25 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         {
             var result = await signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             return result;
+        }
+
+        private bool AllowLogin(string username)
+        {
+            var user = userManager.FindByNameAsync(username).Result;
+            var allowLogin = true;
+            if (user == null)
+            {
+                allowLogin = false;
+            }
+            else
+            {
+                if (!user.EmailConfirmed || (user.IsEnabled.HasValue && !user.IsEnabled.Value) || !user.IsEnabled.HasValue)
+                {
+                    allowLogin = false;
+                }
+            }
+
+            return allowLogin;
         }
 
         public async Task<bool> SendTwoFactorCodeAsync(string selectedProvider)

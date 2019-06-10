@@ -39,7 +39,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             int pageNumber = page ?? 1;
             var model = postService.GetFresh().Select(x => Mapper.Map<PostViewModel>(x)).ToPagedList(pageNumber, 10);
-            return PartialView("_GetFreshPosts", model);
+            return PartialView("_GetPosts", model);
         }
 
         public ActionResult GetBestPosts(int? page)
@@ -52,7 +52,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var model = postService.GetBest(minimumRate).Select(x => Mapper.Map<PostViewModel>(x)).ToPagedList(pageNumber, 10);
-            return PartialView("_GetBestPosts", model);
+            return PartialView("_GetPosts", model);
         }
 
         public ActionResult GetTagCloud()

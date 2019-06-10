@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Prikhodko.NewsWebsite.Service.Contracts.Models;
+using System;
 
 namespace Prikhodko.NewsWebsite.Web.Controllers
 {
@@ -55,7 +56,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    ViewBag.AlertMessage =
+                        "Your email needs to be confirmed before you can log in. An email confirmation has been sent during registration. Please remember to check your spam box";
+                    return View("Error");
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -63,8 +66,37 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             }
         }
 
-       //GET: /Account/VerifyCode
-       [AllowAnonymous]
+        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(code))
+            {
+                return View("Error");
+            }
+            IdentityResult result;
+            try
+            {
+                result = await registerService.ConfirmEmailAsync(userId, code);
+            }
+            catch (Exception e)
+            {
+                // ConfirmEmailAsync throws when the userId is not found.
+                ViewBag.errorMessage = e.Message;
+                return View("Error");
+            }
+
+            if (result.Succeeded)
+            {
+                return View();
+            }
+
+            // If we got this far, something failed.
+            AddErrors(result);
+            ViewBag.errorMessage = "ConfirmEmail failed";
+            return View("Error");
+        }
+
+        //GET: /Account/VerifyCode
+        [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Require that the user has already logged in via username/password or external login
@@ -127,20 +159,35 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 if (result.Succeeded)
                 {
                     await loginService.Login(user, false, rememberBrowser:true);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    await SendConfirmationEmail(user.Id);
+                    return RedirectToAction("RegistrationSuccess");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegistrationSuccess()
+        {
+            return View();
+        }
+
+        private async Task SendConfirmationEmail(string userId)
+        {
+            var code = await registerService.GenerateEmailConfirmationTokenAsync(userId);
+            var callbackUrl = Url.Action(
+                "ConfirmEmail", "Account",
+                new { userId = userId, code = code },
+                protocol: Request.Url.Scheme);
+
+            await registerService.SendEmailAsync(userId,
+                "Confirm your account",
+                "Please confirm your account by clicking this link: <a href=\""
+                + callbackUrl + "\">link</a>");
+
         }
 
         //TODO: implement the following methods by creating relevant services, repositories, etc.

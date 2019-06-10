@@ -114,17 +114,17 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 HttpContext.User.IsInRole("Admin")) //only admin or author can edit post
             {
                 postService.Update(post);
-                return RedirectToAction("Details", "Users", new { name = currentPost.AuthorName });
+                return RedirectToAction("Details", "Users", new { id = currentPost.AuthorId });
             }
 
             return new HttpStatusCodeResult(403);
         }
 
         [Authorize (Roles = "Admin,Writer")]
-        public ActionResult Delete(int id, string username)
+        public ActionResult Delete(int id, string userId)
         {
             postService.Delete(id);
-            return RedirectToAction("Details", "Users", new  {name = username });
+            return RedirectToAction("Details", "Users", new {id = userId});
         }
 
         [Authorize(Roles = "Admin,Reader,Writer")]

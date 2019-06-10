@@ -273,4 +273,16 @@
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="FinishRegistrationDisclaimer" xml:space="preserve">
+    <value>In order to finish it, please check your mailbox for our confirmation letter</value>
+  </data>
+  <data name="Registered" xml:space="preserve">
+    <value>Registered</value>
+  </data>
+  <data name="ThanksForRegistration" xml:space="preserve">
+    <value>Thank you for registration</value>
+  </data>
 </root>

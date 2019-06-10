@@ -1,0 +1,61 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Prikhodko.NewsWebsite.Web.Models.PostViewModel>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div style="margin-top: 10px" id="freshposts" class="container">
+    @foreach (var post in Model)
+    {
+        var postId = "post" + post.Id;
+        <div id="@postId" class="search-result well">
+            <div class="row">
+                <div class="col-md-12">
+                <h3>
+                    <a href="/post/details/@post.Id">@post.Title</a>
+                </h3>
+                <h5>
+                    <a href="/users/details/@post.AuthorId">@Localization.Author: @post.AuthorName</a>
+                </h5>
+                <h4> @post.Description</h4>
+                <ul class="list-inline list-unstyled">
+                    <li><span><i class="glyphicon glyphicon-calendar"></i>@post.Created</span></li>
+                    <li>|</li>
+                    <span><i class="glyphicon glyphicon-comment"></i> @post.Comments.Count comments</span>
+                    <li>|</li>
+                    <li>
+                        @if (post.AvgRate != null)
+                        {
+                            <h5>@Localization.AvgRate: @post.AvgRate<span class="glyphicon glyphicon-star"></span></h5>
+                        }
+                        else
+                        {
+                            <h5>@Localization.NoRatesSoFar</h5>
+                        }
+                    </li>
+                    <li>|</li>
+                    <li>
+                        @foreach (var tag in post.Tags)
+                        {
+                            <a href="/Search/Tag?tagText=@HttpUtility.UrlEncode(tag)"> <span><i class="glyphicon glyphicon-tag"></i></span>@tag</a>;
+                        }
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+        </div>
+    }
+    <div>
+    </div>
+</div>
+
+@Localization.Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @Localization.Of @Model.PageCount
+
+@Html.PagedListPager(Model,
+    page => Url.Action("GetFreshPosts", new { page = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions.PageNumbersOnly,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "Get",
+            UpdateTargetId = "mainpage_content"
+        }))

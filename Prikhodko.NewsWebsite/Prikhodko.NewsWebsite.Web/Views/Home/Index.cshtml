@@ -4,7 +4,7 @@
     <ul class="nav nav-tabs">
         <li class="active"><a id="freshposts" data-toggle="tab" href="#freshposts">@Localization.Fresh</a></li>
         <li><a id="bestposts" data-toggle="tab" href="#bestposts">@Localization.Best</a></li>
-        <li><a id="tagcloud" data-toggle="tab" href="#cloudtag">@Localization.TagCloud</a></li>
+        <li><a id="tagcloud" data-toggle="tab" href="#tagcloud">@Localization.TagCloud</a></li>
     </ul>
 </div>
 
@@ -13,29 +13,71 @@
 
     </div>
     @*<div class="col-sm-2">
-        <div class="row">
-            @Html.Action("GetUserBar", "Users")
-        </div>
-    </div>*@
+            <div class="row">
+                @Html.Action("GetUserBar", "Users")
+            </div>
+        </div>*@
 </div>
 
 @section Scripts {
-    <link href="~/Content/tx3-tag-cloud.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/tx3-tag-cloud.css" media="screen" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/jquery.tx3-tag-cloud.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: "@Url.Action("GetFreshPosts", "Home")",
-                type: "get",
-                dataType: 'html',
-                beforeSend: function () {
-                    $('#mainpage_content').append("@Localization.Loading");
-                },
-                success: function(html) {
-                    $('#mainpage_content').html(html);
-                }
-            });
+        $(document).ready(function() {
+            var currenturl = window.location.href;
+            var currentanchor = currenturl.substring(currenturl.indexOf('#')).replace('#', '');
+            switch (currentanchor) {
+            case 'fresh':
+                $.ajax({
+                    url: "@Url.Action("GetFreshPosts", "Home")",
+                    type: "get",
+                    dataType: 'html',
+                    beforeSend: function() {
+                        $('#mainpage_content').append("@Localization.Loading");
+                    },
+                    success: function(html) {
+                        $('#mainpage_content').html(html);
+                    }
+                });
+                break;
+            case 'best':
+                $.ajax({
+                    url: "@Url.Action("GetBestPosts", "Home")",
+                    type: "get",
+                    dataType: 'html',
+                    success: function(html) {
+                        $('#mainpage_content').html(html);
+                    }
+                });
+                break;
+                case 'tagcloud':
+                    $.ajax({
+                        url: "@Url.Action("GetTagCloud", "Home")",
+                        type: "get",
+                        dataType: 'html',
+                        success: function(html) {
+                            $('#mainpage_content').html(html);
+                            $("#tag_cloud").tx3TagCloud({
+                                multiplier: 5 // default multiplier is "1"
+                            });
+                        }
+                    });
+                    break;
+                default:
+                    $.ajax({
+                        url: "@Url.Action("GetFreshPosts", "Home")",
+                        type: "get",
+                        dataType: 'html',
+                        beforeSend: function() {
+                            $('#mainpage_content').append("@Localization.Loading");
+                        },
+                        success: function(html) {
+                            $('#mainpage_content').html(html);
+                        }
+                    });
+                    break;
+            }
         });
     </script>
 
@@ -46,7 +88,7 @@
                 url: "@Url.Action("GetFreshPosts", "Home")",
                 type: "get",
                 dataType: 'html',
-                success: function (html) {
+                success: function(html) {
                     $('#mainpage_content').html(html);
                 }
             });

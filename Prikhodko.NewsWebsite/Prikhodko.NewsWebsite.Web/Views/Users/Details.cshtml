@@ -1,4 +1,7 @@
-﻿@model Prikhodko.NewsWebsite.Service.Contracts.Models.UserServiceModel
+﻿@using Microsoft.AspNet.Identity
+@model Prikhodko.NewsWebsite.Service.Contracts.Models.UserServiceModel
+
+<title>@Model.ApplicationIdentityUser.UserName - @Localization.Profile</title>
 
 @if (Context.User.IsInRole("Admin"))
 {
@@ -111,6 +114,31 @@
                 }
             });
         })
+    </script>
+
+    <script>
+            $(document).ready(function () {
+                var currenturl = window.location.href;
+                var currentanchor = currenturl.substring(currenturl.indexOf('#')).replace('#', '');
+                switch (currentanchor) {
+                case 'general':
+                    $.ajax({
+                        url: "/Manage/GetAccountGeneralInfoPartial",
+                        success: function (viewHtml) {
+                            $("#general").html(viewHtml);
+                        }
+                    })
+                    break;
+                case 'posts':
+                    $.ajax({
+                        url: "/Post/GetUserPosts/@Context.User.Identity.GetUserId()",
+                        success: function (viewHtml) {
+                            $("#posts").html(viewHtml);
+                        }
+                    });
+                    break;
+                }
+            })
     </script>
 
 }
