@@ -7,50 +7,43 @@
     @foreach (var post in Model)
     {
         var postId = "post" + post.Id;
-        <div id="@postId" class="search-result">
+        <div id="@postId" class="search-result well">
             <div class="row">
-                <div class="col-md-7">
-                    <h3>
-                        <a href="/post/details/@post.Id">
-                            @post.Title
-                        </a>
-                    </h3>
-                </div>
-                <div class="col-md-3">
-                    <h3>
-                        <a href="/users/details/@post.AuthorId">@post.AuthorName</a>
-                    </h3>
-                </div>
+                <div class="col-md-12">
+                <h3>
+                    <a href="/post/details/@post.Id">@post.Title</a>
+                </h3>
+                <h5>
+                    <a href="/users/details/@post.AuthorId">@Localization.Author: @post.AuthorName</a>
+                </h5>
+                <h4> @post.Description</h4>
+                <ul class="list-inline list-unstyled">
+                    <li><span><i class="glyphicon glyphicon-calendar"></i>@post.Created</span></li>
+                    <li>|</li>
+                    <span><i class="glyphicon glyphicon-comment"></i> @post.Comments.Count comments</span>
+                    <li>|</li>
+                    <li>
+                        @if (post.AvgRate != null)
+                        {
+                            <h5>@Localization.AvgRate: @post.AvgRate<span class="glyphicon glyphicon-star"></span></h5>
+                        }
+                        else
+                        {
+                            <h5>@Localization.NoRatesSoFar</h5>
+                        }
+                    </li>
+                    <li>|</li>
+                    <li>
+                        @foreach (var tag in post.Tags)
+                        {
+                            <a href="/Search/Tag?tagText=@HttpUtility.UrlEncode(tag)"> <span><i class="glyphicon glyphicon-tag"></i></span>@tag</a>;
+                        }
+                    </li>
+                </ul>
             </div>
-            <p>
-                @post.Description
-            </p>
-            <div class="row">
-                <div class="col-md-2">
-                    @foreach (var tag in post.Tags)
-                    {
-                        <span class="glyphicon glyphicon-tag" style="color: gray">@tag</span>
-                    }
-                </div>
-                <div class="col-md-2">
-                    <span>@post.Created</span>
-                </div>
-                <div class="col-md-offset-2 col-md-2">
-                    @if (post.AvgRate == null)
-                    {
-                        <span>No average rate so far</span>
-                    }
-                    else
-                    {
-                        <span class="glyphicon glyphicon-star">@post.AvgRate</span>
-                    }
-                </div>
-                <div class="col-md-2">
-                    <span>@post.Comments.Count @Localization.Comments</span>
-                </div>
             </div>
+
         </div>
-        <div class="hr-line-dashed"></div>
     }
     <div>
     </div>

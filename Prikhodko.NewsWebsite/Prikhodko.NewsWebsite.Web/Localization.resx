@@ -258,10 +258,19 @@
   <data name="Blue" xml:space="preserve">
     <value>Blue</value>
   </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
   <data name="MainPage" xml:space="preserve">
     <value>ITNews - Home</value>
   </data>
   <data name="Red" xml:space="preserve">
     <value>Red</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
   </data>
 </root>

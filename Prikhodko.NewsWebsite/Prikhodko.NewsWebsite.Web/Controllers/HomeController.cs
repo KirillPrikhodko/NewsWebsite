@@ -57,7 +57,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 
         public ActionResult GetTagCloud()
         {
-            var model = tagService.GetAmount(10) ?? new List<TagServiceModel>();
+            var model = tagService.GetAll() ?? new List<TagServiceModel>();
             return PartialView("_GetTagCloud", model);
         }
 

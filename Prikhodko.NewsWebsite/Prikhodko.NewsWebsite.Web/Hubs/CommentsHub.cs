@@ -25,6 +25,10 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
         [Authorize(Roles="Admin,Reader,Writer")]
         public void Send(string content, int postId)
         {
+            if (string.IsNullOrWhiteSpace(content) || postId <= 0)
+            {
+                return;
+            }
             CommentServiceModel model = new CommentServiceModel()
             {
                 AuthorId = Context.User.Identity.GetUserId(),

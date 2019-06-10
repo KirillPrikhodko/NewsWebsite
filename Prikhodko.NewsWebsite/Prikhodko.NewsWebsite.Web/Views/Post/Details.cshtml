@@ -7,93 +7,83 @@
     ViewBag.Title = Model.Title;
 }
 
-<div class="row container">
-    <div class="col-md-12">
-        <h1>@Model.Title</h1>
 
-        <div class="container">
-
-            <div class="col-md-8">
+<div class="container">
+    <div class="well">
+        <div class="media">
+            <div class="media-body">
+                <h1 class="media-heading">@Model.Title</h1>
+                <div><a class="text-right" href="/users/details/@ViewBag.Author.Id"> @Localization.Author: @ViewBag.Author.ApplicationIdentityUser.UserName</a></div>
                 <h4>@Model.Description</h4>
-            </div>
-
-            <div class="col-md-2">
-                @Localization.Category:
+                <h4>
+                    @Localization.Category:
                 @Html.DisplayFor(model => model.Category)
-            </div>
-        </div>
-
-        <div class="panel panel-default" id="content">
-        </div>
-
-        <div class="container">
-            <div class="col-md-4">
-                @foreach (var tag in Model.Tags)
-                {
-                    <a href="/Search/Tag?tagText=@HttpUtility.UrlEncode(tag)">@tag</a>;
-                }
-            </div>
-            <div class="col-md-4">
-                @{
-                    if (@Model.RatedByCurrentUser)
-                    {
-                        <div class="col-md-4">@Localization.YourRate</div>
-                    }
-                }
-                <div class="col-md-1">
+            </h4>
+            <p>
+                <div class="panel panel-default" id="content">
+                </div>
+            </p>
+            <ul class="list-inline list-unstyled">
+                <li><span><i class="glyphicon glyphicon-calendar"></i>@Model.Created</span></li>
+                <li>|</li>
+                <span><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count comments</span>
+                <li>|</li>
+                <li>
                     <div class="content-rate">
                     </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                @Localization.Author:
-                <a href="/users/details/@ViewBag.Author.Id">@ViewBag.Author.ApplicationIdentityUser.UserName</a>
-            </div>
-            <div class="col-md-10">
-                <div class="col-md-5"></div>
-                @if (Model.AvgRate != null)
-                {
-                    <div class="col-md-5">@Localization.AvgRate: @Model.AvgRate</div>
-                }
-                else
-                {
-                    <div class="col-md-5">@Localization.NoRatesSoFar</div>
-                }
-            </div>
+                </li>
+                <li>|</li>
+                <li>
+                    @if (Model.AvgRate != null)
+                    {
+                        <h5>@Localization.AvgRate: @Model.AvgRate</h5>
+                    }
+                    else
+                    {
+                        <h5>@Localization.NoRatesSoFar</h5>
+                    }
+                </li>
+                <li>|</li>
+                <li>
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <a href="/Search/Tag?tagText=@HttpUtility.UrlEncode(tag)"> <span><i class="glyphicon glyphicon-tag"></i></span>@tag</a>;
+                    }
+                </li>
+            </ul>
         </div>
-
     </div>
+</div>
 </div>
 
 <div class="container">
     @if (User.Identity.IsAuthenticated && !User.IsInRole("Blocked"))
     {
-        <div class="col-md-10">
-            <input type="text" id="comment_input" class="col-md-10" />
-            <input type="button" id="sendcomment" value="@Localization.Send" />
+        <div class="form-horizontal" id="commentForm">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <textarea id="comment_input" class="form-control" name="addComment" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <button class="btn btn-success btn-circle text-uppercase" type="submit" id="sendcomment"><span class="glyphicon glyphicon-send"></span> @Localization.Send</button>
+                </div>
+            </div>
         </div>
     }
-    <div id="comments" class="col-md-10">
+    <div id="comments">
     </div>
 </div>
 
-<div id="comment_template" class="comment-css" style="display: none">
-    <div class="row container-fluid">
-        <div class="col-md-11">
-            <div>
-                <a id="authorname_template" href=#></a>
-            </div>
-            <div id="commentcontent_template">
-
-            </div>
-        </div>
-        <div class="col=md-1">
-            <div>
-                <button id="upvote_template" class="upvote_button">+</button>
-                <span id="currentrating_template" style="font-weight: bold"></span>
-                <button id="downvote_template" class="downvote_button">-</button>
-            </div>
-        </div>
+<div id="comment_template" class="media-body" style="display: none">
+    <div class="well well-lg">
+        <a class="media-heading text-uppercase reviews" id="authorname_template" href=#></a>
+        <p id="commentcontent_template" class="media-comment">
+        </p>
+        <button class="btn btn-success btn-circle text-uppercase upvote_button" id="upvote_template"><span class="glyphicon glyphicon-plus"></span></button>
+        <span id="currentrating_template" style="font-weight: bold"></span>
+        <button class="btn btn-danger btn-circle text-uppercase downvote_button" id="downvote_template"><span class="glyphicon glyphicon-minus"></span></button>
     </div>
 </div>
 
@@ -136,7 +126,10 @@
 
             $.connection.hub.start().done(function () {
                 $('#sendcomment').click(function () {
-                    comments_hub.server.send($('#comment_input').val(), @Model.Id);
+                    var commentcontent = $('#comment_input').val();
+                    if (commentcontent) {
+                        comments_hub.server.send($('#comment_input').val(), @Model.Id);
+                    }
                     $('#comment_input').val('').focus();
                 });
                 $('.upvote_button').on("click", function(e) {
@@ -161,7 +154,7 @@
         function formComment(username, userid, content, rating, commentid) {
             var newcommentid = "comment" + commentid;
             var comment = $('#comment_template').clone(true).prop("id", newcommentid);
-            comment.css("display", "block");
+            comment.css("display", "inline");
         @if (!Context.User.Identity.IsAuthenticated)
         {
             @:$(comment).find('#upvote_template').prop("disabled", true);
