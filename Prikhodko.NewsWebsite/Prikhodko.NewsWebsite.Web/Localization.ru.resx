@@ -291,4 +291,31 @@
   <data name="ThanksForRegistration" xml:space="preserve">
     <value>Благодарим за регистрацию!</value>
   </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Подтвердите новый пароль</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Подтвердите пароль</value>
+  </data>
+  <data name="CreateNewAccount" xml:space="preserve">
+    <value>Создать новый аккаунт.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Текущий пароль</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Адрес электронной почты</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Новый пароль</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Запомнить меня</value>
+  </data>
+  <data name="UseLocalAccountToLogIn" xml:space="preserve">
+    <value>Войти в  существующий аккаунт.</value>
+  </data>
+  <data name="ConfirmationEmailWasSent" xml:space="preserve">
+    <value>Для входа необходимо подтвердить Ваш адрес электронной почты. Письмо с подтверждением было отправлено при регистрации. Не забывайте проверять папку "Спам".</value>
+  </data>
 </root>

@@ -20,7 +20,7 @@
                 <ul class="list-inline list-unstyled">
                     <li><span><i class="glyphicon glyphicon-calendar"></i>@post.Created</span></li>
                     <li>|</li>
-                    <span><i class="glyphicon glyphicon-comment"></i> @post.Comments.Count comments</span>
+                    <span><i class="glyphicon glyphicon-comment"></i> @post.Comments.Count @Localization.Comments</span>
                     <li>|</li>
                     <li>
                         @if (post.AvgRate != null)

@@ -291,4 +291,31 @@
   <data name="ThanksForRegistration" xml:space="preserve">
     <value>Thank you for registration</value>
   </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirm new password</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="CreateNewAccount" xml:space="preserve">
+    <value>Create a new account.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
+  <data name="UseLocalAccountToLogIn" xml:space="preserve">
+    <value>Use a local account to log in.</value>
+  </data>
+  <data name="ConfirmationEmailWasSent" xml:space="preserve">
+    <value>Your email needs to be confirmed before you can log in. An email confirmation has been sent during registration. Please remember to check your spam box</value>
+  </data>
 </root>

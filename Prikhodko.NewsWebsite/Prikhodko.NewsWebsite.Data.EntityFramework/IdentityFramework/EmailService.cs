@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
+using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -27,8 +28,8 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.IdentityFramework
             myMessage.SetSubject(message.Subject);
             myMessage.AddContent(MimeType.Text, message.Body);
             myMessage.AddContent(MimeType.Html, message.Body);
-
-            var client = new SendGridClient(System.Configuration.ConfigurationManager.AppSettings["ApiSendGrid"]);
+            var api = System.Configuration.ConfigurationManager.AppSettings.Get("ApiSendGrid");
+            var client = new SendGridClient(api);
             // Send the email.
             if (client != null)
             {

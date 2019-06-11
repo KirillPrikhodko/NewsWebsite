@@ -57,7 +57,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     ViewBag.AlertMessage =
-                        "Your email needs to be confirmed before you can log in. An email confirmation has been sent during registration. Please remember to check your spam box";
+                        Localization.ConfirmationEmailWasSent;
                     return View("Error");
                 case SignInStatus.Failure:
                 default:
@@ -66,6 +66,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             }
         }
 
+        [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(code))
