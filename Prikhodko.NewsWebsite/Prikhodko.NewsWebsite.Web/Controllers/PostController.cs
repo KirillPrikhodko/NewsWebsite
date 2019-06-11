@@ -123,6 +123,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         [Authorize (Roles = "Admin,Writer")]
         public ActionResult Delete(int id, string userId)
         {
+            var toDelete = postService.Get(id);
+            if (toDelete.AuthorId != HttpContext.User.Identity.GetUserId())
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             postService.Delete(id);
             return RedirectToAction("Details", "Users", new {id = userId});
         }

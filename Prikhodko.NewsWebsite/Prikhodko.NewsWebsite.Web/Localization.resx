@@ -276,6 +276,12 @@
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="DropzoneText" xml:space="preserve">
+    <value>Drop files here to upload</value>
+  </data>
   <data name="FinishRegistrationDisclaimer" xml:space="preserve">
     <value>In order to finish it, please check your mailbox for our confirmation letter</value>
   </data>

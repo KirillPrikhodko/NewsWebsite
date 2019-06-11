@@ -178,6 +178,15 @@ namespace Prikhodko.NewsWebsite.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created on.
         /// </summary>
         public static string Created {
@@ -219,6 +228,15 @@ namespace Prikhodko.NewsWebsite.Web {
         public static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drop files here to upload.
+        /// </summary>
+        public static string DropzoneText {
+            get {
+                return ResourceManager.GetString("DropzoneText", resourceCulture);
             }
         }
         

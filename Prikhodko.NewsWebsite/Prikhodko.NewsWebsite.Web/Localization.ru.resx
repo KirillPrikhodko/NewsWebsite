@@ -276,6 +276,12 @@
   <data name="Profile" xml:space="preserve">
     <value>Профиль</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="DropzoneText" xml:space="preserve">
+    <value>Перетащите сюда картинку, чтобы вставить ее в пост</value>
+  </data>
   <data name="FinishRegistrationDisclaimer" xml:space="preserve">
     <value>Для завершения регистрации проверьте Ваш почтовый ящик: мы отправили письмо с подтверждением.</value>
   </data>
