@@ -967,6 +967,7 @@
     <Folder Include="ckeditor\plugins\fileman\tmp\" />
     <Folder Include="ckeditor\plugins\fileman\Uploads\Documents\" />
     <Folder Include="ckeditor\plugins\fileman\Uploads\FLV\" />
+    <Folder Include="Content\themes\" />
     <Folder Include="Views\Comments\" />
     <Folder Include="Views\Image\" />
     <Folder Include="Views\Tags\" />

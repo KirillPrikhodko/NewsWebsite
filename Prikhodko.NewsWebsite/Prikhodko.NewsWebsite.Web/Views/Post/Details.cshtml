@@ -81,6 +81,7 @@
         <button class="btn btn-success btn-circle text-uppercase upvote_button" id="upvote_template"><span class="glyphicon glyphicon-plus"></span></button>
         <span id="currentrating_template" style="font-weight: bold"></span>
         <button class="btn btn-danger btn-circle text-uppercase downvote_button" id="downvote_template"><span class="glyphicon glyphicon-minus"></span></button>
+        <button class="btn btn-danger btn-circle text-uppercase deletecomment_button" id="deletecomment_template" style="display: none">@Localization.Delete</button>
     </div>
 </div>
 
@@ -119,6 +120,11 @@
                 document.getElementById("currentrating" + requiredcommentid).innerHTML = currentrating;
             };
 
+            comments_hub.client.deleteComment = function (id) {
+                var commentid = "comment" + id;
+                $('#' + commentid).remove();
+            }
+
             $('#comment_input').focus();
 
             $.connection.hub.start().done(function () {
@@ -135,7 +141,7 @@
                     var searchid = this.id.replace("upvote", "");
                     $('#comment' + searchid).find('#upvote' + searchid).prop("disabled", true);
                     $('#comment' + searchid).find('#downvote' + searchid).prop("disabled", true);
-                    $('#comment' + searchid).find('#upvote' + searchid).prop("style", "background: green");
+                    //$('#comment' + searchid).find('#upvote' + searchid).prop("style", "background: green");
                 })
                 $('.downvote_button').on("click", function(e) {
                     e.preventDefault();
@@ -143,7 +149,10 @@
                     var searchid = this.id.replace("downvote", "");
                     $('#comment' + searchid).find('#upvote' + searchid).prop("disabled", true);
                     $('#comment' + searchid).find('#downvote' + searchid).prop("disabled", true);
-                    $('#comment' + searchid).find('#downvote' + searchid).prop("style", "background: red");
+                    //$('#comment' + searchid).find('#downvote' + searchid).prop("style", "background: red");
+                })
+                $('.deletecomment_button').on("click", function () {
+                    comments_hub.server.deleteComment(this.id)
                 })
             });
         });
@@ -188,6 +197,12 @@
                         @:$(comment).find('#downvote' + commentbuttonid).prop("style", "background: red");
                      }
                 }
+            }
+
+            @if (Context.User.IsInRole("Admin"))
+            {
+                @:$(comment).find('#deletecomment_template').prop("style", "display: inline");
+                @:$(comment).find('#deletecomment_template').prop("id", "deletecomment" + commentid);
             }
 
             return comment;

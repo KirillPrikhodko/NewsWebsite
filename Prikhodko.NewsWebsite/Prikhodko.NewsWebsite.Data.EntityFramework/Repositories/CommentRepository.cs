@@ -31,7 +31,11 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var toDelete = dbContext.Comments.Find(id);
+            if(toDelete != null)
+            {
+                dbContext.Comments.Remove(toDelete);
+            }
         }
 
         public Comment Get(int id)

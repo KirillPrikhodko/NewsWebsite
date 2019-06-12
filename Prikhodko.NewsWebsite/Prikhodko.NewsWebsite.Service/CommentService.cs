@@ -32,7 +32,12 @@ namespace Prikhodko.NewsWebsite.Service
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            if(id <= 0)
+            {
+                return;
+            }
+            repository.Delete(id);
+            unitOfWork.SaveChanges();
         }
 
         public CommentServiceModel Get(int id)

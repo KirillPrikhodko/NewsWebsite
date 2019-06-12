@@ -43,7 +43,7 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
         [Authorize(Roles = "Admin,Reader,Writer")]
         public void AddVote(bool value, string stringCommentId)
         {
-            string textToReplace = value ? "upvote" : "downvote";
+            string textToReplace = value ? "upvote" : "downvote"; //if the vote is positive, the value will be true => id of the clicked button will be "upvoteXXXX"
             int commentId = Int32.Parse(stringCommentId.Replace(textToReplace, "")); //because html upvote button have id "upvoteXXXX" which is passed to server, I have to do this
             commentRateService.Add(new CommentRateServiceModel()
             {
@@ -52,6 +52,18 @@ namespace Prikhodko.NewsWebsite.Web.Hubs
                 Value = value
             });
             Clients.All.changeRating(commentId, value);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public void DeleteComment(string stringId)
+        {
+            int id = Int32.Parse(stringId.Replace("deletecomment", ""));
+            if(id <= 0)
+            {
+                return;
+            }
+            commentService.Delete(id);
+            Clients.All.deleteComment(id);
         }
     }
 }
