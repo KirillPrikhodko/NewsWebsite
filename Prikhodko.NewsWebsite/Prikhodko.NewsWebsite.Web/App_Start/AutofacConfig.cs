@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Autofac;
+using Autofac.Extras;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.SignalR;
 using Microsoft.AspNet.SignalR;
@@ -25,7 +26,7 @@ namespace Prikhodko.NewsWebsite.Web
             builder.AddServiceDependencies();
 
             var container = builder.Build();
-
+            var csl = new Autofac.Extras.CommonServiceLocator.AutofacServiceLocator(container);
             GlobalHost.DependencyResolver = new Autofac.Integration.SignalR.AutofacDependencyResolver(container);
             DependencyResolver.SetResolver(new Autofac.Integration.Mvc.AutofacDependencyResolver(container));
         }

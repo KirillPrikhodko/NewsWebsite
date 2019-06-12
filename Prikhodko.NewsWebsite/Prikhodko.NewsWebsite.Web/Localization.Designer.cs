@@ -322,6 +322,15 @@ namespace Prikhodko.NewsWebsite.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find by name.
+        /// </summary>
+        public static string FindByName {
+            get {
+                return ResourceManager.GetString("FindByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In order to finish it, please check your mailbox for our confirmation letter.
         /// </summary>
         public static string FinishRegistrationDisclaimer {

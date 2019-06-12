@@ -318,4 +318,7 @@
   <data name="ConfirmationEmailWasSent" xml:space="preserve">
     <value>Your email needs to be confirmed before you can log in. An email confirmation has been sent during registration. Please remember to check your spam box</value>
   </data>
+  <data name="FindByName" xml:space="preserve">
+    <value>Find by name</value>
+  </data>
 </root>

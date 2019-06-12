@@ -30,6 +30,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             if (toRemove != null)
             {
                 toRemove.ApplicationIdentityUser.IsEnabled = false;
+                
             }
         }
 

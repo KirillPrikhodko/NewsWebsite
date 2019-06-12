@@ -318,4 +318,7 @@
   <data name="ConfirmationEmailWasSent" xml:space="preserve">
     <value>Для входа необходимо подтвердить Ваш адрес электронной почты. Письмо с подтверждением было отправлено при регистрации. Не забывайте проверять папку "Спам".</value>
   </data>
+  <data name="FindByName" xml:space="preserve">
+    <value>Искать по имени</value>
+  </data>
 </root>

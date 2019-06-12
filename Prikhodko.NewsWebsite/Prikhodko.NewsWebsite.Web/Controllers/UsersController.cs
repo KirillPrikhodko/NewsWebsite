@@ -21,10 +21,31 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(int? page)
+        public ActionResult Index(string sortOrder, string searchString, int? page)
         {
-            var model = userService.GetAll().Where(x => x.ApplicationIdentityUser.UserName.ToLower() != "admin").Where(x => x.ApplicationIdentityUser.IsEnabled == true).ToList(); //admin is not listed
+            #region Paging
+            var model = userService.GetAll().Where(x => x.ApplicationIdentityUser.UserName.ToLower() != "admin").Where(x => x.ApplicationIdentityUser.IsEnabled == true); //admin is not listed
             int pageNumber = page ?? 1;
+            #endregion
+            #region Search
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(s => s.ApplicationIdentityUser.UserName.Contains(searchString)
+                                       || s.ApplicationIdentityUser.UserName.Contains(searchString));
+            }
+            #endregion
+            #region Sort
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    model = model.OrderByDescending(x => x.ApplicationIdentityUser.UserName);
+                    break;
+                default:
+                    model = model.OrderBy(x => x.ApplicationIdentityUser.UserName);
+                    break;
+            }
+            #endregion
             return View(model.ToPagedList(pageNumber, 10));
         }
 
