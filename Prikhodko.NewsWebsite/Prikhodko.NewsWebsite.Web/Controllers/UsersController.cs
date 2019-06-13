@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -50,7 +51,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -64,7 +65,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                     return RedirectToAction("Index", "Manage");
                 }
             }
-            var model = userService.FindById(id);
+            var model = await userService.FindByIdAsync(id);
             return View(model);
         }
 
@@ -91,7 +92,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(400);
             }
             userService.AddRole(id, "Writer");
             return new HttpStatusCodeResult(200);
@@ -102,7 +103,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(400);
             }
             userService.RemoveRole(id, "Writer");
             return new HttpStatusCodeResult(200);
@@ -113,7 +114,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(400);
             }
             userService.AddRole(id, "Admin");
             return new HttpStatusCodeResult(200);
@@ -124,7 +125,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(400);
             }
             userService.RemoveRole(id, "Admin");
             return new HttpStatusCodeResult(200);
@@ -135,8 +136,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(400);
             }
+            userService.RemoveRole(id, "Admin");
+            userService.RemoveRole(id, "Reader");
+            userService.RemoveRole(id, "Writer");
             userService.AddRole(id, "Blocked");
             return new HttpStatusCodeResult(200);
         }
@@ -146,8 +150,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(400);
             }
+            userService.AddRole(id, "Reader");
             userService.RemoveRole(id, "Blocked");
             return new HttpStatusCodeResult(200);
         }
@@ -157,7 +162,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(400);
             }
             userService.Delete(id);
             return new HttpStatusCodeResult(200);

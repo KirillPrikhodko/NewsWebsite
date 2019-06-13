@@ -21,49 +21,81 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 
         public async Task<IdentityResult> AddLoginAsync(string userId, UserLoginInfo loginInfo)
         {
+            if(string.IsNullOrEmpty(userId) || loginInfo == null)
+            {
+                return null;
+            }
             var result = await repository.AddLoginAsync(userId, loginInfo);
             return result;
         }
 
         public Task<IdentityResult> AddPasswordAsync(string userId, string password)
         {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(password))
+            {
+                return null;
+            }
             var result = repository.AddPasswordAsync(userId, password);
             return result;
         }
 
         public async Task<IdentityResult> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
         {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(oldPassword) || string.IsNullOrEmpty(newPassword))
+            {
+                return null;
+            }
             var result = await repository.ChangePasswordAsync(userId, oldPassword, newPassword);
             return result;
         }
 
-        public ApplicationIdentityUserServiceModel FindById(string userId)
+        public async Task<ApplicationIdentityUserServiceModel> FindByIdAsync(string userId)
         {
-            var user = repository.FindById(userId);
-            var result = Mapper.Map<ApplicationIdentityUser, ApplicationIdentityUserServiceModel>(user);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
+            var user = await repository.FindByIdAsync(userId);
+            var result = Mapper.Map<ApplicationIdentityUserServiceModel>(user);
             return result;
         }
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(string userId)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
             var result = await repository.GetLoginsAsync(userId);
             return result;
         }
 
         public async Task<string> GetPhoneNumberAsync(string userId)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
             var result = await repository.GetPhoneNumberAsync(userId);
             return result;
         }
 
         public async Task<bool> GetTwoFactorEnabledAsync(string userId)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return false;
+            }
             var result = await repository.GetTwoFactorEnabledAsync(userId);
             return result;
         }
 
         public async Task SetTwoFactorEnabledAsync(string userId, bool enabled)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return;
+            }
             await repository.SetTwoFactorEnabledAsync(userId, enabled);
         }
     }

@@ -2,8 +2,8 @@
 
 namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
 {
-    public interface ICommentRateService : IService<CommentRateServiceModel>
+    public interface ICommentRateService
     {
-        
+        void Add(CommentRateServiceModel item);
     }
 }

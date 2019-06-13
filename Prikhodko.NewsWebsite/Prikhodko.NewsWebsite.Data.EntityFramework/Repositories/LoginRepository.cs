@@ -24,6 +24,11 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         }
         public async Task<SignInStatus> Login(LoginViewModel model)
         {
+            if(model == null)
+            {
+                return SignInStatus.Failure;
+            }
+
             if (!AllowLogin(model.Username))
             {
                 var user = await userManager.FindByNameAsync(model.Username);
@@ -47,21 +52,30 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public async Task Login(ApplicationIdentityUser user, bool isPeristent, bool rememberBrowser)
         {
-            if (!AllowLogin(user.UserName))
+            if(user == null | !AllowLogin(user.UserName))
             {
                 return;
             }
+
             await signInManager.SignInAsync(user, isPeristent, rememberBrowser);
         }
 
         public async Task<SignInStatus> ExternalSignInAsync(ExternalLoginInfo loginInfo, bool isPersistent)
         {
+            if(loginInfo == null)
+            {
+                return SignInStatus.Failure;
+            }
             var result = await signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             return result;
         }
 
         private bool AllowLogin(string username)
         {
+            if(string.IsNullOrEmpty(username))
+            {
+                return false;
+            }
             var user = userManager.FindByNameAsync(username).Result;
             var allowLogin = true;
             if (user == null)
@@ -81,6 +95,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public async Task<bool> SendTwoFactorCodeAsync(string selectedProvider)
         {
+            if(string.IsNullOrEmpty(selectedProvider))
+            {
+                return false;
+            }
             var result = await signInManager.SendTwoFactorCodeAsync(selectedProvider);
             return result;
         }
@@ -92,6 +110,11 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public async Task<SignInStatus> TwoFactorSignInAsync(VerifyCodeViewModel model)
         {
+            if(model == null)
+            {
+                return SignInStatus.Failure;
+            }
+
             var result = await signInManager.TwoFactorSignInAsync(model.Provider, model.Code, model.RememberMe, model.RememberBrowser);
             return result;
         }
@@ -104,12 +127,22 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public async Task<IList<string>> GetValidTwoFactorProvidersAsync(string userId)
         {
+            if(string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
+
             var result = await userManager.GetValidTwoFactorProvidersAsync(userId);
             return result;
         }
 
         public async Task<IdentityResult> RemoveLoginAsync(string userId, UserLoginInfo loginInfo)
         {
+            if(string.IsNullOrEmpty(userId) || loginInfo == null)
+            {
+                return null;
+            }
+
             var result = await userManager.RemoveLoginAsync(userId, loginInfo);
             return result;
         }

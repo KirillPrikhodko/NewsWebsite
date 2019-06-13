@@ -21,8 +21,8 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var tags = tagService.GetAll().Select(x => x.Name).ToList();
-            return Json(tags, JsonRequestBehavior.AllowGet);
+            var tags = tagService.GetAll().Select(x => x.Name);
+            return Json(tags.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }

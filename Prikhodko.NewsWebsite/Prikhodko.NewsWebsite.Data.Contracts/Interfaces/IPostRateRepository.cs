@@ -2,8 +2,8 @@
 
 namespace Prikhodko.NewsWebsite.Data.Contracts.Interfaces
 {
-    public interface IPostRateRepository : IRepository<PostRate>
+    public interface IPostRateRepository
     {
-        
+        void Add(PostRate item);
     }
 }

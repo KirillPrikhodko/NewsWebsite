@@ -72,7 +72,7 @@ namespace Prikhodko.NewsWebsite.Config.MappingProfiles
                     c => c.MapFrom(src =>
                         src.Content)) //TODO: after the Content is configured as a separate entity, this will have to change
                 .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
-                .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
+                .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags.Distinct().ToList()))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForMember(x => x.Rates, c => c.MapFrom(src => src.Rates))
                 .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))

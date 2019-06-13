@@ -3,8 +3,8 @@ using Prikhodko.NewsWebsite.Data.Contracts.Models;
 
 namespace Prikhodko.NewsWebsite.Data.Contracts.Interfaces
 {
-    public interface ITagRepository : IRepository<Tag>, IEnsurable<Tag>
+    public interface ITagRepository : IEnsurable<Tag>
     {
-        IEnumerable<Tag> GetAmount(int amount);
+        IEnumerable<Tag> GetAll();
     }
 }

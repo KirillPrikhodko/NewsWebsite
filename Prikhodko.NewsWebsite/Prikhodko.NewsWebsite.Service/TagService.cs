@@ -18,41 +18,12 @@ namespace Prikhodko.NewsWebsite.Service
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
-        public void Add(TagServiceModel item)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public TagServiceModel Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public IEnumerable<TagServiceModel> GetAll()
         {
             var tags = repository.GetAll();
-            var result = tags.Select(x => Mapper.Map<TagServiceModel>(x)).ToList();
-            return result;
-        }
-
-        public IEnumerable<TagServiceModel> GetAmount(int amount)
-        {
-            if (amount <= 0)
-            {
-                return null;
-            }
-            var result = repository.GetAmount(amount).Select(x => Mapper.Map<TagServiceModel>(x)).ToList();
-            return result;
-        }
-
-        public void Update(TagServiceModel item)
-        {
-            throw new System.NotImplementedException();
+            var result = tags.Select(x => Mapper.Map<TagServiceModel>(x));
+            return result.ToList();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Prikhodko.NewsWebsite.Data.Contracts.Interfaces;
 using Prikhodko.NewsWebsite.Data.Contracts.Models;
@@ -45,7 +46,7 @@ namespace Prikhodko.NewsWebsite.Service
         {
             if (string.IsNullOrEmpty(id) || country == null) //unlike Id, country can be empty
             {
-                throw new ArgumentException("invalid id or country");
+                return;
             }
 
             repository.EditCountry(id, country);
@@ -56,7 +57,7 @@ namespace Prikhodko.NewsWebsite.Service
         {
             if (string.IsNullOrEmpty(id) || dateOfBirth < DateTime.Today.AddYears(-150))
             {
-                throw new ArgumentException("invalid id or date");
+                return;
             }
 
             repository.EditDateOfBirth(id, dateOfBirth);
@@ -67,16 +68,16 @@ namespace Prikhodko.NewsWebsite.Service
         {
             if (string.IsNullOrEmpty(id) || name == null) //unlike Id, name can be empty
             {
-                throw new ArgumentException("invalid id or name");
+                return;
             }
 
             repository.EditName(id, name);
             unitOfWork.SaveChanges();
         }
 
-        public UserServiceModel FindById(string userId)
+        public async Task<UserServiceModel> FindByIdAsync(string userId)
         {
-            var applicationIdentityUser = accountManageService.FindById(userId);
+            var applicationIdentityUser = await accountManageService.FindByIdAsync(userId);
             UserServiceModel result = null;
             if (applicationIdentityUser != null)
             {

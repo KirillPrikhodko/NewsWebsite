@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Prikhodko.NewsWebsite.Service.Contracts.Models;
 using Prikhodko.NewsWebsite.Web.Models;
+using System.Collections.Generic;
 
 namespace Prikhodko.NewsWebsite.Web
 {
@@ -42,7 +43,7 @@ namespace Prikhodko.NewsWebsite.Web
                 .ForMember(x => x.Content, c => c.MapFrom(src => src.Content))
                 .ForMember(x => x.Description, c => c.MapFrom(src => src.Description))
                 .ForMember(x => x.Tags, c => c.MapFrom(src => src.Tags))
-                .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments))
+                .ForMember(x => x.Comments, c => c.MapFrom(src => src.Comments ?? new List<CommentServiceModel>() ))
                 .ForMember(x => x.Title, c => c.MapFrom(src => src.Title))
                 .ForMember(x => x.Created, c => c.MapFrom(src => src.Created))
                 .ForAllOtherMembers(c => c.Ignore());

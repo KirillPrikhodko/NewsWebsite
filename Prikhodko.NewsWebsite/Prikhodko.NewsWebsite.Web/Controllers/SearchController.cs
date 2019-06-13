@@ -20,10 +20,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             this.postService = postService;
         }
 
-        // GET: Search
         public ActionResult Index()
         {
-            return View();
+            return View("Tag");
         }
 
         [HttpGet]
@@ -32,8 +31,8 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             ViewBag.Tag = tagText;
             var tagModel = new TagServiceModel(){Name = tagText };
             int pageNumber = page ?? 1;
-            IEnumerable<PostViewModel> posts = postService.GetByTag(tagModel).Select(x => Mapper.Map<PostViewModel>(x)).ToPagedList(pageNumber, 10);
-            return View(posts);
+            var posts = postService.GetByTag(tagModel).Select(x => Mapper.Map<PostViewModel>(x));
+            return View(posts.ToPagedList(pageNumber, 10));
         }
     }
 }

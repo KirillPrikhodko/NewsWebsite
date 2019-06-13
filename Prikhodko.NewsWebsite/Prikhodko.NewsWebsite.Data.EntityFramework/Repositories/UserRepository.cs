@@ -29,8 +29,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             var toRemove = dbContext.AppUsers.Find(id);
             if (toRemove != null)
             {
-                toRemove.ApplicationIdentityUser.IsEnabled = false;
-                
+                toRemove.ApplicationIdentityUser.IsEnabled = false;                
             }
         }
 
@@ -47,16 +46,21 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public IList<User> GetAll()
         {
-            var users = dbContext.AppUsers.ToList();
-            return users;
+            var users = dbContext.AppUsers.Where(x => x.ApplicationIdentityUser != null);
+            return users.ToList();
         }
 
         public void EditName(string id, string name)
         {
-            var user = dbContext.AppUsers.Find(id);
-            if (user == null || name == null)
+            if(string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("no user with requested id");
+                return;
+            }
+
+            var user = dbContext.AppUsers.Find(id);
+            if (user == null)
+            {
+                return;
             }
 
             user.Name = name;
@@ -64,10 +68,15 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public void EditCountry(string id, string country)
         {
-            var user = dbContext.AppUsers.Find(id);
-            if (user == null || country == null)
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(country))
             {
-                throw new ArgumentException("no user with requested id");
+                return;
+            }
+
+            var user = dbContext.AppUsers.Find(id);
+            if (user == null)
+            {
+                return;
             }
 
             user.Country = country;
@@ -75,10 +84,15 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public void EditDateOfBirth(string id, DateTime dateOfBirth)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return;
+            }
+
             var user = dbContext.AppUsers.Find(id);
             if (user == null)
             {
-                throw new ArgumentException("no user with requested id");
+                return;
             }
 
             user.DateOfBirth = dateOfBirth;
@@ -109,6 +123,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public IList<string> GetRoles(string id)
         {
+            if(string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
             return userManager.GetRoles(id);
         }
     }

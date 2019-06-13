@@ -24,6 +24,12 @@ namespace Prikhodko.NewsWebsite.Service
             {
                 return;
             }
+
+            if(string.IsNullOrEmpty(item.Content))
+            {
+                return;
+            }
+
             var comment = Mapper.Map<Comment>(item);
             repository.Add(comment);
             unitOfWork.SaveChanges();
@@ -44,16 +50,6 @@ namespace Prikhodko.NewsWebsite.Service
         {
             var result = Mapper.Map<CommentServiceModel>(repository.Get(id));
             return result;
-        }
-
-        public IEnumerable<CommentServiceModel> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(CommentServiceModel item)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

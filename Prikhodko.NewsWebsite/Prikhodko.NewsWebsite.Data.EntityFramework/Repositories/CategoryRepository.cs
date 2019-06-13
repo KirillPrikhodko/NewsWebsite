@@ -38,6 +38,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public Category Ensure(Category item)
         {
+            if(item == null)
+            {
+                return null;
+            }
             var existingCategory = dbContext.Categories.FirstOrDefault(x => x.Name == item.Name);
             return existingCategory ?? item;
         }
@@ -54,8 +58,8 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public IEnumerable<Category> GetAll()
         {
-            var categories = dbContext.Categories.ToList();
-            return categories;
+            var categories = dbContext.Categories;
+            return categories.ToList();
         }
 
         public void Update(Category item)
@@ -68,7 +72,7 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             var categoryToUpdate = dbContext.Categories.Find(item.Id);
             if (categoryToUpdate != null)
             {
-                categoryToUpdate.Name = item.Name; //TODO: think of a common interface that will clone (maybe use ICloneable?)
+                categoryToUpdate.Name = item.Name;
             }
         }
     }

@@ -8,13 +8,11 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IPostRepository postRepository;
-        private readonly IUserRepository userRepository;
 
-        public CommentRepository(ApplicationDbContext dbContext, IPostRepository postRepository, IUserRepository userRepository)
+        public CommentRepository(ApplicationDbContext dbContext, IPostRepository postRepository)
         {
             this.dbContext = dbContext;
             this.postRepository = postRepository;
-            this.userRepository = userRepository;
         }
 
         public void Add(Comment item)
@@ -31,6 +29,11 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public void Delete(int id)
         {
+            if(id <= 0)
+            {
+                return;
+            }
+
             var toDelete = dbContext.Comments.Find(id);
             if(toDelete != null)
             {
@@ -40,18 +43,13 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public Comment Get(int id)
         {
+            if (id <= 0)
+            {
+                return null;
+            }
+
             var result = dbContext.Comments.Find(id);
             return result;
-        }
-
-        public IEnumerable<Comment> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(Comment item)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

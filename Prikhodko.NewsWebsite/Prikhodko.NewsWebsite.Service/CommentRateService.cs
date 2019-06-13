@@ -21,29 +21,13 @@ namespace Prikhodko.NewsWebsite.Service
         }
         public void Add(CommentRateServiceModel item)
         {
+            if(item == null)
+            {
+                return;
+            }
             var rate = Mapper.Map<CommentRate>(item);
             repository.Add(rate);
             unitOfWork.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public CommentRateServiceModel Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<CommentRateServiceModel> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(CommentRateServiceModel item)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

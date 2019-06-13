@@ -14,13 +14,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICategoryService categoryService;
         private readonly IPostService postService;
         private readonly ITagService tagService;
 
         public HomeController(ICategoryService categoryService, IPostService postService, ITagService tagService)
         {
-            this.categoryService = categoryService;
             this.postService = postService;
             this.tagService = tagService;
         }
@@ -45,13 +43,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         public ActionResult GetBestPosts(int? page)
         {
             int pageNumber = page ?? 1;
-            double minimumRate = 4;
-            int amount = 10;
-            if (minimumRate < 0 || double.IsInfinity(minimumRate) || double.IsNaN(minimumRate) || amount <= 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var model = postService.GetBest(minimumRate).Select(x => Mapper.Map<PostViewModel>(x)).ToPagedList(pageNumber, 10);
+            var model = postService.GetBest(minimumRate: 4).Select(x => Mapper.Map<PostViewModel>(x)).ToPagedList(pageNumber, 10);
             return PartialView("_GetPosts", model);
         }
 
@@ -59,11 +51,6 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         {
             var model = tagService.GetAll() ?? new List<TagServiceModel>();
             return PartialView("_GetTagCloud", model);
-        }
-
-        public ActionResult Test()
-        {
-            return View();
         }
     }
 }

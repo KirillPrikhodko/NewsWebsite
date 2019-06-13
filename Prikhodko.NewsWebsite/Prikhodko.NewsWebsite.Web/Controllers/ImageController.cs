@@ -54,7 +54,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             }
             else
             {
-                return Json(new { Message = "Error in saving file" });
+                return Json(new { Message = Localization.ErrorSavingFile });
             }
         }
     }

@@ -42,6 +42,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUser user)
         {
+            if (model == null || user == null)
+            {
+                return null;
+            }
             user.User = new User() { Id = user.Id, DateOfBirth = null };
             user.IsEnabled = true;
             var result = await userManager.CreateAsync(user, model.Password);
@@ -58,6 +62,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public async Task<IdentityResult> ConfirmEmailAsync(string userId, string code)
         {
+            if(string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(code))
+            {
+                return null;
+            }
             var result = await userManager.ConfirmEmailAsync(userId, code);
             return result;
         }

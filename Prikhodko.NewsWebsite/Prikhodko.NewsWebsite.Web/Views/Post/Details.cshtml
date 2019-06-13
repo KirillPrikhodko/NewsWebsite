@@ -23,7 +23,7 @@
                 <ul class="list-inline list-unstyled">
                     <li><span><i class="glyphicon glyphicon-calendar"></i>@Model.Created</span></li>
                     <li>|</li>
-                    <span><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count comments</span>
+                    <span><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count @Localization.Comments</span>
                     <li>|</li>
                     <li>
                         <div class="content-rate">
@@ -167,7 +167,7 @@
             @:$(comment).find('#downvote_template').prop("disabled", true);
         }
             $(comment).find('#authorname_template').append(username);
-            $(comment).find('#authorname_template').prop("href", "/users/details?name=" + username);
+            $(comment).find('#authorname_template').prop("href", "/users/details/" + userid);
             $(comment).find('#authorname_template').prop("id", "authorname" + commentid);
 
             $(comment).find('#commentcontent_template').append("<span>" + content + "</span>");
@@ -214,7 +214,7 @@
     </script>
 
     <script>
-        if ('@ViewBag.UserAuthenticated' === 'True') {
+        if ('@Context.User.Identity.IsAuthenticated' === 'True') {
             var rate_value = '@Model.CurrentUserRateValue';
             var options = {
                 max_value: 5,

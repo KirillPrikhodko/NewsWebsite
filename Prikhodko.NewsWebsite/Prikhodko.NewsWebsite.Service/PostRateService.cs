@@ -20,36 +20,16 @@ namespace Prikhodko.NewsWebsite.Service
         }
         public void Add(PostRateServiceModel item)
         {
-            if (item != null && item.Value > 0)
+            if (item != null && item.Value > 0 && item.Value <= 5)
             {
                 var postRate = Mapper.Map<PostRate>(item);
                 repository.Add(postRate);
             }
             else
             {
-                throw new IndexOutOfRangeException("someone tried to rate a post 0 or less");
+                return;
             }
             unitOfWork.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public PostRateServiceModel Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<PostRateServiceModel> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(PostRateServiceModel item)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

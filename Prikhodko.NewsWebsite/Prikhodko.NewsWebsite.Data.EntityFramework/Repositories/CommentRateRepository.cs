@@ -16,28 +16,13 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         }
         public void Add(CommentRate item)
         {
+            if(item == null)
+            {
+                return;
+            }
+
             item.Comment = commentRepository.Get(item.CommentId);
             dbContext.CommentRates.Add(item);
-        }
-
-        public void Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public CommentRate Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<CommentRate> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(CommentRate item)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

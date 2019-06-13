@@ -169,6 +169,15 @@ namespace Prikhodko.NewsWebsite.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ConfirmEmail failed.
+        /// </summary>
+        public static string ConfirmEmailFailed {
+            get {
+                return ResourceManager.GetString("ConfirmEmailFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm new password.
         /// </summary>
         public static string ConfirmNewPassword {
@@ -313,6 +322,24 @@ namespace Prikhodko.NewsWebsite.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error has occured.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error in saving file.
+        /// </summary>
+        public static string ErrorSavingFile {
+            get {
+                return ResourceManager.GetString("ErrorSavingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External Logins.
         /// </summary>
         public static string ExternalLogins {
@@ -363,6 +390,15 @@ namespace Prikhodko.NewsWebsite.Web {
         public static string Hello {
             get {
                 return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid login attempt..
+        /// </summary>
+        public static string InvalidLoginAttempt {
+            get {
+                return ResourceManager.GetString("InvalidLoginAttempt", resourceCulture);
             }
         }
         
@@ -471,6 +507,42 @@ namespace Prikhodko.NewsWebsite.Web {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password has been changed..
+        /// </summary>
+        public static string PasswordChanged {
+            get {
+                return ResourceManager.GetString("PasswordChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password has been set..
+        /// </summary>
+        public static string PasswordSet {
+            get {
+                return ResourceManager.GetString("PasswordSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your phone number was added..
+        /// </summary>
+        public static string PhoneAdded {
+            get {
+                return ResourceManager.GetString("PhoneAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your phone number was removed..
+        /// </summary>
+        public static string PhoneRemoved {
+            get {
+                return ResourceManager.GetString("PhoneRemoved", resourceCulture);
             }
         }
         
@@ -624,6 +696,15 @@ namespace Prikhodko.NewsWebsite.Web {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your two-factor authentication provider has been set..
+        /// </summary>
+        public static string TwoFactorSet {
+            get {
+                return ResourceManager.GetString("TwoFactorSet", resourceCulture);
             }
         }
         

@@ -321,4 +321,31 @@
   <data name="FindByName" xml:space="preserve">
     <value>Искать по имени</value>
   </data>
+  <data name="ConfirmEmailFailed" xml:space="preserve">
+    <value>Не удалось подтвердить адрес электронной почты</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Произошла ошибка</value>
+  </data>
+  <data name="ErrorSavingFile" xml:space="preserve">
+    <value>Ошибка при сохранении файла</value>
+  </data>
+  <data name="InvalidLoginAttempt" xml:space="preserve">
+    <value>Не удалось войти</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Ваш пароль был изменен</value>
+  </data>
+  <data name="PasswordSet" xml:space="preserve">
+    <value>Пароль установлен</value>
+  </data>
+  <data name="PhoneAdded" xml:space="preserve">
+    <value>Добавлен номер телефона</value>
+  </data>
+  <data name="PhoneRemoved" xml:space="preserve">
+    <value>Номер телефона удален</value>
+  </data>
+  <data name="TwoFactorSet" xml:space="preserve">
+    <value>Двойная аутентификация установлена</value>
+  </data>
 </root>

@@ -47,7 +47,7 @@
                     <ul class="nav navbar-nav navbar-right categories-options">
                         <li>
                             <select class="form-control" id="theme-switcher">
-                                @if (chosenTheme == "Blue")
+                                @if (chosenTheme == "Blue" || string.IsNullOrEmpty(chosenTheme))
                                 {
                                     <option selected>@Localization.Blue</option>
                                     <option>@Localization.Red</option>

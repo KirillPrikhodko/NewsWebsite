@@ -25,25 +25,20 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             this.userService = userService;
         }
 
-        //
-        // GET: /Manage/Index
         public ActionResult Index(ManageMessageId? message)
         {
             ViewBag.Blocked = HttpContext.User.IsInRole("Blocked");
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? Localization.PasswordChanged
+                : message == ManageMessageId.SetPasswordSuccess ? Localization.PasswordSet
+                : message == ManageMessageId.SetTwoFactorSuccess ? Localization.TwoFactorSet
+                : message == ManageMessageId.Error ? Localization.Error
+                : message == ManageMessageId.AddPhoneSuccess ? Localization.PhoneAdded
+                : message == ManageMessageId.RemovePhoneSuccess ? Localization.PhoneRemoved
                 : "";
             return View();
         }
 
-        //TODO: implement the rest of the class
-
-        // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
@@ -52,7 +47,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             var result = await loginService.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
-                var user = accountManageService.FindById(User.Identity.GetUserId()); //original code used await UserManager.FindByIdAsync
+                var user = await accountManageService.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
                     await loginService.Login(user, false, rememberBrowser: false);
@@ -65,106 +60,12 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             }
             return RedirectToAction("ManageLogins", new { Message = message });
         }
-
-        //
-        // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/EnableTwoFactorAuthentication
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EnableTwoFactorAuthentication()
-        {
-            await accountManageService.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
-            var user = accountManageService.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                await loginService.Login(user, false, false);
-            }
-            return RedirectToAction("Index", "Manage");
-        }
-
-        //
-        // POST: /Manage/DisableTwoFactorAuthentication
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DisableTwoFactorAuthentication()
-        {
-            await accountManageService.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), false);
-            var user = accountManageService.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                await loginService.Login(user, false, false);
-            }
-            return RedirectToAction("Index", "Manage");
-        }
-
-        ////
-        //// GET: /Manage/VerifyPhoneNumber
-        //public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
-        //{
-        //    var code = await accountManageService.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
-        //    // Send an SMS through the SMS provider to verify the phone number
-        //    return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
-        //}
-
-        ////
-        //// POST: /Manage/VerifyPhoneNumber
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
-        //    var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
-        //    if (result.Succeeded)
-        //    {
-        //        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-        //        if (user != null)
-        //        {
-        //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-        //        }
-        //        return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
-        //    }
-        //    // If we got this far, something failed, redisplay form
-        //    ModelState.AddModelError("", "Failed to verify phone");
-        //    return View(model);
-        //}
-
-        ////
-        //// POST: /Manage/RemovePhoneNumber
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> RemovePhoneNumber()
-        //{
-        //    var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
-        //    if (!result.Succeeded)
-        //    {
-        //        return RedirectToAction("Index", new { Message = ManageMessageId.Error });
-        //    }
-        //    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-        //    if (user != null)
-        //    {
-        //        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-        //    }
-        //    return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
-        //}
-
-        //
-        // GET: /Manage/ChangePassword
+        
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        //
-        // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
@@ -176,7 +77,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             var result = await accountManageService.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
-                var user = accountManageService.FindById(User.Identity.GetUserId());
+                var user = await accountManageService.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null)
                 {
                     await loginService.Login(user, false, false);
@@ -187,15 +88,11 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
             return View();
         }
 
-        //
-        // POST: /Manage/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
@@ -205,7 +102,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 var result = await accountManageService.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
                 if (result.Succeeded)
                 {
-                    var user = accountManageService.FindById(User.Identity.GetUserId());
+                    var user = await accountManageService.FindByIdAsync(User.Identity.GetUserId());
                     if (user != null)
                     {
                         await loginService.Login(user, false, false);
@@ -219,15 +116,13 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
-            var user = accountManageService.FindById(User.Identity.GetUserId());
+            var user = await accountManageService.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
             {
                 return View("Error");
@@ -241,36 +136,13 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
                 OtherLogins = otherLogins
             });
         }
-
-        //
-        // POST: /Manage/LinkLogin
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LinkLogin(string provider)
-        {
-            // Request a redirect to the external login provider to link a login for the current user
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
-        }
-
-        //
-        // GET: /Manage/LinkLoginCallback
-        public async Task<ActionResult> LinkLoginCallback()
-        {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-            if (loginInfo == null)
-            {
-                return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-            }
-            var result = await accountManageService.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-        }
-
+        
         public async Task<ActionResult> GetAccountSettingsPartial()
         {
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
-                HasPassword = HasPassword(),
+                HasPassword = await HasPassword(),
                 PhoneNumber = await accountManageService.GetPhoneNumberAsync(userId),
                 TwoFactor = await accountManageService.GetTwoFactorEnabledAsync(userId),
                 Logins = await accountManageService.GetLoginsAsync(userId),
@@ -279,10 +151,10 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return PartialView("_AccountSettingsPartial", model);
         }
 
-        public ActionResult GetAccountGeneralInfoPartial()
+        public async Task<ActionResult> GetAccountGeneralInfoPartial()
         {
-            var model = userService.FindById(HttpContext.User.Identity.GetUserId());
-            return View("_AccountGeneralInfoPartial", model);
+            var model = await userService.FindByIdAsync(HttpContext.User.Identity.GetUserId());
+            return PartialView("_AccountGeneralInfoPartial", model);
         }
 
         protected override void Dispose(bool disposing)
@@ -327,9 +199,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             }
         }
 
-        private bool HasPassword()
+        private async Task<bool> HasPassword()
         {
-            var user = accountManageService.FindById(User.Identity.GetUserId());
+            var user = await accountManageService.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
                 return user.PasswordHash != null;
@@ -337,9 +209,9 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             return false;
         }
 
-        private bool HasPhoneNumber()
+        private async Task<bool> HasPhoneNumber()
         {
-            var user = accountManageService.FindById(User.Identity.GetUserId());
+            var user = await accountManageService.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
                 return user.PhoneNumber != null;

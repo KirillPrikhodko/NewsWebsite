@@ -25,18 +25,30 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
         }
         public async Task<SignInStatus> Login(LoginViewModel model)
         {
+            if(model == null)
+            {
+                return SignInStatus.Failure;
+            }
             var result = await repository.Login(model);
             return result;
         }
 
         public async Task Login(ApplicationIdentityUserServiceModel userViewModel, bool isPeristent, bool rememberBrowser)
         {
+            if (userViewModel == null)
+            {
+                return;
+            }
             var user = Mapper.Map<ApplicationIdentityUser>(userViewModel);
             await repository.Login(user, isPeristent, rememberBrowser);
         }
 
         public async Task<SignInStatus> ExternalSignInAsync(ExternalLoginInfo loginInfo, bool isPersistent)
         {
+            if (loginInfo == null)
+            {
+                return SignInStatus.Failure;
+            }
             var result = await repository.ExternalSignInAsync(loginInfo, isPersistent);
             return result;
         }
@@ -54,6 +66,10 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 
         public async Task<SignInStatus> TwoFactorSignInAsync(VerifyCodeViewModel model)
         {
+            if(model == null)
+            {
+                return SignInStatus.Failure;
+            }
             return await repository.TwoFactorSignInAsync(model);
         }
 
@@ -64,12 +80,20 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 
         public async Task<IList<string>> GetValidTwoFactorProvidersAsync(string userId)
         {
+            if(string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
             var result = await repository.GetValidTwoFactorProvidersAsync(userId);
             return result;
         }
 
         public Task<IdentityResult> RemoveLoginAsync(string userId, UserLoginInfo loginInfo)
         {
+            if(string.IsNullOrEmpty(userId) || loginInfo == null)
+            {
+                return null;
+            }
             var result = repository.RemoveLoginAsync(userId, loginInfo);
             return result;
         }

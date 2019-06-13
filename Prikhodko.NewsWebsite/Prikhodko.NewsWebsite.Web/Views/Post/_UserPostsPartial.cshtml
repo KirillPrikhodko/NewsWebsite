@@ -1,21 +1,68 @@
-﻿@using Prikhodko.NewsWebsite.Web.Models
-@using PagedList.Mvc;
+﻿@using PagedList.Mvc;
 @model PagedList.IPagedList<Prikhodko.NewsWebsite.Web.Models.PostViewModel>
 
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script src="https://www.w3schools.com/lib/w3.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@if (Model != null & Model.Count > 0)
+{
+    <script>
+    $('#titlesort').on("click", function () {
+
+            $.ajax({
+            url: "/post/getuserposts/@Model[0].AuthorId?sortOrder=@ViewBag.NameSortParm",
+                success: function (content) {
+                    $('#posts').html(content);
+                }
+            })
+        })
+        $('#categorysort').on("click", function () {
+            $.ajax({
+                url: "/post/getuserposts/@Model[0].AuthorId?sortOrder=@ViewBag.CategorySortParm",
+                success: function (content) {
+                    $('#posts').html(content);
+                }
+            })
+        })
+        $('#avgratesort').on("click", function () {
+            $.ajax({
+                url: "/post/getuserposts/@Model[0].AuthorId?sortOrder=@ViewBag.AvgRateSortParm",
+                success: function (content) {
+                    $('#posts').html(content);
+                }
+            })
+        })
+        $('#numberofcommentssort').on("click", function () {
+            $.ajax({
+                url: "/post/getuserposts/@Model[0].AuthorId?sortOrder=@ViewBag.NumberOfCommentsSortParm",
+                success: function (content) {
+                    $('#posts').html(content);
+                }
+            })
+        })
+        $('#createdsort').on("click", function () {
+            $.ajax({
+                url: "/post/getuserposts/@Model[0].AuthorId?sortOrder=@ViewBag.CreatedSortParm",
+                success: function (content) {
+                    $('#posts').html(content);
+                }
+            })
+        })
+    </script>
+}
+
 
 <table id="posts" style="margin-top: 15px" class="w3-table-all">
     <tr>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(1)')" style="cursor:pointer">@Localization.Title</th>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(2)')" style="cursor:pointer">@Localization.Category</th>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(3)')" style="cursor:pointer">@Localization.AvgRate</th>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(4)')" style="cursor:pointer">@Localization.NumberOfComments</th>
-        <th onclick="w3.sortHTML('#posts', '.item', 'td:nth-child(5)')" style="cursor:pointer">@Localization.Created</th>
+        <th><a id="titlesort">@Localization.Title</a></th>
+        <th><a id="categorysort">@Localization.Category</a></th>
+        <th><a id="avgratesort">@Localization.AvgRate</a></th>
+        <th><a id="numberofcommentssort">@Localization.NumberOfComments</a></th>
+        <th><a id="createdsort">@Localization.Created</a></th>
         @if (ViewBag.LetEditAndDelete)
         {
-    <th style="cursor:pointer">@Localization.Edit/@Localization.Delete</th>
+            <th style="cursor:pointer">@Localization.Edit/@Localization.Delete</th>
         }
     </tr>
     @foreach (var post in Model)
@@ -37,6 +84,13 @@
     }
 </table>
 <br />
+@*@using (Html.BeginForm())
+    {
+        <p>
+            @Localization.FindByName: @Html.TextBox("SearchString")
+            <input type="submit" value="@Localization.Search" />
+        </p>
+    }*@
 
 @Localization.Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) @Localization.Of @Model.PageCount
 
@@ -48,3 +102,4 @@
             HttpMethod = "Get",
             UpdateTargetId = "postscontent"
         }))
+

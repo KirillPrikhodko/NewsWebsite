@@ -26,25 +26,5 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             var updatedPost = dbContext.Posts.Find(item.PostId);
             updatedPost.AvgRate = postRepository.GetAvgPostRate(updatedPost);
         }
-
-        public void Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public PostRate Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<PostRate> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(PostRate item)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

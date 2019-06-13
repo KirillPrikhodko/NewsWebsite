@@ -2,8 +2,8 @@
 
 namespace Prikhodko.NewsWebsite.Service.Contracts.Interfaces
 {
-    public interface IPostRateService : IService<PostRateServiceModel>
+    public interface IPostRateService
     {
-        
+        void Add(PostRateServiceModel item);
     }
 }

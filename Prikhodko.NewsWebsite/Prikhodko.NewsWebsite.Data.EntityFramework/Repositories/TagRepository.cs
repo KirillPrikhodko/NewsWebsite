@@ -15,15 +15,6 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
         {
             this.dbContext = dbContext;
         }
-        public void Add(Tag item)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public Tag Ensure(Tag item)
         {
@@ -31,30 +22,10 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             return existingTag ?? item;
         }
 
-        public Tag Get(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public IEnumerable<Tag> GetAll()
         {
-            var tags = dbContext.Tags.Where(x => x.Posts.Count > 0).ToList();
-            return tags;
-        }
-
-        public IEnumerable<Tag> GetAmount(int amount)
-        {
-            if (amount <= 0)
-            {
-                return null;
-            }
-            var result = dbContext.Tags.OrderBy(x => x.Posts.Count).Take(amount).ToList();
-            return result;
-        }
-
-        public void Update(Tag item)
-        {
-            throw new System.NotImplementedException();
+            var tags = dbContext.Tags.Where(x => x.Posts.Count > 0);
+            return tags.ToList();
         }
     }
 }

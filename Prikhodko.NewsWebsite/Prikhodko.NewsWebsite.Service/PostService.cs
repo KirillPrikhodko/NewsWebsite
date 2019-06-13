@@ -13,19 +13,20 @@ namespace Prikhodko.NewsWebsite.Service
         private readonly IPostRepository postRepository;
         private readonly ITagRepository tagRepository;
         private readonly IUnitOfWork unitOfWork;
-        private readonly IUserService userService;
 
-        public PostService(IPostRepository postRepository, ITagRepository tagRepository, IUnitOfWork unitOfWork, IUserService userService)
+        public PostService(IPostRepository postRepository, ITagRepository tagRepository, IUnitOfWork unitOfWork)
         {
             this.postRepository = postRepository;
             this.unitOfWork = unitOfWork;
-            this.userService = userService;
             this.tagRepository = tagRepository;
         }
         public void Add(PostServiceModel item)
         {
+            if(item == null)
+            {
+                return;
+            }
             var post = Mapper.Map<Post>(item);
-            post.Tags = post.Tags.Distinct().ToList();
             postRepository.Add(post);
             unitOfWork.SaveChanges();
             if (post.Id > 0)
@@ -36,30 +37,29 @@ namespace Prikhodko.NewsWebsite.Service
 
         public void Delete(int id)
         {
+            if(id <= 0)
+            {
+                return;
+            }
             postRepository.Delete(id);
             unitOfWork.SaveChanges();
         }
 
         public PostServiceModel Get(int id)
         {
+            if (id <= 0)
+            {
+                return null;
+            }
             var post = postRepository.Get(id);
             var result = Mapper.Map<PostServiceModel>(post);
-            //if (post != null)
-            //{
-            //    result.AvgRate = GetAvgPostRate(post.Rates);
-            //}
             return result;
         }
 
         public IEnumerable<PostServiceModel> GetAll()
         {
-            var posts = postRepository.GetAll();
-            var result = new List<PostServiceModel>();
-            foreach (var post in posts)
-            {
-                result.Add(Mapper.Map<PostServiceModel>(post));
-            }
-            return result;
+            var result = postRepository.GetAll().Select(x => Mapper.Map<PostServiceModel>(x));
+            return result.ToList();
         }
 
         public IEnumerable<PostServiceModel> GetBest(double minimumRate)
@@ -70,27 +70,34 @@ namespace Prikhodko.NewsWebsite.Service
             }
 
             var result = postRepository.GetBest(minimumRate).Select(x => Mapper.Map<PostServiceModel>(x));
-            return result;
+            return result.ToList();
         }
 
         public IEnumerable<PostServiceModel> GetByTag(TagServiceModel tagModel)
         {
+            if(tagModel == null)
+            {
+                return null;
+            }
             var tag = tagRepository.Ensure(Mapper.Map<Tag>(tagModel));
             var posts = postRepository.GetByTag(tag);
             var result = posts.Select(x => Mapper.Map<PostServiceModel>(x));
-            return result;
+            return result.ToList();
         }
 
         public IEnumerable<PostServiceModel> GetFresh()
         {
             var result = postRepository.GetFresh().Select(x => Mapper.Map<PostServiceModel>(x));
-            return result;
+            return result.ToList();
         }
 
         public void Update(PostServiceModel item)
         {
+            if(item == null)
+            {
+                return;
+            }
             var post = Mapper.Map<Post>(item);
-            post.Tags = post.Tags.Distinct().ToList();
             postRepository.Update(post);
             unitOfWork.SaveChanges();
         }

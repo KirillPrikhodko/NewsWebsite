@@ -44,6 +44,10 @@ namespace Prikhodko.NewsWebsite.Service.IdentityFramework
 
         public async Task<IdentityResult> Register(RegisterViewModel model, ApplicationIdentityUserServiceModel userViewModel)
         {
+            if(model == null || userViewModel == null)
+            {
+                return null;
+            }
             var user = Mapper.Map<ApplicationIdentityUser>(userViewModel);
             var result = await repository.Register(model, user);
             userViewModel.Id = user.User.Id;

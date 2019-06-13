@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -29,36 +30,37 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             this.rateService = rateService;
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
             var postServiceModel = postService.Get(id);
-            var postViewModel = Mapper.Map<PostViewModel>(postServiceModel);
-            if (postViewModel == null)
+            if (postServiceModel == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
+            var postViewModel = Mapper.Map<PostViewModel>(postServiceModel);
 
             foreach (var rate in postServiceModel.Rates)
             {
-                if (rate.Author.Id == HttpContext.User.Identity.GetUserId())
+                if (rate.Author.Id == HttpContext.User.Identity.GetUserId()) //if the service model has been rated by current user
                 {
-                    postViewModel.RatedByCurrentUser = true;
-                    postViewModel.CurrentUserRateValue = rate.Value;
+                    postViewModel.RatedByCurrentUser = true; //this information is stored in postViewModel
+                    postViewModel.CurrentUserRateValue = rate.Value; //and later in View it will display user's rate and disable rating mechanism
                     break;
                 }
             }
 
-            if (postViewModel.Comments == null)
-            {
-                postViewModel.Comments = new List<CommentServiceModel>();
-            }
-            ViewBag.UserAuthenticated = HttpContext.User.Identity.IsAuthenticated;
-            ViewBag.Author = userService.FindById(postViewModel.AuthorId);
-            ViewBag.CurrentUser = userService.FindById(HttpContext.User.Identity.GetUserId());
+            //TODO: delete this because I transferred it to mapping
+            //if (postViewModel.Comments == null)
+            //{
+            //    postViewModel.Comments = new List<CommentServiceModel>();
+            //}
+            ViewBag.Author = await userService.FindByIdAsync(postViewModel.AuthorId);
+            ViewBag.CurrentUser = await userService.FindByIdAsync(HttpContext.User.Identity.GetUserId());
             return View(postViewModel);
         }
 
         [Authorize (Roles = "Admin,Writer")]
+        [Authorize ]
         public ActionResult Create()
         {
             ViewBag.Categories = new SelectList(categoryService.GetAll().Select(x => x.Name));
@@ -79,7 +81,7 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
             postService.Add(serviceModel);
             if (serviceModel.Id > 0) //postService should add Id to service model after the post is added to DB
             {
-                return RedirectToAction("Details", "Post", new { Id = serviceModel.Id });
+                return RedirectToAction("Details", "Post", new { serviceModel.Id });
             }
 
             return RedirectToAction("Index", "Home");
@@ -90,12 +92,14 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         public ActionResult Edit(int id)
         {
             var currentPost = postService.Get(id);
-            var model = Mapper.Map<EditPostViewModel>(currentPost);
-            if (model == null)
+
+            if (currentPost == null)
             {
                 return new HttpStatusCodeResult(404);
             }
-            if (currentPost.AuthorName == HttpContext.User.Identity.Name ||
+
+            var model = Mapper.Map<EditPostViewModel>(currentPost);
+            if (currentPost.AuthorId == HttpContext.User.Identity.GetUserId() ||
                 HttpContext.User.IsInRole("Admin")) //only admin or author can edit post
             {
                 ViewBag.Categories = new SelectList(categoryService.GetAll().Select(x => x.Name));
@@ -109,10 +113,17 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         public ActionResult Edit(EditPostViewModel model)
         {
             var currentPost = postService.Get(model.Id);
+
+            if (currentPost == null)
+            {
+                return new HttpStatusCodeResult(404);
+            }
+
             var post = Mapper.Map<PostServiceModel>(model);
             if (currentPost.AuthorName == HttpContext.User.Identity.Name ||
                 HttpContext.User.IsInRole("Admin")) //only admin or author can edit post
             {
+                post.Created = DateTime.Now;
                 postService.Update(post);
                 return RedirectToAction("Details", "Users", new { id = currentPost.AuthorId });
             }
@@ -133,19 +144,72 @@ namespace Prikhodko.NewsWebsite.Web.Controllers
         }
 
         [Authorize(Roles = "Admin,Reader,Writer")]
-        public ActionResult AddRate(double rate, int postId)
+        public async Task<ActionResult> AddRate(double rate, int postId)
         {
-            PostRateServiceModel postRate = new PostRateServiceModel() { Author = userService.FindById(HttpContext.User.Identity.GetUserId()), PostId = postId, Value = rate };
+            PostRateServiceModel postRate = new PostRateServiceModel() { Author = await userService.FindByIdAsync(HttpContext.User.Identity.GetUserId()), PostId = postId, Value = rate };
             rateService.Add(postRate);
-            return new EmptyResult();
+            return new HttpStatusCodeResult(200);
         }
 
-        public ActionResult GetUserPosts(string id, int? page)
+        public async Task<ActionResult> GetUserPosts(string id, string sortOrder, string searchString, int? page)
         {
+            #region Paging
             int pageNumber = page ?? 1;
-            var posts = userService.FindById(id).Posts.Select(x => Mapper.Map<PostViewModel>(x)).ToPagedList(pageNumber, 10);
+            var user = await userService.FindByIdAsync(id);
+            var posts = user.Posts.Select(x => Mapper.Map<PostViewModel>(x));
+            #endregion
+            #region Search
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                posts = posts.Where(x => x.Title.Contains(searchString)
+                                       || x.Title.Contains(searchString));
+            }
+            #endregion
+            #region Sort
+            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
+            ViewBag.CategorySortParm = sortOrder == "category" ? "category_desc" : "category";
+            ViewBag.AvgRateSortParm = sortOrder == "avgrate" ? "avgrate_desc" : "avgrate";
+            ViewBag.NumberOfCommentsSortParm = sortOrder == "numberofcomments" ? "numberofcomments_desc" : "numberofcomments";
+            ViewBag.CreatedSortParm = sortOrder == "created" ? "created_desc" : "created";
+            switch (sortOrder)
+            {
+                case "category":
+                    posts = posts.OrderBy(x => x.Category);
+                    break;
+                case "category_desc":
+                    posts = posts.OrderByDescending(x => x.Category);
+                    break;
+                case "name":
+                    posts = posts.OrderBy(x => x.Title);
+                    break;
+                case "name_desc":
+                    posts = posts.OrderByDescending(x => x.Title);
+                    break;
+                case "avgrate":
+                    posts = posts.OrderBy(x => x.AvgRate);
+                    break;
+                case "avgrate_desc":
+                    posts = posts.OrderByDescending(x => x.AvgRate);
+                    break;
+                case "numberofcomments":
+                    posts = posts.OrderBy(x => x.Comments.Count);
+                    break;
+                case "numberofcomments_desc":
+                    posts = posts.OrderByDescending(x => x.Comments.Count);
+                    break;
+                case "created":
+                    posts = posts.OrderBy(x => x.Created);
+                    break;
+                case "created_desc":
+                    posts = posts.OrderByDescending(x => x.Created);
+                    break;
+                default:
+                    posts = posts.OrderBy(x => x.Title);
+                    break;
+            }
+            #endregion
             ViewBag.LetEditAndDelete = HttpContext.User.IsInRole("Admin") || HttpContext.User.Identity.GetUserId() == id;   //if admin requests posts table or user requests his own posts
-            return PartialView("_UserPostsPartial", posts);                                                            //he should be able to edit or delete posts
+            return PartialView("_UserPostsPartial", posts.ToPagedList(pageNumber, 10));                                                            //he should be able to edit or delete posts
         }
     }
 }

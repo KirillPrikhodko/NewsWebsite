@@ -2,8 +2,10 @@
 
 namespace Prikhodko.NewsWebsite.Data.Contracts.Interfaces
 {
-    public interface ICommentRepository : IRepository<Comment>
+    public interface ICommentRepository
     {
-        
+        void Add(Comment item);
+        void Delete(int id);
+        Comment Get(int id);
     }
 }

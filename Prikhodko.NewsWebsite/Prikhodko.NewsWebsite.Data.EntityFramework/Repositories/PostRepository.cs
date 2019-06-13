@@ -12,14 +12,12 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
     public class PostRepository : IPostRepository
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IUserRepository userRepository;
         private readonly ITagRepository tagRepository;
         private readonly ICategoryRepository categoryRepository;
 
-        public PostRepository(ApplicationDbContext dbContext, IUserRepository userRepository, ITagRepository tagRepository, ICategoryRepository categoryRepository)
+        public PostRepository(ApplicationDbContext dbContext, ITagRepository tagRepository, ICategoryRepository categoryRepository)
         {
             this.dbContext = dbContext;
-            this.userRepository = userRepository;
             this.tagRepository = tagRepository;
             this.categoryRepository = categoryRepository;
         }
@@ -32,16 +30,18 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
             item.Author = dbContext.Users.Find(item.AuthorId).User;
             item.AvgRate = GetAvgPostRate(item);
-            for(int i = 0; i < item.Tags.Count(); i++)
-            {
-                item.Tags[i] = tagRepository.Ensure(item.Tags[i]);
-            }
+            item.Tags = item.Tags.Select(x => tagRepository.Ensure(x)).ToList();
             item.Category = categoryRepository.Ensure(item.Category);
             dbContext.Posts.Add(item);
         }
 
         public double? GetAvgPostRate(Post post)
         {
+            if(post == null)
+            {
+                return null;
+            }
+
             double? result = 0;
             var quantity = post.Rates.Count;
             for (int i = 0; i < quantity; i++)
@@ -77,8 +77,8 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
 
         public IEnumerable<Post> GetAll()
         {
-            var result = dbContext.Posts.ToList();
-            return result;
+            var result = dbContext.Posts;
+            return result.ToList();
         }
 
         public IEnumerable<Post> GetBest(double minimumRate)
@@ -87,8 +87,8 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             {
                 return null;
             }
-            var result = dbContext.Posts.Where(x => x.AvgRate != null && x.AvgRate >= minimumRate).OrderByDescending(x => x.AvgRate).ToList();
-            return result;
+            var result = dbContext.Posts.Where(x => x.AvgRate != null && x.AvgRate >= minimumRate).OrderByDescending(x => x.AvgRate);
+            return result.ToList();
         }
 
         public IEnumerable<Post> GetByTag(Tag tag)
@@ -99,15 +99,15 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             }
 
             tag = tagRepository.Ensure(tag);
-            var result = dbContext.Posts.Where(x => x.Tags.Select(t => t.Name).Contains(tag.Name)).ToList();
-            return result;
+            var result = dbContext.Posts.Where(x => x.Tags.Select(t => t.Name).Contains(tag.Name));
+            return result.ToList();
         }
 
         public IEnumerable<Post> GetFresh()
         {
             var expirationDate = DateTime.Now.AddDays(-7);
-            var result = dbContext.Posts.Where(x => x.Created >= expirationDate).OrderByDescending(x => x.Created).ToList();
-            return result;
+            var result = dbContext.Posts.Where(x => x.Created >= expirationDate).OrderByDescending(x => x.Created);
+            return result.ToList();
         }
 
         public void Update(Post item)
@@ -120,6 +120,8 @@ namespace Prikhodko.NewsWebsite.Data.EntityFramework.Repositories
             if (postToUpdate != null)
             {
                 item.Update(postToUpdate);
+                postToUpdate.Tags = postToUpdate.Tags.Select(x => tagRepository.Ensure(x)).ToList();
+                postToUpdate.Category = categoryRepository.Ensure(postToUpdate.Category);
             }
         }
     }
