@@ -348,4 +348,13 @@
   <data name="TwoFactorSet" xml:space="preserve">
     <value>Your two-factor authentication provider has been set.</value>
   </data>
+  <data name="ClickHereToLogIn" xml:space="preserve">
+    <value>Click here to Log in</value>
+  </data>
+  <data name="Please" xml:space="preserve">
+    <value>Please</value>
+  </data>
+  <data name="ThankConfirmingEmail" xml:space="preserve">
+    <value>Thank you for confirming your email.</value>
+  </data>
 </root>

@@ -348,4 +348,13 @@
   <data name="TwoFactorSet" xml:space="preserve">
     <value>Двойная аутентификация установлена</value>
   </data>
+  <data name="ClickHereToLogIn" xml:space="preserve">
+    <value>Нажмите здесь, чтобы войти</value>
+  </data>
+  <data name="Please" xml:space="preserve">
+    <value>Пожалуйста</value>
+  </data>
+  <data name="ThankConfirmingEmail" xml:space="preserve">
+    <value>Спасибо за подтверждение Вашего адреса электронной почты.</value>
+  </data>
 </root>

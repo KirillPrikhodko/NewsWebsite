@@ -151,6 +151,15 @@ namespace Prikhodko.NewsWebsite.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click here to Log in.
+        /// </summary>
+        public static string ClickHereToLogIn {
+            get {
+                return ResourceManager.GetString("ClickHereToLogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to comments.
         /// </summary>
         public static string Comments {
@@ -547,6 +556,15 @@ namespace Prikhodko.NewsWebsite.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please.
+        /// </summary>
+        public static string Please {
+            get {
+                return ResourceManager.GetString("Please", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Posts.
         /// </summary>
         public static string Posts {
@@ -669,6 +687,15 @@ namespace Prikhodko.NewsWebsite.Web {
         public static string TagSearchInputFiller {
             get {
                 return ResourceManager.GetString("TagSearchInputFiller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for confirming your email..
+        /// </summary>
+        public static string ThankConfirmingEmail {
+            get {
+                return ResourceManager.GetString("ThankConfirmingEmail", resourceCulture);
             }
         }
         
